@@ -4,4 +4,4 @@ yarn.lock
 .vscode/
 
 # Config files for back
-/back/config/
+# /back/config/
