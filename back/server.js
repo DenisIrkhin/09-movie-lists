@@ -5,7 +5,7 @@ const cors = require('cors')
 
 const testRoute = require('./routes/test')
 
-const PORT = 4000
+const PORT = 5050
 
 app.use(cors())
 // For future cookie implementation
