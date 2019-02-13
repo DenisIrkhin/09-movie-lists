@@ -1,0 +1,23 @@
+.navbar-main-style {
+  background-color: #14181c;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}
+
+.navbar-brand {
+  font-size: 32px;
+  color: white;
+}
+
+.navbar-brand:hover {
+  color: white;
+}
+
+.nav-link {
+  color: #99aabb;
+  font-size: 14px;
+}
+
+.nav-link:hover {
+  color: white;
+}
