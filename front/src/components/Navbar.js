@@ -6,50 +6,63 @@ import { Link } from 'react-router-dom'
 class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-main-style">
-        <div className="container">
-          <Link to="/" className="navbar-brand">
-            Movie Lists
+      <div>
+        <nav
+          className="navbar navbar-expand-lg sticky-top navbar-dark"
+          id="navbar-main-style"
+        >
+          <Link to="/" className="navbar-brand ml-3">
+            Movielists
           </Link>
 
-          <div
-            className="collapse navbar-collapse justify-content-end"
-            id="navbarSupportedContent"
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to="/signup" className="nav-link">
-                  CREATE ACCOUNT
-                </Link>
-              </li>
+            <span className="navbar-toggler-icon" />
+          </button>
 
-              <li className="nav-item">
-                <Link to="/login" className="nav-link">
-                  LOGIN
-                </Link>
-              </li>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div className="container">
+              <ul className="navbar-nav ml-auto justify-content-end">
+                <li className="nav-item">
+                  <form className="form-inline form-spacing">
+                    <input
+                      className="form-control search-select"
+                      type="text"
+                      placeholder="Find Movies"
+                      aria-label="Search"
+                    />
+                  </form>
+                </li>
 
-              <li className="nav-item">
-                <Link to="/lists" className="nav-link">
-                  LISTS
-                </Link>
-              </li>
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    LOGIN
+                  </Link>
+                </li>
 
-              <li className="nav-item">
-                <Link to="/reviews" className="nav-link">
-                  REVIEWS
-                </Link>
-              </li>
+                <li className="nav-item">
+                  <Link to="/list" className="nav-link">
+                    MAKE LIST
+                  </Link>
+                </li>
 
-              <li className="nav-item">
-                <Link to="/reviews" className="nav-link">
-                  CHAT
-                </Link>
-              </li>
-            </ul>
+                <li className="nav-item">
+                  <Link to="/premium" className="nav-link">
+                    PREMIUM
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     )
   }
 }

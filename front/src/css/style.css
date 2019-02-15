@@ -1,11 +1,14 @@
-.navbar-main-style {
-  background-color: #14181c;
+/* NAVIGATION BAR */
+
+#navbar-main-style {
+  background-color: #026670;
   font-family: 'Roboto', sans-serif;
+  font-weight: 600;
   color: white;
 }
 
 .navbar-brand {
-  font-size: 32px;
+  font-size: 28px;
   color: white;
 }
 
@@ -20,4 +23,14 @@
 
 .nav-link:hover {
   color: white;
+}
+
+.nav-item {
+  text-align: center;
+}
+
+@media only screen and (min-width: 990px) {
+  .form-spacing {
+    margin-right: 10px;
+  }
 }
