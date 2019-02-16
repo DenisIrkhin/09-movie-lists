@@ -24,20 +24,8 @@ class Navbar extends Component {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-<<<<<<< Updated upstream
             <span className="navbar-toggler-icon" />
           </button>
-=======
-            <ul className="navbar-nav">
-              <li className="nav-item nav-link">
-                <LoginSignup/>
-                </li>
-              <li className="nav-item">
-                <Link to="/signup" className="nav-link">
-                  CREATE ACCOUNT
-                </Link>
-              </li>
->>>>>>> Stashed changes
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <div className="container">
