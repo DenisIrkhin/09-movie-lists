@@ -17,9 +17,10 @@ class UnconnectedApp extends Component {
   }
   // Render Test comp for fetch data from mongo and understand that it works
   renderTest() {
+    console.log("test page rendered")
     return (
       <div>
-        <Login />
+        <Signup />
       </div>
     )
   }
