@@ -67,6 +67,7 @@ router.post('/signup', (req, res) => {
 // If good authentificated then session id will be created
 router.post('/login', (req, res) => {
   errors = {}
+  console.log("request",req)
   console.log('req.body for post. /users/login', req.body)
   let { email, password } = req.body
   // Here object from async func

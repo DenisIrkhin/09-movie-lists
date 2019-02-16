@@ -21,7 +21,7 @@ class UnconnectedApp extends Component {
   renderTest () {
     return (
       <div>
-        <Signup />
+        <Login />
       </div>
     )
   }
