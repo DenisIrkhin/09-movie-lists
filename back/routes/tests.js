@@ -34,7 +34,7 @@ router.post('/add', (req, res) => {
   dbo.collection('tests').insertOne(req.body, (err, result) => {
     if (err) throw err
     // console.log('Success inserting One')
-    res.status(200).json({ success: true, message: 'test added' })
+    res.status(200).json({ success: true, message: 'test added', doc: result })
   })
 })
 
