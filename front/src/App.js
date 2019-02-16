@@ -10,6 +10,9 @@ import Home from './components/Home'
 import Login from './components/Login'
 import Signup from './components/Signup'
 
+
+
+
 class UnconnectedApp extends Component {
   constructor(props){
     super(props)
@@ -24,13 +27,28 @@ class UnconnectedApp extends Component {
       </div>
     )
   }
+  renderSignup(){
+    console.log("signup component rendered")
+    return(
+      <Signup></Signup>
+    )
+  }
+  renderLogin(){
+    console.log("login component rendered")
+    return (
+      <Login></Login>
+    )
+  }
 
   render() {
+  
     return (
       <BrowserRouter>
         <div className="App">
           <Navbar />
           <Home />
+          <Route exact path="/signup" render={this.renderSignup}/>
+          <Route exact path="/login" render={this.renderLogin}/>
           <Route exact path="/test" render={this.renderTest} />
         </div>
       </BrowserRouter>

@@ -1,10 +1,42 @@
 import React, { Component } from 'react'
 import '../css/style.css'
 import { Link } from 'react-router-dom'
+import {connect} from 'react-redux'
 // import { connect } from 'react-redux'
 
-class Navbar extends Component {
+class UnconnectedNavbar extends Component {
+
+  CheckIfLoggedIn(){
+    if(!this.props.loggedIn){
+    return (
+      <div>
+      <li className="nav-item">
+                  <Link to="/signup" className="nav-link">
+                  SIGN UP
+                  </Link>
+
+                </li>
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    LOG IN
+                  </Link>
+                </li>
+                </div>
+    )
+    }else{
+      console.log("logout rendered")
+      return(
+        <li className="nav-item">
+          <Link to="/" className="nav-link" onClick={console.log("onClick event")}>
+          LOG OUT (Logged in as //I need endpoint to get username of current session)
+          </Link>
+        </li>
+      )
+    }
+  }
+
   render() {
+    
     return (
       <div>
         <nav
@@ -40,12 +72,19 @@ class Navbar extends Component {
                     />
                   </form>
                 </li>
+                {this.CheckIfLoggedIn()}
 
+                {/* <li className="nav-item">
+                  <Link to="/signup" className="nav-link">
+                  SIGN UP
+                  </Link>
+
+                </li>
                 <li className="nav-item">
                   <Link to="/login" className="nav-link">
-                    LOGIN
+                    LOG IN
                   </Link>
-                </li>
+                </li> */}
 
                 <li className="nav-item">
                   <Link to="/list" className="nav-link">
@@ -66,5 +105,11 @@ class Navbar extends Component {
     )
   }
 }
+
+let mapStateToProps=function(state){
+  return {loggedIn:state.loggedIn}
+}
+
+let Navbar=connect(mapStateToProps)(UnconnectedNavbar)
 
 export default Navbar
