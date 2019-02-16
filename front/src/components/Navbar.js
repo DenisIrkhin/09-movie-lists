@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../css/style.css'
 import { Link } from 'react-router-dom'
 // import { connect } from 'react-redux'
-import LoginSignup from "./LoginSignup"
+
 class Navbar extends Component {
   render() {
     return (

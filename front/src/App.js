@@ -7,14 +7,21 @@ import Test from './components/Test'
 // import thunk from 'redux-thunk'
 // For future using
 import Navbar from './components/Navbar'
-import LoginSignup from './components/LoginSignup'
+import Login from './components/Login'
+import Signup from './components/Signup'
+
+
 
 class UnconnectedApp extends Component {
+  constructor(props){
+    super(props)
+    
+  }
   // Render Test comp for fetch data from mongo and understand that it works
   renderTest () {
     return (
       <div>
-        <LoginSignup />
+        <Signup />
       </div>
     )
   }
