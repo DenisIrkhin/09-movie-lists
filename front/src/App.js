@@ -56,7 +56,7 @@ class UnconnectedApp extends Component {
   }
 }
 let mapStateToProps = function (state) {
-  return { ...state }
+  return { ...state}
 }
 
 let App = connect(mapStateToProps)(UnconnectedApp)

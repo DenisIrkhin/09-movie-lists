@@ -222,7 +222,7 @@ class UnconnectedLogin extends Component {
 // }
 
 let mapStateToProps = function(state) {
-  return { loggedIn: state.loggedIn };
+  return { loggedIn: state.state.loggedIn };
 };
 
 let Login = connect(mapStateToProps)(UnconnectedLogin);

@@ -107,7 +107,7 @@ class UnconnectedNavbar extends Component {
 }
 
 let mapStateToProps=function(state){
-  return {loggedIn:state.loggedIn}
+  return {loggedIn:state.state.loggedIn}
 }
 
 let Navbar=connect(mapStateToProps)(UnconnectedNavbar)

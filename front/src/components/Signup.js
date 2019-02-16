@@ -76,7 +76,7 @@ class UnconnectedSignup extends Component {
 
   render() {
     if(!this.props.loggedIn && this.state.modalIsOpen){
-    
+      console.log("test props",this.props)
       return (
         <div >
   
@@ -113,7 +113,7 @@ class UnconnectedSignup extends Component {
 }
 
 let mapStateToProps=function(state){
-  return {loggedIn:state.loggedIn}
+  return {loggedIn:state.state.loggedIn}
 }
 
 let Signup=connect(mapStateToProps)(UnconnectedSignup)

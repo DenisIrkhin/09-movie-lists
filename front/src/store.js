@@ -5,18 +5,18 @@ let reducer = function(state, action) {
   switch (action.type) {
     case "login":
     console.log("action login used")
-      return { ...state, loggedIn: true };
+      return { ...state, state:{loggedIn: true} };
 
     case "logout":
     console.log("action logout used")
 
-      return { ...state, loggedIn: false };
+      return { ...state, state:{loggedIn: false} };
 
     default:
       return { state };
   }
 };
-const initialState = {};
+const initialState = {loggedIn:false};
 
 const store = createStore(
   reducer,
