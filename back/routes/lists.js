@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
     console.log('userId 71', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
-    return res.status(404).json({ success: false, message: `Can't define user`, error: err.message })
+    return retatus(404).json({ success: false, message: `Can't define user`, error: err.message })
   }
 
   dbo

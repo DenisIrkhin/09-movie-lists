@@ -9,6 +9,9 @@ import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Login from './components/Login'
 import Signup from './components/Signup'
+import MakeList from './components/MakeList'
+import Lists from './components/Lists'
+
 
 
 
@@ -39,6 +42,18 @@ class UnconnectedApp extends Component {
       <Login></Login>
     )
   }
+  renderMakeList(){
+    console.log("makeList component rendered")
+    return(
+      <MakeList></MakeList>
+    )
+  }
+  renderLists(){
+    console.log("lists component rendered")
+    return(
+      <Lists></Lists>
+    )
+  }
 
   render() {
   
@@ -50,6 +65,9 @@ class UnconnectedApp extends Component {
           <Route exact path="/signup" render={this.renderSignup}/>
           <Route exact path="/login" render={this.renderLogin}/>
           <Route exact path="/test" render={this.renderTest} />
+          <Route exact path="/lists/makeList" render={this.renderMakeList}/>
+          <Route exact path="/lists" render={this.renderLists}/>
+
         </div>
       </BrowserRouter>
     )

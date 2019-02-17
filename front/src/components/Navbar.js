@@ -87,7 +87,7 @@ class UnconnectedNavbar extends Component {
                 </li> */}
 
                 <li className="nav-item">
-                  <Link to="/list" className="nav-link">
+                  <Link to="/list/makelist" className="nav-link">
                     MAKE LIST
                   </Link>
                 </li>
