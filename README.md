@@ -3,20 +3,33 @@
 <!-- TOC -->
 
 - [movie-lists](#movie-lists)
+  - [Description](#description)
+  - [Docs](#docs)
   - [Backend](#backend)
     - [Libraries](#libraries)
     - [Cookies](#cookies)
     - [Endpoints](#endpoints)
-      - [get /tests](#get-tests)
-      - [post /tests/add](#post-testsadd)
-      - [get /users](#get-users)
+      - [tests](#tests)
+        - [get /tests](#get-tests)
+        - [post /tests/add](#post-testsadd)
+      - [users](#users)
+        - [get /users](#get-users)
       - [post /users/signup](#post-userssignup)
-      - [post /users/login](#post-userslogin)
+        - [post /users/login](#post-userslogin)
+      - [lists](#lists)
   - [Frontend](#frontend)
 
 <!-- /TOC -->
 
+## Description
+
 decode final project (Denis, Konrad, Jonathan)
+
+## Docs
+
+[Goodle doc](https://docs.google.com/document/d/1URSVsR-8AnsH6TIttTHO3VzwFVnCy02FoL5B8xFF9T4/edit)
+
+[Github repository](https://github.com/code-magi/movie-lists)
 
 ## Backend
 
@@ -36,7 +49,9 @@ Expired: `never`
 
 ### Endpoints
 
-#### get /tests
+#### tests
+
+##### get /tests
 
 url: http://localhost:5050/tests
 method: get
@@ -62,7 +77,7 @@ body: none
 }
 ```
 
-#### post /tests/add
+##### post /tests/add
 
 url: http://localhost:5050/tests/add
 method: post
@@ -101,7 +116,9 @@ body:
 }
 ```
 
-#### get /users
+#### users
+
+##### get /users
 
 url: http://localhost:5050/users
 method: get
@@ -163,7 +180,7 @@ Cookie: __sid__:
 }
 ```
 
-#### post /users/login
+##### post /users/login
 
 url: http://localhost:5050/users/login
 method: post
@@ -187,6 +204,8 @@ Cookie: __sid__:
 }
 ```
 
+#### lists
+
 ## Frontend
 
-Client port: 3080
+Dev Client port: 3080

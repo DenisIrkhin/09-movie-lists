@@ -7,7 +7,7 @@ let dbo
 let errors = {}
 
 // Session id generator to a digit from 10mln to 99,999mln
-const sessionIdGenerator = () => Math.floor(Math.random() * 100000000 + 10000000)
+const sessionIdGenerator = () => Math.floor(Math.random() * 100000000 + 10000000).toString()
 
 // bring Async func
 // declare global to assign value in promise resolve
@@ -27,6 +27,7 @@ setTimeout(() => {
 // Here we will insert new users into our `users` collection
 router.post('/signup', (req, res) => {
   errors = {}
+  console.log('******************************************')
   console.log('req.body for post. /users/signup', req.body)
 
   // Check if email exists
@@ -56,7 +57,7 @@ router.post('/signup', (req, res) => {
               if (err) throw err
               console.log('new session doc added', result)
               res.cookie('__sid__', `${sessionId}`)
-              res.status(200).json({ success: true, message: 'Logged in successfully' })
+              return res.status(200).json({ success: true, message: 'Logged in successfully' })
             })
         })
       }
@@ -67,7 +68,7 @@ router.post('/signup', (req, res) => {
 // If good authentificated then session id will be created
 router.post('/login', (req, res) => {
   errors = {}
-  console.log("request",req)
+  console.log('******************************************')
   console.log('req.body for post. /users/login', req.body)
   let { email, password } = req.body
   // Here object from async func
@@ -99,7 +100,7 @@ router.post('/login', (req, res) => {
             if (err) throw err
             console.log('new session doc added', result)
             res.cookie('__sid__', `${sessionId}`)
-            res.status(200).json({ success: true, message: 'Logged in successfully' })
+            return res.status(200).json({ success: true, message: 'Logged in successfully' })
           })
       }
     }
@@ -108,6 +109,7 @@ router.post('/login', (req, res) => {
 
 // Get all docs from `users` collection
 router.get('/', (req, res) => {
+  console.log('******************************************')
   console.log('req.body for get. /users/ ', req.body)
   dbo
     .collection('users')
@@ -115,7 +117,7 @@ router.get('/', (req, res) => {
     .toArray((err, result) => {
       if (err) throw err
       // console.log('Getting all test', result)
-      res.status(200).json({ success: true, users: result })
+      return res.status(200).json({ success: true, users: result })
     })
 })
 

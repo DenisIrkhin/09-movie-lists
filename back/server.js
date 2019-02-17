@@ -2,11 +2,15 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 const testsRoute = require('./routes/tests')
 const usersRoute = require('./routes/users')
+const listsRoute = require('./routes/lists')
 
 const PORT = 5050
+
+app.use(cookieParser())
 
 // app.use(cors())
 // For future cookie implementation
@@ -20,6 +24,7 @@ app.use(bodyParser.json())
 // Use routes
 app.use('/tests', testsRoute)
 app.use('/users', usersRoute)
+app.use('/lists', listsRoute)
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}...`)
