@@ -25,100 +25,129 @@ setTimeout(() => {
 }, 500)
 
 // Here we will insert new users into our `users` collection
-router.post('/signup', (req, res) => {
+router.post('/signup', async (req, res) => {
   errors = {}
+  let emailExists, userId
   console.log('******************************************')
   console.log('req.body for post. /users/signup', req.body)
 
   // Check if email exists
   let { email } = req.body
-  dbo
-    .collection('users')
-    .findOne({ email })
-    .then(user => {
-      console.log('user', user)
-      if (user) {
-        errors.email = 'Email already exist'
-        console.log('errors', errors)
-        return res.status(404).json({ success: false, errors })
-      } else {
-        // Create new user and new sessioId
-        //
-        dbo.collection('users').insertOne(req.body, (err, result) => {
-          if (err) throw err
-          console.log('User added to users collection')
+  try {
+    emailExists = await (dbo.collection('users').findOne({ email }))
+  } catch (error) {
+    console.log(error)
+  }
 
-          // Create session id and save it to dbo
-          let sessionId = sessionIdGenerator()
-          let sessionElem = { email, sessionId }
-          dbo
-            .collection('sessions')
-            .insertOne(sessionElem, (err, result) => {
-              if (err) throw err
-              console.log('new session doc added', result)
-              res.cookie('__sid__', `${sessionId}`)
-              return res.status(200).json({ success: true, message: 'Logged in successfully' })
-            })
-        })
-      }
-    })
-})
+  // Check if email found
+  if (emailExists) {
+    errors.email = 'Email already exist'
+    console.log('errors', errors)
+    return res.status(404).json({ success: false, errors })
+  } else {
+    // Create new user and new sessionId
+    // NOTE: userId is an object includs ObjectID in mLab we see it like
+    //  "_id": {
+    // "$oid": "5c68c24270bc1e9054488bc3"
+    // }
+    try {
+      let result = await (dbo.collection('users').insertOne(req.body))
+      userId = result.ops[0]._id
+      console.log('type of userId', typeof userId)
+      console.log('User added to users collection')
+    } catch (error) {
+      console.log(error)
+    }
+
+    // Create session id and save it to dbo
+    let sessionId = sessionIdGenerator()
+
+    // Email just for simplify human readability of dbo
+    let sessionElem = { userId, sessionId, email }
+    try {
+      let result = await (dbo.collection('sessions').insertOne(sessionElem))
+      console.log('new session doc added', result.ops[0])
+      res.cookie('__sid__', `${sessionId}`)
+      // return res.status(200).json({ success: true, message: 'Logged in successfully' })
+    } catch (error) {
+      console.log(error)
+    }
+
+    // // Devs Only. Search session by userId
+    // try {
+    //   let findUser = await (dbo.collection('sessions').findOne({ userId }))
+    //   console.log('findUser', findUser)
+    //   return res.status(200).json({ findUser })
+    // } catch (error) {
+    //   console.log(error)
+    // }
+  }
+}
+)
 
 // Here we will authentificate users with passwords
 // If good authentificated then session id will be created
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   errors = {}
+  let user, userId
+
   console.log('******************************************')
   console.log('req.body for post. /users/login', req.body)
+
   let { email, password } = req.body
-  // Here object from async func
-  // Await for request
-  //
 
-  dbo
-    .collection('users')
-    .findOne({ email })
-    .then(user => {
-      console.log('user is ', user)
-      if (!user) {
-        errors.email = 'Email not found'
-        console.log('errors', errors)
-        return res.status(404).json({ success: false, errors })
-      } else if (user.password !== password) {
-        errors.password = 'Incorrect password'
-        console.log('errors', errors)
-        return res.status(404).json({ success: false, errors })
-      } else {
-      // User authentificated.
-        console.log('User authentificated')
-        // Create session id and save it to dbo
-        let sessionId = sessionIdGenerator()
-        let sessionElem = { email, sessionId }
-        dbo
-          .collection('sessions')
-          .insertOne(sessionElem, (err, result) => {
-            if (err) throw err
-            console.log('new session doc added', result)
-            res.cookie('__sid__', `${sessionId}`)
-            return res.status(200).json({ success: true, message: 'Logged in successfully' })
-          })
-      }
+  // Find user by email and get userId from it
+  // NOTE: userId is an object includs ObjectID in mLab we see it like
+  //  "_id": {
+  // "$oid": "5c68c24270bc1e9054488bc3"
+  // }
+  try {
+    user = await (dbo.collection('users').findOne({ email }))
+    console.log('user is ', user)
+    userId = user._id
+    console.log('userId is ', userId)
+  } catch (error) {
+    console.log(error)
+  }
+
+  if (!user) {
+    errors.email = 'Email not found'
+    console.log('errors', errors)
+    return res.status(404).json({ success: false, errors })
+  } else if (user.password !== password) {
+    errors.password = 'Incorrect password'
+    console.log('errors', errors)
+    return res.status(404).json({ success: false, errors })
+  } else {
+    // User authentificated.
+    console.log('User authentificated')
+
+    // Create session id and save it to dbo
+    let sessionId = sessionIdGenerator()
+    let sessionElem = { userId, sessionId, email }
+    try {
+      let result = await (dbo.collection('sessions').insertOne(sessionElem))
+      console.log('new session doc added', result.ops[0])
+      res.cookie('__sid__', `${sessionId}`)
+      return res.status(200).json({ success: true, message: 'Logged in successfully' })
+    } catch (error) {
+      console.log(error)
     }
-    )
-})
+  }
+}
+)
 
-// Get all docs from `users` collection
-router.get('/', (req, res) => {
+// Get all users from `users` collection
+router.get('/', async (req, res) => {
   console.log('******************************************')
   console.log('req.body for get. /users/ ', req.body)
-  dbo
-    .collection('users')
-    .find({})
-    .toArray((err, result) => {
-      if (err) throw err
-      // console.log('Getting all test', result)
-      return res.status(200).json({ success: true, users: result })
-    })
+
+  try {
+    let result = await (dbo.collection('users').find({}).toArray())
+    return res.status(200).json({ success: true, users: result })
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 module.exports = router

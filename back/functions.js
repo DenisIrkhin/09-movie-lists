@@ -1,19 +1,19 @@
-// Returns email by cookies
+// Returns userId by cookies
 // Function never throws error.
 // Always returns object of two objects
 // {
 //  errors,
-//  email
+//  userId
 // }
 // Errors is an object of errors
-// Email is email of user found by cookie through sessions collections
-// If email is not found then return email: ''
+// userId is userId of user found by cookie through sessions collections
+// If userId is not found then return userId: ''
 module.exports = function getUserIdByCookies (dbo, cookies = {}) {
   let errors = {}
-  let email = ''
+  let userId = ''
   let repObj = {
     errors,
-    email
+    userId
   }
   // Get our cookie from all cookies
   let mlCookie = (cookies.__sid__).toString()
@@ -38,8 +38,8 @@ module.exports = function getUserIdByCookies (dbo, cookies = {}) {
             // return repObj
             throw new Error(`Can't find sessionid in sessions collection`)
           } else {
-            repObj.email = res.email
-            // console.log('email', email)
+            repObj.userId = res.userId
+            // console.log('userId', userId)
             // console.log('repObj', repObj)
             return repObj
           }
@@ -55,8 +55,8 @@ module.exports = function getUserIdByCookies (dbo, cookies = {}) {
 }
 
 // Another approach to throw errors to catch them in calling function on catch branch
-// Returns email by cookies
-// Retruns string email or throw Error object
+// Returns userId by cookies
+// Retruns string userId or throw Error object
 module.exports = function getUserIdByCookiesWithErrors (dbo, cookies = {}) {
   // Get our cookie from all cookies
   let mlCookie = (cookies.__sid__).toString()
@@ -79,8 +79,8 @@ module.exports = function getUserIdByCookiesWithErrors (dbo, cookies = {}) {
             // Can't find sessionid in sessions collection.
             throw new Error(`Can't find sessionid in sessions collection`)
           } else {
-            // Find doc in sessions collections and return user's email from it
-            return res.email
+            // Find doc in sessions collections and return user's userId from it
+            return res.userId
           }
         })
         .catch(err => {

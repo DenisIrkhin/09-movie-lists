@@ -32,12 +32,12 @@ router.post('/add', async (req, res) => {
   console.log('req.body from post. /lists/add ', req.body)
   console.log('All Cookies: ', req.cookies)
 
-  let email = ''
+  let userId
 
   try {
-    // Get user' eamil by cookie
-    email = await getUserIdByCookiesWithErrors(dbo, req.cookies)
-    console.log('email 40', email)
+    // Get userId by cookie
+    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    console.log('userId 40', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
     return res.status(404).json({ success: false, message: `Can't define user`, error: err.message })
@@ -45,7 +45,7 @@ router.post('/add', async (req, res) => {
 
   // Create new list and save it in dbo
   let { name, movieArr } = req.body
-  const newList = { name, movieArr, user: email }
+  const newList = { name, movieArr, userId }
   console.log('newList', newList)
   dbo
     .collection('lists')
@@ -63,12 +63,12 @@ router.get('/', async (req, res) => {
   console.log('req.body from get. /lists/ ', req.body)
   console.log('All Cookies: ', req.cookies)
 
-  let email = ''
+  let userId = ''
 
   try {
     // Get user' eamil by cookie
-    email = await getUserIdByCookiesWithErrors(dbo, req.cookies)
-    console.log('email 71', email)
+    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    console.log('userId 71', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
     return res.status(404).json({ success: false, message: `Can't define user`, error: err.message })
@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
 
   dbo
     .collection('lists')
-    .find({ user: email })
+    .find({ user: userId })
     .toArray((err, lists) => {
       if (err) throw err
       console.log('lists', lists)
