@@ -45,15 +45,17 @@ class UnconnectedSignup extends Component {
     e.preventDefault()
     //make fetch request here and dispatch action if it returns positive
     //Recommend that backend also expects a password and user
+    let reqBody={ email: this.state.inputEmail,password:this.state.inputPassword }
+    console.log('reqBody', reqBody)
     axios({
       method: "post",
-      data: { email: this.state.inputEmail },
+      data: reqBody,
       url: "http://localhost:5050/users/Signup",
       withCredentials: true
     }).then((response)=>{
       console.log("post signup was successful")
       console.log("response",response)
-      this.props.dispatch({type:"login"})
+      this.props.dispatch({type:"login",payload:this.state.inputEmail})
     }).catch(e=>{
       console.log("error",e)
       this.setState({modalMessage:"Username is already taken. Please choose another"})

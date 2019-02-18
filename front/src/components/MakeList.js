@@ -7,29 +7,60 @@ import axios from "axios";
 import App from "../App.js";
 import Modal from "react-modal";
 
+class TagsBody extends Component{
+  constructor(props){
+    super(props)
+    this.state={inputText:"",tags:[]}
+  }
+  handleInputText(evt){
+    
+
+  }
+
+  render(){
+    return(
+      <div>
+        <form>
+          <input type="text"></input>
+        </form>
+      </div>
+    )
+  }
+}
+
+
+
 class ListPropertiesForm extends Component {
   constructor(props) {
     super(props);
-    
-    this.changeCategory=this.changeCategory.bind(this)
+
+    this.changeCategory = this.changeCategory.bind(this);
   }
-  changeCategory(e){
-    this.props.parent.setState({category:e.currentTarget.value})
+  changeCategory(e) {
+    this.props.parent.setState({ category: e.currentTarget.value });
   }
-  
 
   render() {
     return (
       <form>
-        <span>List Name:</span>
-        <input type="text" placeholder="List Name"  />
-
-        <select id="categoryDropdown" size onChange={this.changeCategory}>
-          <option value="category 1">category 1</option>
-          <option value="category 2">category 2</option>
-          <option value="category 3">category 3</option>
+        <div>
+          <span>List Name:</span>
+          <input type="text" placeholder="List Name" />
+        </div>
+        {/* <select id="categoryDropdown" size onChange={this.changeCategory}>
+          <option value="Top 5">Top 5</option>
+          <option value="Top 10">Top 10</option>
+          <option value="Top 20">Top 20</option>
           <option value="category 4">category 4</option>
-        </select>
+        </select> */}
+        <div>
+          <h5>input tags</h5>
+          <TagsBody></TagsBody>
+        </div>
+        <div>
+          <h4>Description</h4>
+          <textarea name="description" cols="40" rows="5" />
+        </div>
       </form>
     );
   }
@@ -38,13 +69,13 @@ class ListPropertiesForm extends Component {
 class MakeList extends Component {
   constructor(props) {
     super(props);
-    this.state={category:"",}
+    this.state = { category: "" };
   }
   render() {
     return (
       <div>
         <h2>Make A List</h2>
-        <ListPropertiesForm parent={this}/>
+        <ListPropertiesForm parent={this} />
       </div>
     );
   }

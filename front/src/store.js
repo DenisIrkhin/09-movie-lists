@@ -5,13 +5,13 @@ let reducer = function(state, action) {
   switch (action.type) {
     case "login":
     console.log("action login used")
-    return {...state,state:{...state.state,loggedIn:true}}
+    return {...state,state:{...state.state,loggedIn:true,user:action.payload}}
 
 
     case "logout":
     console.log("action logout used")
 
-    return {...state,state:{...state.state,loggedIn:false}}
+    return {...state,state:{...state.state,loggedIn:false,user:"not logged in"}}
       
 
     case "getLists":
