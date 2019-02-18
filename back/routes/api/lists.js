@@ -45,8 +45,8 @@ router.post('/add', async (req, res) => {
   }
 
   // Create new list and save it in dbo
-  let { name, movieArr } = req.body
-  const newList = { name, movieArr, userId }
+  let { name, movieArr, description, tags } = req.body
+  const newList = { name, movieArr, userId, description, tags }
   console.log('newList', newList)
   try {
     let result = await (dbo.collection('lists').insertOne(newList))
@@ -93,17 +93,6 @@ router.post('/id', async (req, res) => {
 
   let { listId } = req.body
   console.log('listId', listId)
-
-  // let userId = ''
-
-  // try {
-  //   // Get user' eamil by cookie
-  //   userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
-  //   console.log('userId 71', userId)
-  // } catch (err) {
-  //   console.log('err64 when resolving getUserIdByCookies', err)
-  //   return res.status(400).json({ success: false, message: `Can't define user`, error: err.message })
-  // }
 
   try {
     let list = await (dbo.collection('lists').findOne({ _id: ObjectID(listId) }))
