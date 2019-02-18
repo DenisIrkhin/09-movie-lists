@@ -85,10 +85,39 @@ router.get('/', async (req, res) => {
   }
 })
 
+// Delete one user's list. Check for sessionId(user) first
+router.delete('/id', async (req, res) => {
+  console.log('*******************************************')
+  console.log('req.body from delete. /lists/id ', req.body)
+  console.log('All Cookies: ', req.cookies)
+
+  let userId = ''
+
+  let { listId } = req.body
+
+  try {
+    // Get user' eamil by cookie
+    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    console.log('userId 71', userId)
+  } catch (err) {
+    console.log('err64 when resolving getUserIdByCookies', err)
+    return res.status(400).json({ success: false, message: `Can't define user`, error: err.message })
+  }
+
+  try {
+    let result = await (dbo.collection('lists').deleteOne({ _id: ObjectID(listId) }))
+    // console.log('lists', result)
+    return res.status(200).json({ success: true, message: `List deleted` })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ success: true, message: `Something goes wrong`, error })
+  }
+})
+
 // Get list by list id. Does NOT check for user.
 router.post('/id', async (req, res) => {
   console.log('*******************************************')
-  console.log('req.body from get. /lists/ ', req.body)
+  console.log('req.body from post. /lists/id ', req.body)
   // console.log('All Cookies: ', req.cookies)
 
   let { listId } = req.body
@@ -98,6 +127,31 @@ router.post('/id', async (req, res) => {
     let list = await (dbo.collection('lists').findOne({ _id: ObjectID(listId) }))
     console.log('list', list)
     return res.status(200).json({ success: true, list })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ success: true, message: `Something goes wrong`, error })
+  }
+})
+
+// Get list by wildcard search. Does NOT check for user.
+router.post('/wildsearch', async (req, res) => {
+  console.log('*******************************************')
+  console.log('req.body from post. /lists/wildsearch ', req.body)
+  // console.log('All Cookies: ', req.cookies)
+
+  let { search } = req.body
+  console.log('search ', search)
+
+  try {
+    let lists = await (dbo.collection('lists').find({
+      $or: [
+        { name: { $regex: search, $options: 'i' } },
+        { tags: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ]
+    }).toArray())
+    console.log('lists', lists)
+    return res.status(200).json({ success: true, lists })
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: true, message: `Something goes wrong`, error })
