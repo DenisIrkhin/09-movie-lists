@@ -85,9 +85,13 @@ class UnconnectedNavbar extends Component {
                     LOG IN
                   </Link>
                 </li> */}
-
                 <li className="nav-item">
-                  <Link to="/list/makelist" className="nav-link">
+                  <Link to="/lists" className="nav-link">
+                  MY LISTS
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/lists/makelist" className="nav-link">
                     MAKE LIST
                   </Link>
                 </li>
