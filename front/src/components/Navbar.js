@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "../css/style.css";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import axios from "axios";
-import $ from "jquery";
+import React, { Component } from 'react'
+import '../css/style.css'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import axios from 'axios'
+import $ from 'jquery'
 
 class UnconnectedNavbar extends Component {
   CheckIfLoggedIn() {
@@ -22,95 +22,107 @@ class UnconnectedNavbar extends Component {
             </Link>
           </li>
         </div>
-      );
+      )
     } else {
-      console.log("logout rendered");
+      console.log('logout rendered')
       return (
         <li className="nav-item">
           <button
             className="nav-link"
             onClick={() => {
-              console.log("onClick event");
-              this.props.dispatch({type:"logout"});
-              this.props.history.push("/")
+              console.log('onClick event')
+              this.props.dispatch({ type: 'logout' })
+              this.props.history.push('/')
             }}
           >
             LOG OUT (Logged in as {this.props.user})
           </button>
         </li>
-      );
+      )
     }
   }
   componentDidMount() {
-    document.getElementById("searchForm").addEventListener("submit", event => {
-      event.preventDefault();
-      let searchText = document.getElementById("searchText").value;
-      console.log(searchText);
-      this.getMovies(searchText);
-    });
+    document.getElementById('searchForm').addEventListener('submit', event => {
+      event.preventDefault()
+      let searchText = document.getElementById('searchText').value
+      console.log(searchText)
+      this.getMovies(searchText)
+    })
   }
 
   getMovie(idArray) {
-    let imdbId = [];
+    let imdbId = []
     for (let i = 0; i < idArray.length; i++) {
       axios
         .get(
-          "https://api.themoviedb.org/3/movie/" +
+          'https://api.themoviedb.org/3/movie/' +
             idArray[i] +
-            "?api_key=98325a9d3ed3ec225e41ccc4d360c817"
+            '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
         )
         .then(function(response) {
-          imdbId.push({ imdbid: response.data.imdb_id });
-          return imdbId;
-        });
+          imdbId.push({ imdbid: response.data.imdb_id })
+          return imdbId
+        })
     }
+    console.log('return statement')
+    // return imdbId
+  }
+
+  myFunction() {
+    console.log('hello')
   }
 
   getMovies(searchText) {
-    if (searchText === "") {
-      this.props.history.push("/");
+    if (searchText === '') {
+      this.props.history.push('/')
     } else {
-      this.props.history.push("/search");
+      this.props.history.push('/search')
       axios
         .get(
-          "https://api.themoviedb.org/3/search/movie?api_key=98325a9d3ed3ec225e41ccc4d360c817&language=en-US&query=" +
+          'https://api.themoviedb.org/3/search/movie?api_key=98325a9d3ed3ec225e41ccc4d360c817&language=en-US&query=' +
             searchText
         )
         .then(response => {
-          let movies = response.data.results;
-          let arrayId = [];
-          for (let i = 0; i < movies.length; i++) {
-            // console.log('test', movies[i].id)
-            arrayId.push(movies[i].id);
-          }
-          let imdbId = this.getMovie(arrayId);
-          console.log("imdbId", imdbId);
+          let movies = response.data.results
+          let arrayId = []
+          // for (let i = 0; i < movies.length; i++) {
+          //   // console.log('test', movies[i].id)
+          //   arrayId.push(movies[i].id)
+          // }
+          // let imdbId = this.getMovie(arrayId)
+          // console.log('imdbId', imdbId[0])
 
-          let output = "";
-          console.log("after", movies);
+          let output = ''
+          console.log('after', movies)
           for (let movie of movies) {
             if (movie.poster_path !== null) {
-              console.log(movie);
+              console.log(movie)
               output += `<div class="col-md-8 movie-holder">
 
-            <div class="well img-holder-search p-0">
+            <div class="well img-holder-search">
               <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
+              <button class="add-list-button" id="buttonMovie">Add to List</button>
             </div>
 
             <div class="text-holder-search">
               <h5 class="title-search-result">${movie.title}</h5>
               <p class="text-search-result">${movie.overview}</p>
-              <button class="more-info-button" id="buttonMovie">See More</button>
+              <p class="release-search-result"><strong>Release date:</strong> ${
+                movie.release_date
+              }</p>
+              <p class="rating-search-result"><strong>Rating:</strong> ${
+                movie.vote_average
+              }/10</p>
             </div>
 
-          </div>`;
+          </div>`
             }
           }
-          $("#movies").html(output);
+          $('#movies').html(output)
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
   }
 
@@ -183,12 +195,12 @@ class UnconnectedNavbar extends Component {
           </div>
         </nav>
       </div>
-    );
+    )
   }
 }
 
 let mapStateToProps = function(state) {
-  return { loggedIn: state.state.loggedIn, user: state.state.user };
-};
-let Navbar = connect(mapStateToProps)(withRouter(UnconnectedNavbar));
-export default Navbar;
+  return { loggedIn: state.state.loggedIn, user: state.state.user }
+}
+let Navbar = connect(mapStateToProps)(withRouter(UnconnectedNavbar))
+export default Navbar
