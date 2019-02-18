@@ -7,28 +7,58 @@ import axios from "axios";
 import App from "../App.js";
 import Modal from "react-modal";
 
-class TagsBody extends Component{
-  constructor(props){
-    super(props)
-    this.state={inputText:"",tags:[]}
-  }
-  handleInputText(evt){
-    
 
+class TagsBody extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { inputText: "", tags: [] };
+    this.handleInputText = this.handleInputText.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleInputText(evt) {
+    this.setState({ inputText: evt.currentTarget.value });
+  }
+  //adds tag
+  handleSubmit(evt) {
+    evt.preventDefault();
+    if (this.state.inputText.length) {
+      console.log('adding tag', this.state.inputText)
+      this.setState({
+        tags: this.state.tags.concat(this.state.inputText),
+        inputText: ""
+      })
+    }
   }
 
-  render(){
-    return(
+  displayTags(){
+    let that=this
+    return this.state.tags.map((elem,index)=>{
+      return <span className="tag">
+        {elem}<span name={index} className="fas fa-tag" onClick={(evt)=>{
+          console.log("i just clicked on a tag")
+          let oldTagArr=that.state.tags.slice(0)
+          console.log('oldTagArr', oldTagArr)
+          let newTagArr=oldTagArr.slice(0)
+          newTagArr.splice(index,1)
+          console.log('newTagArr', newTagArr)
+          that.setState({tags:newTagArr})
+
+        }}></span>
+      </span>
+    })
+  }
+
+  render() {
+    return (
       <div>
-        <form>
-          <input type="text"></input>
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" onChange={this.handleInputText} value={this.state.inputText}/>
+          <div style={{maxWidth:"500px",margin:"auto"}}>{this.displayTags()}</div>
         </form>
       </div>
-    )
+    );
   }
 }
-
-
 
 class ListPropertiesForm extends Component {
   constructor(props) {
@@ -55,7 +85,7 @@ class ListPropertiesForm extends Component {
         </select> */}
         <div>
           <h5>input tags</h5>
-          <TagsBody></TagsBody>
+          <TagsBody />
         </div>
         <div>
           <h4>Description</h4>

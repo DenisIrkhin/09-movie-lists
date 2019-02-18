@@ -305,6 +305,7 @@ html {
   background-color: #edeae5;
 }
 
+
 #movieDetails {
   width: 90%;
   margin: 0 auto;
@@ -320,3 +321,25 @@ html {
   width: 100%;
   z-index: 1;
 }
+
+.tag{
+  transition:all ease 300ms;
+  position:relative;
+}
+
+.tag:hover{
+  color:red;
+  text-decoration:line-through
+}
+
+/* .tag:hover:before{
+  display:block;
+  height:3px;
+  width:3px;
+  position:absolute;
+  content:"";
+  z-index:2;
+  top:0;
+  right:0;
+  background:blue
+} */
