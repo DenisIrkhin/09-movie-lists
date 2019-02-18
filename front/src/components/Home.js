@@ -19,7 +19,6 @@ class Home extends Component {
           </Link>
           <div />
         </div>
-
         <div className="container-fluid second-main">
           <div className="row row-main-page">
             <div className="col-md-3 text-center p-2 three-images">
@@ -48,7 +47,6 @@ class Home extends Component {
             </div>
           </div>
         </div>
-
         <div className="container-fluid third-main">
           <h1 className="carousel-header">Upcoming Movies</h1>
           <div
@@ -101,7 +99,6 @@ class Home extends Component {
             </a>
           </div>
         </div>
-
         <div className="container-fluid bg-dark">
           <div />
         </div>
