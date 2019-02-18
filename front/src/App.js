@@ -11,6 +11,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import MakeList from './components/MakeList'
 import Lists from './components/Lists'
+import List from './components/List'
 
 
 
@@ -48,11 +49,19 @@ class UnconnectedApp extends Component {
       <MakeList></MakeList>
     )
   }
-  renderLists(){
+  renderLists(routerData){
     console.log("lists component rendered")
     return(
       <Lists></Lists>
     )
+  }
+  renderList(routerData){
+    console.log("specific list component rendered")
+    console.log("path of list",routerData.match.params.id)
+    return(
+      <List listId={routerData.match.params.id} />
+    )
+    
   }
 
   render() {
@@ -67,6 +76,7 @@ class UnconnectedApp extends Component {
           <Route exact path="/test" render={this.renderTest} />
           <Route exact path="/lists/makeList" render={this.renderMakeList}/>
           <Route exact path="/lists" render={this.renderLists}/>
+          <Route exact path={"/lists/:id"} render={this.renderList}/>
 
         </div>
       </BrowserRouter>

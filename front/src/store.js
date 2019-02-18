@@ -16,7 +16,7 @@ let reducer = function(state, action) {
 
     case "getLists":
     console.log("action getLists used")
-      return {...state,state:{...state.state,lists:[]}}
+      return {...state,state:{...state.state,lists:action.payload}}
 
     default:
       return { state };

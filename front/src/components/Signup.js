@@ -51,9 +51,11 @@ class UnconnectedSignup extends Component {
       url: "http://localhost:5050/users/Signup",
       withCredentials: true
     }).then((response)=>{
-      console.log(response)
+      console.log("post signup was successful")
+      console.log("response",response)
       this.props.dispatch({type:"login"})
     }).catch(e=>{
+      console.log("error",e)
       this.setState({modalMessage:"Username is already taken. Please choose another"})
     })
     //
@@ -76,7 +78,6 @@ class UnconnectedSignup extends Component {
 
   render() {
     if(!this.props.loggedIn && this.state.modalIsOpen){
-      console.log("test props",this.props)
       return (
         <div >
   
