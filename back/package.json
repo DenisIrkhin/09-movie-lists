@@ -7,6 +7,7 @@
     "start": "node server.js",
     "client": "cd ../front && yarn start",
     "server": "nodemon server.js",
+    "pm2srv": "pm2 start server.js",
     "dev": "concurrently \"yarn run client\" \"yarn run server\""
   },
   "keywords": [],

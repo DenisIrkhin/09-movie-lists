@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const getUserIdByCookies = require('../functions')
-const getUserIdByCookiesWithErrors = require('../functions')
+// const getUserIdByCookies = require('../../functions')
+const getUserIdByCookiesWithErrors = require('../../functions')
 
 // Declare globally to asign later in promises
 let dbo
@@ -11,7 +11,7 @@ let errors = {}
 
 // brin Async func
 // declare global to assign value in promise resolve
-const gdbo = require('../mongo-dbo-promise')
+const gdbo = require('../../mongo-dbo-promise')
 gdbo.then(res => {
   // console.log('Inside promise resolve is', res)
   dbo = res
@@ -40,21 +40,21 @@ router.post('/add', async (req, res) => {
     console.log('userId 40', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
-    return res.status(404).json({ success: false, message: `Can't define user`, error: err.message })
+    return res.status(400).json({ success: false, message: `Can't define user`, error: err.message })
   }
 
   // Create new list and save it in dbo
   let { name, movieArr } = req.body
   const newList = { name, movieArr, userId }
   console.log('newList', newList)
-  dbo
-    .collection('lists')
-    .insertOne(newList, (err, result) => {
-      // console.log('Inside inserting84', err, result)
-      if (err) throw err
-      // console.log('Success inserting One')
-      return res.status(200).json({ success: true, message: 'list added' })
-    })
+  try {
+    let result = await (dbo.collection('lists').insertOne(newList))
+    console.log('list added', result.ops[0])
+    return res.status(200).json({ success: true, message: 'list added' })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ success: true, message: `Something goes wrong`, error })
+  }
 })
 
 // Get user docs from `lists` collection
@@ -71,18 +71,17 @@ router.get('/', async (req, res) => {
     console.log('userId 71', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
-    return res.status(404).json({ success: false, message: `Can't define user`, error: err.message })
+    return res.status(400).json({ success: false, message: `Can't define user`, error: err.message })
   }
 
-  dbo
-    .collection('lists')
-    .find({ user: userId })
-    .toArray((err, lists) => {
-      if (err) throw err
-      console.log('lists', lists)
-      return res.status(200).json({ success: true, lists })
-    })
-    // .catch(err => console.log(err))
+  try {
+    let lists = await (dbo.collection('lists').find({ userId }).toArray())
+    console.log('lists', lists)
+    return res.status(200).json({ success: true, lists })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ success: true, message: `Something goes wrong`, error })
+  }
 })
 
 module.exports = router

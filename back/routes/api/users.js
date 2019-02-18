@@ -11,7 +11,7 @@ const sessionIdGenerator = () => Math.floor(Math.random() * 100000000 + 10000000
 
 // bring Async func
 // declare global to assign value in promise resolve
-const gdbo = require('../mongo-dbo-promise')
+const gdbo = require('../../mongo-dbo-promise')
 gdbo.then(res => {
   // console.log('Inside promise resolve is', res)
   dbo = res
@@ -43,7 +43,7 @@ router.post('/signup', async (req, res) => {
   if (emailExists) {
     errors.email = 'Email already exist'
     console.log('errors', errors)
-    return res.status(404).json({ success: false, errors })
+    return res.status(400).json({ success: false, errors })
   } else {
     // Create new user and new sessionId
     // NOTE: userId is an object includs ObjectID in mLab we see it like
@@ -68,9 +68,10 @@ router.post('/signup', async (req, res) => {
       let result = await (dbo.collection('sessions').insertOne(sessionElem))
       console.log('new session doc added', result.ops[0])
       res.cookie('__sid__', `${sessionId}`)
-      // return res.status(200).json({ success: true, message: 'Logged in successfully' })
+      return res.status(200).json({ success: true, message: 'Logged in successfully' })
     } catch (error) {
       console.log(error)
+      return res.status(400).json({ success: false, message: 'Something goes wrong', error })
     }
 
     // // Devs Only. Search session by userId
@@ -113,11 +114,11 @@ router.post('/login', async (req, res) => {
   if (!user) {
     errors.email = 'Email not found'
     console.log('errors', errors)
-    return res.status(404).json({ success: false, errors })
+    return res.status(400).json({ success: false, errors })
   } else if (user.password !== password) {
     errors.password = 'Incorrect password'
     console.log('errors', errors)
-    return res.status(404).json({ success: false, errors })
+    return res.status(400).json({ success: false, errors })
   } else {
     // User authentificated.
     console.log('User authentificated')
@@ -132,6 +133,7 @@ router.post('/login', async (req, res) => {
       return res.status(200).json({ success: true, message: 'Logged in successfully' })
     } catch (error) {
       console.log(error)
+      return res.status(400).json({ success: false, message: 'Something goes wrong', error })
     }
   }
 }
