@@ -15,7 +15,7 @@ gdbo.then(res => {
 setTimeout(() => {
   if (dbo !== undefined) {
   }
-  console.log('Mongodb connected')
+  console.log('Mongodb connected from test.js')
 }, 500)
 
 // Here we will insert new posts into our database

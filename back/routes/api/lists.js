@@ -22,7 +22,7 @@ gdbo.then(res => {
 setTimeout(() => {
   if (dbo !== undefined) {
   }
-  console.log('Mongodb connected from lists')
+  console.log('Mongodb connected from lists.js')
 }, 500)
 
 // Insert new lists into our database
@@ -113,6 +113,9 @@ router.put('/id', async (req, res) => {
   // in case filter condition is not true (user does NOT match current user)
   // Mongo does NOT throw err but return result with result.value = null
   // We handle this
+  // NOTE: { returnOriginal: false } is MongoClient implementation.
+  // In mongoose we can try { new: true}
+  // in MongoDocs {returnNewDocument : true }
   try {
     let result = await (dbo.collection('lists').findOneAndUpdate(
       { $and: [{ _id: ObjectID(listId) }, { userId }] },

@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient
 
 // MLab import from separate file for security reason also.
-const url = require('./config/keys').mongoURL
+const url = require('./config/param').mongoURL
 // console.log('url', url)
 
 let gdbo = new Promise((resolve, reject) => {
