@@ -10,7 +10,7 @@ class UnconnectedNavbar extends Component {
   CheckIfLoggedIn() {
     if (!this.props.loggedIn) {
       return (
-        <div>
+        <React.Fragment>
           <li className="nav-item">
             <Link to="/signup" className="nav-link">
               SIGN UP
@@ -21,7 +21,7 @@ class UnconnectedNavbar extends Component {
               LOG IN
             </Link>
           </li>
-        </div>
+        </React.Fragment>
       )
     } else {
       console.log('logout rendered')
@@ -50,27 +50,23 @@ class UnconnectedNavbar extends Component {
     })
   }
 
-  getMovie(idArray) {
-    let imdbId = []
-    for (let i = 0; i < idArray.length; i++) {
-      axios
-        .get(
-          'https://api.themoviedb.org/3/movie/' +
-            idArray[i] +
-            '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
-        )
-        .then(function(response) {
-          imdbId.push({ imdbid: response.data.imdb_id })
-          return imdbId
-        })
-    }
-    console.log('return statement')
-    // return imdbId
-  }
-
-  myFunction() {
-    console.log('hello')
-  }
+  // getMovie(idArray) {
+  //   let imdbId = []
+  //   for (let i = 0; i < idArray.length; i++) {
+  //     axios
+  //       .get(
+  //         'https://api.themoviedb.org/3/movie/' +
+  //           idArray[i] +
+  //           '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
+  //       )
+  //       .then(function(response) {
+  //         imdbId.push({ imdbid: response.data.imdb_id })
+  //         return imdbId
+  //       })
+  //   }
+  //   console.log('return statement')
+  //   // return imdbId
+  // }
 
   getMovies(searchText) {
     if (searchText === '') {
@@ -84,7 +80,7 @@ class UnconnectedNavbar extends Component {
         )
         .then(response => {
           let movies = response.data.results
-          let arrayId = []
+          // let arrayId = []
           // for (let i = 0; i < movies.length; i++) {
           //   // console.log('test', movies[i].id)
           //   arrayId.push(movies[i].id)
@@ -101,7 +97,7 @@ class UnconnectedNavbar extends Component {
 
             <div class="well img-holder-search">
               <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
-              <button class="add-list-button" id="buttonMovie">Add to List</button>
+              <button class="add-list-button" id="buttonMovie-large">Add to List</button>
             </div>
 
             <div class="text-holder-search">
@@ -113,6 +109,7 @@ class UnconnectedNavbar extends Component {
               <p class="rating-search-result"><strong>Rating:</strong> ${
                 movie.vote_average
               }/10</p>
+              <button class="add-list-button" id="buttonMovie-small">Add to List</button>
             </div>
 
           </div>`
@@ -128,43 +125,42 @@ class UnconnectedNavbar extends Component {
 
   render() {
     return (
-      <div>
-        <nav
-          className="navbar navbar-expand-lg sticky-top navbar-dark"
-          id="navbar-main-style"
+      <nav
+        className="navbar navbar-expand-lg navbar-dark"
+        id="navbar-main-style"
+      >
+        <Link to="/" className="navbar-brand ml-3">
+          Movielists
+        </Link>
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-          <Link to="/" className="navbar-brand ml-3">
-            Movielists
-          </Link>
+          <span className="navbar-toggler-icon" />
+        </button>
 
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <div className="container">
-              <ul className="navbar-nav ml-auto justify-content-end">
-                <li className="nav-item">
-                  <form className="form-inline form-spacing" id="searchForm">
-                    <input
-                      className="form-control search-select"
-                      type="text"
-                      id="searchText"
-                      placeholder="Search for movies"
-                      aria-label="Search"
-                    />
-                  </form>
-                </li>
-                {this.CheckIfLoggedIn()}
-                {/* <li className="nav-item">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div className="container">
+            <ul className="navbar-nav ml-auto justify-content-end">
+              <li className="nav-item">
+                <form className="form-inline form-spacing" id="searchForm">
+                  <input
+                    className="form-control search-select"
+                    type="text"
+                    id="searchText"
+                    placeholder="Search for movies"
+                    aria-label="Search"
+                  />
+                </form>
+              </li>
+              {this.CheckIfLoggedIn()}
+              {/* <li className="nav-item">
                   <Link to="/signup" className="nav-link">
                   SIGN UP
                   </Link>
@@ -175,26 +171,25 @@ class UnconnectedNavbar extends Component {
                   </Link>
                 </li> */}
 
-                <li className="nav-item">
-                  <Link to="/lists" className="nav-link">
-                    MY LISTS
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/lists/makelist" className="nav-link">
-                    MAKE LIST
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/premium" className="nav-link">
-                    PREMIUM
-                  </Link>
-                </li>
-              </ul>
-            </div>
+              <li className="nav-item">
+                <Link to="/lists" className="nav-link">
+                  MY LISTS
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/lists/makelist" className="nav-link">
+                  MAKE LIST
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/premium" className="nav-link">
+                  PREMIUM
+                </Link>
+              </li>
+            </ul>
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
     )
   }
 }

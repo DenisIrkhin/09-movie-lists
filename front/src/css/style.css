@@ -57,7 +57,7 @@ html {
 
 @media only screen and (max-width: 600px) {
   .top-main-header {
-    font-size: 40px;
+    font-size: 50px;
   }
 }
 
@@ -67,7 +67,7 @@ html {
 
 @media only screen and (max-width: 600px) {
   .top-main-text {
-    font-size: 18px;
+    font-size: 26px;
   }
 }
 
@@ -91,6 +91,32 @@ html {
   padding-top: 6%;
   padding-bottom: 6%;
   background-color: #edeae5;
+  text-align: center;
+}
+
+.icon-main {
+  font-size: 90px;
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  .icon-main {
+    font-size: 60px;
+    margin-bottom: 30px;
+  }
+}
+
+.icon-text {
+  font-size: 19px;
+}
+
+@media only screen and (max-width: 600px) {
+  .icon-text {
+    font-size: 17px;
+    margin-bottom: 30px;
+    width: 60%;
+    margin: auto;
+  }
 }
 
 .third-main {
@@ -108,6 +134,12 @@ html {
   margin: auto;
   display: block;
   margin-bottom: 4%;
+}
+
+@media only screen and (max-width: 600px) {
+  .three-images {
+    margin-bottom: 8%;
+  }
 }
 
 /* CAROUSEL MAIN PAGE*/
@@ -255,6 +287,18 @@ html {
   width: 80%;
   padding: 8%;
   margin: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  #buttonMovie-large {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #buttonMovie-small {
+    display: none;
+  }
 }
 
 .add-list-button {

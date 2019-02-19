@@ -12,9 +12,9 @@ class Home extends Component {
         <div className="container-fluid top-main">
           <h1 className="top-main-header">Your Movie Lists</h1>
           <p className="top-main-text">
-            Search for movies. Make lists. Share with friends.
+            Start making lists now. Or log in if you're already a member.
           </p>
-          <Link to="/list">
+          <Link to="/lists">
             <button className="btn btn-lg btn-color-main">Get Started</button>
           </Link>
           <div />
@@ -22,28 +22,22 @@ class Home extends Component {
         <div className="container-fluid second-main">
           <div className="row row-main-page">
             <div className="col-md-3 text-center p-2 three-images">
-              <img
-                className="d-block"
-                src="https://via.placeholder.com/200X200"
-                alt=""
-              />
-              <p>Number 1</p>
+              <i className="fas fa-search icon-main" />
+              <p className="icon-text">
+                Search through our database of 500,000 movies
+              </p>
             </div>
             <div className="col-md-3 text-center p-2 three-images">
-              <img
-                className="d-block"
-                src="https://via.placeholder.com/200X200"
-                alt=""
-              />
-              <p>Number 2</p>
+              <i className="fas fa-list icon-main" />
+              <p className="icon-text">
+                Make lists and add your favourite movies{' '}
+              </p>
             </div>
             <div className="col-md-3 text-center p-2 three-images">
-              <img
-                className="d-block"
-                src="https://via.placeholder.com/200X200"
-                alt=""
-              />
-              <p>Number 3</p>
+              <i className="fas fa-share-square icon-main pl-3" />
+              <p className="icon-text">
+                Share lists with your friends through social media
+              </p>
             </div>
           </div>
         </div>
