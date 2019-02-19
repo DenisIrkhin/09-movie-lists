@@ -97,7 +97,7 @@ class UnconnectedNavbar extends Component {
 
             <div class="well img-holder-search">
               <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
-              <button class="add-list-button" id="buttonMovie-large">Add to List</button>
+              <button class="add-list-button" id="buttonMovie-large">ADD TO LIST</button>
             </div>
 
             <div class="text-holder-search">
@@ -109,7 +109,7 @@ class UnconnectedNavbar extends Component {
               <p class="rating-search-result"><strong>Rating:</strong> ${
                 movie.vote_average
               }/10</p>
-              <button class="add-list-button" id="buttonMovie-small">Add to List</button>
+              <button class="add-list-button" id="buttonMovie-small">ADD TO LIST</button>
             </div>
 
           </div>`

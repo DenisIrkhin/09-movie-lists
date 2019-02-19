@@ -15,7 +15,8 @@ import List from './components/List'
 
 import Search from './components/Search'
 import Movie from './components/Movie'
-import LoginAlert from './components/LoginAlert';
+import LoginAlert from './components/LoginAlert'
+import Premium from './components/Premium'
 
 class UnconnectedApp extends Component {
   constructor(props) {
@@ -54,9 +55,9 @@ class UnconnectedApp extends Component {
     console.log('login component rendered')
     return <Login />
   }
-  renderLoginAlert(){
+  renderLoginAlert() {
     console.log('login alert rendered')
-    return <LoginAlert/>
+    return <LoginAlert />
   }
   renderMakeList() {
     console.log('makeList component rendered')
@@ -72,6 +73,11 @@ class UnconnectedApp extends Component {
     return <List listId={routerData.match.params.id} />
   }
 
+  renderPremium() {
+    console.log('premium component rendered')
+    return <Premium />
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -80,13 +86,14 @@ class UnconnectedApp extends Component {
           <Route exact path="/signup" render={this.renderSignup} />
           <Route exact path="/login" render={this.renderLogin} />
           <Route exact path="/" render={this.renderHome} />
+          <Route exact path="/premium" render={this.renderPremium} />
           <Route exact path="/search" render={this.renderSearch} />
           <Route exact path="/movie" render={this.renderMovie} />
           <Route exact path="/test" render={this.renderTest} />
           <Route exact path="/lists/makeList" render={this.renderMakeList} />
           <Route exact path="/lists" render={this.renderLists} />
           <Route exact path={'/lists/:id'} render={this.renderList} />
-          <Route exact path="/loginalert" render={this.renderLoginAlert}/>
+          <Route exact path="/loginalert" render={this.renderLoginAlert} />
         </div>
       </BrowserRouter>
     )
