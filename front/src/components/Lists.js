@@ -14,9 +14,10 @@ class UnconnectedLists extends Component {
   }
   componentDidMount() {
     console.log("fetched to get list");
+    console.log("url: /api/lists")
     axios({
       method: "get",
-      url: "/lists",
+      url: "/api/lists",
       withCredentials: true
     }).then(response => {
       console.log("response", response);
@@ -33,12 +34,12 @@ class UnconnectedLists extends Component {
         return (
           <li>
             <Link to={"lists/" + elem._id}>
-              <span>{elem.name}</span>
+              <span>{elem.name}</span></Link>
               <span style={{float:"right"}}>
               <span name="edit" className="far fa-edit MouseOver "  />
               <span name="delete" className="fas fa-trash-alt MouseOver "  />
               </span>
-            </Link>
+            
           </li>
         );
       }

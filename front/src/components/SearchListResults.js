@@ -34,7 +34,7 @@ class SearchListResults extends Component {
     console.log("Fetching from endpoint lists/id");
     axios({
       method: "post",
-      url: "/lists/wildsearch",
+      url: "/api/lists/wildsearch",
       data: { search: searchQuery }
     }).then(response => {
       console.log("response", response);

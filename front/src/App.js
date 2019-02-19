@@ -36,7 +36,7 @@ class UnconnectedApp extends Component {
     console.log("fetching to endpoint /user/check");
     axios({
       method: "",
-      url: "/user/check",
+      url: "/api/user/check",
       withCredentials: true
     }).then(response => {
       console.log("response", response);
@@ -47,7 +47,7 @@ class UnconnectedApp extends Component {
     }).then(()=>{
       axios({
         method: "get",
-        url: "/lists",
+        url: "/api/lists",
         withCredentials: true
       }).then(response => {
         console.log("response", response);

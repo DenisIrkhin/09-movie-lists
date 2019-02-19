@@ -195,7 +195,7 @@ class UnconnectedMakeList extends Component {
     console.log("commencing fetch at endpoint /lists/add ");
     axios({
       method: "post",
-      url: "/lists/add",
+      url: "/api/lists/add",
       data: reqBody,
       withCredentials: "include"
     }).then(response => {

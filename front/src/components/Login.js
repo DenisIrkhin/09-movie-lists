@@ -63,7 +63,7 @@ class UnconnectedLogin extends Component {
     axios({
       method: 'post',
       data: reqBody,
-      url: '/users/login',
+      url: 'api/users/login',
       withCredentials: true
     })
       .then(response => {
@@ -75,7 +75,7 @@ class UnconnectedLogin extends Component {
           console.log("fetch from endpoint /lists")
           axios({
             method: "get",
-            url: "/lists",
+            url: "api/lists",
             withCredentials: true
           }).then(response => {
             console.log("response", response);
