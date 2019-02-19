@@ -27,16 +27,16 @@ class UnconnectedNavbar extends Component {
       console.log('logout rendered')
       return (
         <li className="nav-item">
-          <button
+          <Link
+            to="/"
             className="nav-link"
             onClick={() => {
               console.log('onClick event')
               this.props.dispatch({ type: 'logout' })
-              this.props.history.push('/')
             }}
           >
             LOG OUT (Logged in as {this.props.user})
-          </button>
+          </Link>
         </li>
       )
     }
