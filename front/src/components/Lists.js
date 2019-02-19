@@ -30,10 +30,15 @@ class UnconnectedLists extends Component {
       let listsArr = this.props.lists;
       console.log("listsArr", listsArr);
       function createListElements(elem) {
-        
         return (
           <li>
-            <Link to={"lists/"+elem._id}><h4>{elem.name}</h4></Link>
+            <Link to={"lists/" + elem._id}>
+              <span>{elem.name}</span>
+              <span style={{float:"right"}}>
+              <span name="edit" className="far fa-edit MouseOver "  />
+              <span name="delete" className="fas fa-trash-alt MouseOver "  />
+              </span>
+            </Link>
           </li>
         );
       }
