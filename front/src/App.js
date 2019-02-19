@@ -43,7 +43,20 @@ class UnconnectedApp extends Component {
       let user = response.data.email;
       console.log("user", user);
       that.props.dispatch({ type: "Login", payload: user });
-    });
+      
+    }).then(()=>{
+      axios({
+        method: "get",
+        url: "/lists",
+        withCredentials: true
+      }).then(response => {
+        console.log("response", response);
+        let responseLists = response.data.lists;
+        console.log("responseLists", responseLists);
+        
+        this.props.dispatch({ type: 'login', payload: this.state.inputEmail })
+      });
+    })
   }
 
   renderHome() {

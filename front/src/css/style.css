@@ -532,6 +532,17 @@ html {
   text-decoration: line-through;
 }
 
+.MouseOver {
+  transition: all ease 300ms;
+  position: relative;
+}
+
+.MouseOver:hover {
+  color: red;
+  width:1.5em;
+
+}
+
 /* .tag:hover:before{
   display:block;
   height:3px;
