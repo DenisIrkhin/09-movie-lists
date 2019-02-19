@@ -10,37 +10,54 @@ import Modal from "react-modal";
 class UnconnnectedList extends Component {
   constructor(props) {
     super(props);
-    this.state = { listId: this.props.listId, list: ["movie1","movie2","movie3","movie4"] };
-    this.displayList=this.displayList.bind(this)
-}
+    this.state = { list: [] };
+    this.displayList = this.displayList.bind(this);
+  }
   componentDidMount() {
+    let that = this;
+    console.log("getting item id");
+    let path = window.location.pathname;
+    console.log("path", path);
+    let pathArr = path.split("/");
+    console.log("pathArr", pathArr);
+    let listId = pathArr[pathArr.length - 1];
+    console.log("listId", listId);
+    this.setState({ listId: listId });
+    console.log("Fetching from endpoint lists/id");
     axios({
       method: "post",
-      url: "",
-      data: "",
+      url: "http://localhost:5050/lists/id",
+      data: { listId: listId },
       withCredentials: "include"
-    }).then(response=>{
-        
-    })
+    }).then(response => {
+      console.log("response", response);
+      that.setState({ list: response.data.list });
+    });
   }
   displayList() {
-    if (!this.state.list.length) {
-      return <h4>There is no list to be displayed</h4>;
-    } else {
-      return (
+    try {
+      console.log("movie array", this.state.list.movieArr);
+      if (
+        this.state.list.movieArr === undefined ||
+        this.state.list.movieArr.length === 0
+      ) {
+        return <h4>There is no list to be displayed</h4>;
+      } else {
+        return (
           <div>
-              <h4>list.name.Ex:My top 10 lists</h4>
-        <ol>
-          {this.state.list.map(function(elem) {
-            return <li>{elem}</li>;
-          })}
-        </ol>
-        </div>
-      );
-    }
+            <h4>List:{this.state.list.name}</h4>
+            <ol>
+              {this.state.list.movieArr.map(function(elem) {
+                return <li>{elem}</li>;
+              })}
+            </ol>
+          </div>
+        );
+      }
+    } catch {}
   }
   render() {
-    console.log("rendered component list for id",this.listId)
+    console.log("rendered component list for id", this.listId);
     console.log("ListId", this.props.listId);
     return <div>{this.displayList()}</div>;
   }

@@ -15,6 +15,7 @@ import List from './components/List'
 
 import Search from './components/Search'
 import Movie from './components/Movie'
+import LoginAlert from './components/LoginAlert';
 
 class UnconnectedApp extends Component {
   constructor(props) {
@@ -53,6 +54,10 @@ class UnconnectedApp extends Component {
     console.log('login component rendered')
     return <Login />
   }
+  renderLoginAlert(){
+    console.log('login alert rendered')
+    return <LoginAlert/>
+  }
   renderMakeList() {
     console.log('makeList component rendered')
     return <MakeList />
@@ -81,6 +86,7 @@ class UnconnectedApp extends Component {
           <Route exact path="/lists/makeList" render={this.renderMakeList} />
           <Route exact path="/lists" render={this.renderLists} />
           <Route exact path={'/lists/:id'} render={this.renderList} />
+          <Route exact path="/loginalert" render={this.renderLoginAlert}/>
         </div>
       </BrowserRouter>
     )

@@ -5,6 +5,23 @@ html {
 #root {
   height: 100%;
 }
+/* Used on various pages */
+@keyframes jump {
+  0% {
+    transform: translate3d(0, -40%, 0) scale3d(1, 1, 1);
+  }
+  40% {
+    transform: translate3d(0, -20%, 0) scale3d(1, 1.1, 1);
+  }
+  100% {
+    transform: translate3d(0, 0%, 0) scale3d(1, 1, 1);
+  }
+}
+.jump {
+  transform-origin: 50% 50%;
+  animation: jump 0.7s linear alternate infinite;
+}
+
 
 /* NAVIGATION BAR */
 
@@ -366,15 +383,6 @@ html {
   z-index: 1;
 }
 
-.tag{
-  transition:all ease 300ms;
-  position:relative;
-}
-
-.tag:hover{
-  color:red;
-  text-decoration:line-through
-}
 
 /* .tag:hover:before{
   display:block;

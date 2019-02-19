@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import '../css/style.css'
 import { Link } from 'react-router-dom'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router'
 import BannerOne from '../media/images/main-poster-pikachu.jpg'
 import BannerTwo from '../media/images/main-poster-shazam.jpg'
 import BannerThree from '../media/images/main-poster-dumbo.jpg'
 
-class Home extends Component {
+class UnconnectedHome extends Component {
+
+  
+
   render() {
     return (
       <div className="bg-light">
@@ -14,9 +19,15 @@ class Home extends Component {
           <p className="top-main-text">
             Start making lists now. Or log in if you're already a member.
           </p>
-          <Link to="/lists">
-            <button className="btn btn-lg btn-color-main">Get Started</button>
-          </Link>
+          
+            <button className="btn btn-lg btn-color-main" onClick={()=>{
+              if(!this.props.loggedIn){
+                this.props.history.push("/signup")
+              }else{
+                this.props.history.push("/lists/makelist")
+              }
+            }}>Get Started</button>
+          
           <div />
         </div>
         <div className="container-fluid second-main">
@@ -100,5 +111,11 @@ class Home extends Component {
     )
   }
 }
+
+let mapStateToProps=function(state){
+  return {loggedIn:state.state.loggedIn}
+}
+
+let Home=connect(mapStateToProps)(withRouter(UnconnectedHome))
 
 export default Home

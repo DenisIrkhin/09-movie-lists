@@ -10,7 +10,7 @@ import Modal from "react-modal";
 class UnconnectedLists extends Component {
   constructor(props) {
     super(props);
-    this.displayLists=this.displayLists.bind(this)
+    this.displayLists = this.displayLists.bind(this);
   }
   componentDidMount() {
     console.log("fetched to get list");
@@ -26,51 +26,46 @@ class UnconnectedLists extends Component {
     });
   }
   displayLists() {
-      try{
-
-      
-    let listsArr = this.props.lists;
-    console.log("listsArr", listsArr);
-    function createListElements(elem) {
-      return (
-        <li>
-          <h4>{elem.name}</h4>
-          {/* the comment below will include the list elemens of each individual list. ex: "movie1,movie2,movie3" */}
-          {/* <ol>
-            {elem.movieArr.map(function(elem) {
-              return <li>{elem}</li>;
-            })}
-          </ol> */}
-        </li>
-      );
-    }
-    if(!listsArr.length){
-        return <div>
+    try {
+      let listsArr = this.props.lists;
+      console.log("listsArr", listsArr);
+      function createListElements(elem) {
+        
+        return (
+          <li>
+            <Link to={"lists/"+elem._id}><h4>{elem.name}</h4></Link>
+          </li>
+        );
+      }
+      if (!listsArr.length) {
+        return (
+          <div>
             <h4>No Lists have been created yet</h4>
             <Link to="/lists/makelist">Create a List</Link>
-        </div>
-    }else{
-        return listsArr.map(createListElements)
-    }
-    
-}catch{}
+          </div>
+        );
+      } else {
+        return listsArr.map(createListElements);
+      }
+    } catch {}
   }
-  
 
   render() {
-    return (
-      <div>
-        <h2>Your Lists</h2>
-        <ol >
-            {this.displayLists()}
-        </ol>
-      </div>
-    );
+    if (!this.props.loggedIn) {
+      return <Redirect to="/loginalert" />;
+    } else {
+      return (
+        <div>
+          <h2>Your Lists</h2>
+          <ol>{this.displayLists()}</ol>
+        </div>
+      );
+    }
   }
 }
 
 let mapStateToProps = function(state) {
-  return { lists: state.state.lists };
+  return { lists: state.state.lists, loggedIn: state.state.loggedIn };
 };
 let Lists = connect(mapStateToProps)(UnconnectedLists);
 

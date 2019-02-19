@@ -1,0 +1,17 @@
+
+
+.tag {
+  transition: all ease 300ms;
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.tag:hover {
+  color: red;
+  text-decoration: line-through;
+}
+
+.red{
+  color:red
+}
