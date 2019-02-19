@@ -9,8 +9,10 @@ let reducer = function(state, action) {
 
 
     case "logout":
+    if(document.cookie.includes("__sid__")){
+      document.cookie='__sid__=""'
+    }
     console.log("action logout used")
-
     return {...state,state:{...state.state,loggedIn:false,user:"not logged in"}}
       
 
@@ -18,6 +20,9 @@ let reducer = function(state, action) {
     console.log("action getLists used")
       return {...state,state:{...state.state,lists:action.payload}}
 
+    case "searchList":
+    console.log("action searchList used")
+      return {...state,state:{...state.state,searchListQuery:action.payload}}
     default:
       return { state };
   }

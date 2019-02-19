@@ -77,6 +77,7 @@ class TagsBody extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+        <span>input tags: </span>
           <input
             type="text"
             onChange={this.handleInputTag}
@@ -127,7 +128,7 @@ class ListPropertiesForm extends Component {
             name="listName"
             onChange={this.inputTextHandler}
           />
-          <h5>input tags</h5>
+          <br></br>
           <TagsBody grandParent={this.props.parent} />
         </div>
         <div>
@@ -184,7 +185,7 @@ class UnconnectedMakeList extends Component {
   addList() {
     let that = this;
     //tags will be sent as a string which separates the movies with ^^ .
-    let tagBody=this.state.tags.join("^^")
+    let tagBody=this.state.tags.join(" ^^ ")
     let reqBody = {
       name: this.state.inputTitle,
       movieArr: ["movie1", "movie2", "movie3"],

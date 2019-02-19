@@ -16,7 +16,7 @@ class UnconnectedLists extends Component {
     console.log("fetched to get list");
     axios({
       method: "get",
-      url: "http://localhost:5050/lists",
+      url: "/lists",
       withCredentials: true
     }).then(response => {
       console.log("response", response);

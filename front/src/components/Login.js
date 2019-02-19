@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import App from '../App.js'
 import Modal from 'react-modal'
+import {BACKEND_DOMAIN} from "../Global"
+
 
 Modal.setAppElement(App)
 
@@ -61,7 +63,7 @@ class UnconnectedLogin extends Component {
     axios({
       method: 'post',
       data: reqBody,
-      url: 'http://localhost:5050/users/login',
+      url: '/users/login',
       withCredentials: true
     })
       .then(response => {

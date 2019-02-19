@@ -61,7 +61,7 @@ class UnconnectedSignup extends Component {
     axios({
       method: 'post',
       data: reqBody,
-      url: 'http://localhost:5050/users/Signup',
+      url: '/users/Signup',
       withCredentials: true
     })
       .then(response => {

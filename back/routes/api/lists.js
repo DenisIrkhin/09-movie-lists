@@ -201,7 +201,9 @@ router.post('/wildsearch', async (req, res) => {
 
   let { search } = req.body
   console.log('search ', search)
-
+  search=search.split(" ").join("|")
+  //top 5 sci fi
+console.log("search",search)
   try {
     let lists = await (dbo.collection('lists').find({
       $or: [
@@ -210,6 +212,7 @@ router.post('/wildsearch', async (req, res) => {
         { description: { $regex: search, $options: 'i' } }
       ]
     }).toArray())
+    
     console.log('lists', lists)
     return res.status(200).json({ success: true, lists })
   } catch (error) {

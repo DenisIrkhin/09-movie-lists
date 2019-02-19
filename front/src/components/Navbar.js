@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import axios from 'axios'
 import $ from 'jquery'
+import SearchList from './SearchBarList';
 
 class UnconnectedNavbar extends Component {
   CheckIfLoggedIn() {
@@ -149,6 +150,8 @@ class UnconnectedNavbar extends Component {
           <div className="container">
             <ul className="navbar-nav ml-auto justify-content-end">
               <li className="nav-item">
+
+              <SearchList></SearchList>
                 <form className="form-inline form-spacing" id="searchForm">
                   <input
                     className="form-control search-select"

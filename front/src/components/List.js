@@ -26,7 +26,7 @@ class UnconnnectedList extends Component {
     console.log("Fetching from endpoint lists/id");
     axios({
       method: "post",
-      url: "http://localhost:5050/lists/id",
+      url: "/lists/id",
       data: { listId: listId },
       withCredentials: "include"
     }).then(response => {
