@@ -4,7 +4,7 @@ yarn.lock
 .vscode/
 
 # Developement config file. It's for devs only and have some sensitive info
-/back/config/param_dev.js
+#/back/config/param_dev.js
 
 # Production setting eviroment file. It's for test purpose only on dev machine.
 /back/.env.prod
