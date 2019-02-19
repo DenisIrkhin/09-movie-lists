@@ -1,5 +1,8 @@
 const express = require('express')
 const router = express.Router()
+
+const getUserIdByCookiesWithErrors = require('../../functions')
+
 // Declare globally to asign later in promises
 let dbo
 
@@ -135,6 +138,57 @@ router.post('/login', async (req, res) => {
       console.log(error)
       return res.status(400).json({ success: false, message: 'Something goes wrong', error })
     }
+  }
+}
+)
+
+// Define user by cookie if any.
+// If good authentificated then session id will be created
+router.post('/check', async (req, res) => {
+  errors = {}
+  let user, userId
+
+  console.log('******************************************')
+  console.log('req.body for post. /users/check', req.body)
+
+  // NOTE: userId is an object includs ObjectID in mLab we see it like
+  //  "_id": {
+  // "$oid": "5c68c24270bc1e9054488bc3"
+  // }
+
+  try {
+    // Get userId by cookie
+    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    console.log('userId 165', userId)
+  } catch (err) {
+    console.log('err43 when resolving getUserIdByCookies', err)
+    return res.status(400).json({ success: false, message: `Can't define user`, error: err.message })
+  }
+
+  // UserId found by cookie
+  // Bring more fields from `users` collection
+  try {
+    user = await (dbo.collection('users').findOne({ _id: userId }))
+    console.log('user 175', user)
+  } catch (error) {
+    console.log('error ', error)
+    return res.status(400).json({ success: false, message: 'Something goes wrong', error })
+  }
+
+  // Take out fields we need from user obj
+  let { email } = user
+
+  // Create new session id and save it to dbo
+  let sessionId = sessionIdGenerator()
+  let sessionElem = { userId, sessionId, email }
+  try {
+    let result = await (dbo.collection('sessions').insertOne(sessionElem))
+    console.log('new session doc added', result.ops[0])
+    res.cookie('__sid__', `${sessionId}`)
+    return res.status(200).json({ success: true, message: 'user found', email })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ success: false, message: 'Something goes wrong', error })
   }
 }
 )
