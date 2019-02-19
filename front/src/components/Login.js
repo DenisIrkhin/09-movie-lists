@@ -71,7 +71,20 @@ class UnconnectedLogin extends Component {
         console.log('response', response)
         console.log('cookie', document.cookie)
         if (response.data.success === true) {
-          this.props.dispatch({ type: 'login', payload: this.state.inputEmail })
+          // "use dispatch to set loggedIn to true and add the list to the store for the particular user"
+          console.log("fetch from endpoint /lists")
+          axios({
+            method: "get",
+            url: "/lists",
+            withCredentials: true
+          }).then(response => {
+            console.log("response", response);
+            let responseLists = response.data.lists;
+            console.log("responseLists", responseLists);
+            this.props.dispatch({ type: "getLists", payload: responseLists });
+            this.props.dispatch({ type: 'login', payload: this.state.inputEmail })
+            
+          });
         } else {
           this.setState({
             modalMessage: 'Wrong username or password.'

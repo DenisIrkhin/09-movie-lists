@@ -14,6 +14,7 @@ class SearchListResults extends Component {
         super(props)
         this.state={searchQuery:"",results:[]}
         this.startSearch=this.startSearch.bind(this)
+        this.displayTags=this.displayTags.bind(this)
     }
   startSearch(){
     let that = this;
@@ -42,13 +43,35 @@ class SearchListResults extends Component {
       }
     })
   }
+  displayTags(tagList) {
+    let that = this;
+    return tagList.split(" ^^ ").map((elem, index) => {
+      return (
+          <Link to={"/searchlistresults/"+elem}>
+        <span className>
+          {elem}
+          <span
+            name={index}
+            className="fas fa-tag"
+            
+          />
+        </span>
+        </Link>
+      );
+    });
+  }
+
   displayResults(){
+      
       //results is an array of lists
       console.log("displaying results")
-    function resultsToDom(elem){
+    let resultsToDom=(elem)=>{
         return <li>
             <Link to={"/lists/"+elem._id}><div>{elem.name}</div></Link>
             <div>{elem.description}</div>
+            <span>Tags:  </span><span>
+                {this.displayTags(elem.tags)}
+            </span>
             
         </li>
     }
@@ -58,8 +81,11 @@ class SearchListResults extends Component {
   
 
   render() {
+      window.onhashchange=()=>{
+          this.startSearch()
+      }
       this.startSearch();
-    return <ul>Tthis is the list search result
+    return <ul onhashchange={window.onhashchange}>Tthis is the list search result
         {this.displayResults()}
         </ul>
   }
