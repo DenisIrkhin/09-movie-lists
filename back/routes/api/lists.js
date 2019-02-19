@@ -26,7 +26,7 @@ setTimeout(() => {
 }, 500)
 
 // Insert new lists into our database
-//
+// POST
 router.post('/add', async (req, res) => {
   errors = {}
   console.log('*******************************************')
@@ -58,7 +58,8 @@ router.post('/add', async (req, res) => {
   }
 })
 
-// Get All users lists
+// Get All user's lists
+// GET
 router.get('/', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from get. /lists/ ', req.body)
@@ -86,6 +87,7 @@ router.get('/', async (req, res) => {
 })
 
 // Update one user's list. Check for sessionId(user) first
+// PUT
 router.put('/id', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from put. /lists/id ', req.body)
@@ -131,6 +133,7 @@ router.put('/id', async (req, res) => {
 })
 
 // Delete one user's list. Check for sessionId(user) first
+// DELETE
 router.delete('/id', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from delete. /lists/id ', req.body)
@@ -170,6 +173,7 @@ router.delete('/id', async (req, res) => {
 })
 
 // Get list by list id. Does NOT check for user.
+// POST
 router.post('/id', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from post. /lists/id ', req.body)
@@ -189,6 +193,7 @@ router.post('/id', async (req, res) => {
 })
 
 // Get list by wildcard search. Does NOT check for user.
+// POST
 router.post('/wildsearch', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from post. /lists/wildsearch ', req.body)
