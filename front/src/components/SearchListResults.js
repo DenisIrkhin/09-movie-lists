@@ -31,7 +31,7 @@ class SearchListResults extends Component {
 
     console.log('searchQueryArr', searchQueryArr)
     console.log('searchQuery', searchQuery)
-    console.log("Fetching from endpoint lists/id");
+    console.log("Fetching from endpoint lists/wildSearch")
     axios({
       method: "post",
       url: "/api/lists/wildsearch",
@@ -39,7 +39,7 @@ class SearchListResults extends Component {
     }).then(response => {
       console.log("response", response);
       if(searchQuery!==that.state.searchQuery){
-      that.setState({ results: response.data.lists ,searchQuery:searchQuery});
+      that.setState({ results: response.data.sortedRankedList ,searchQuery:searchQuery});
       }
     })
   }
@@ -85,9 +85,9 @@ class SearchListResults extends Component {
           this.startSearch()
       }
       this.startSearch();
-    return <ul onhashchange={window.onhashchange}>Tthis is the list search result
+    return <ol onhashchange={window.onhashchange}>Tthis is the list search result
         {this.displayResults()}
-        </ul>
+        </ol>
   }
 }
 
