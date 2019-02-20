@@ -5,6 +5,7 @@ html {
 #root {
   height: 100%;
 }
+
 /* Used on various pages */
 @keyframes jump {
   0% {
@@ -40,6 +41,64 @@ html {
   color: white;
 }
 
+.input.list-control {
+  padding: 5px;
+  width: 100% !important;
+}
+
+.form-lists-control {
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  width: 100% !important;
+}
+
+@media only screen and (max-width: 990px) {
+  .desktop-only {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 990px) {
+}
+
+/* .dropdown-list-choices {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  margin: 0;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  padding-left: 5px;
+  padding-right: 9px;
+  padding-bottom: 8px;
+  padding-top: 10px;
+  color: #a8903d;
+  font-weight: 500;
+  background-color: #fce181;
+  font-family: 'Roboto', sans-serif;
+}
+
+.dropdown-list-choices:hover {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+.dropdown-list-choices:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+.dropdown-list-choices:active {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+} */
+
 .nav-link {
   color: #99aabb;
   font-size: 14px;
@@ -53,11 +112,23 @@ html {
   text-align: center;
 }
 
+/* @media only screen and (max-width: 990px) {
+  .desktop-only {
+    display: none;
+  }
+} */
+
 @media only screen and (min-width: 990px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+/* @media only screen and (min-width: 990px) {
   .form-spacing {
     margin-right: 10px;
   }
-}
+} */
 
 /* MAIN PAGE*/
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import axios from 'axios'
 import $ from 'jquery'
-import SearchList from './SearchBarList';
+import SearchList from './SearchBarList'
 
 class UnconnectedNavbar extends Component {
   CheckIfLoggedIn() {
@@ -42,6 +42,25 @@ class UnconnectedNavbar extends Component {
       )
     }
   }
+
+  // showMoviesSearch = () => {
+  //   console.log('movies')
+  //   if (document.getElementById('movieItem').style.display == 'none') {
+  //     console.log('movies hidden true')
+  //     document.getElementById('movieItem').style.display = 'block'
+  //     document.getElementById('listItem').style.display = 'none'
+  //   }
+  // }
+
+  // showListsSearch = () => {
+  //   console.log('lists')
+  //   if (document.getElementById('listItem').style.display == 'none') {
+  //     console.log('search hidden true')
+  //     document.getElementById('listItem').style.display = 'block'
+  //     document.getElementById('movieItem').style.display = 'none'
+  //   }
+  // }
+
   componentDidMount() {
     document.getElementById('searchForm').addEventListener('submit', event => {
       event.preventDefault()
@@ -149,19 +168,76 @@ class UnconnectedNavbar extends Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <div className="container">
             <ul className="navbar-nav ml-auto justify-content-end">
-              <li className="nav-item">
+              <li className="nav-item dropdown desktop-only">
+                <a
+                  className="nav-link dropdown-toggle"
+                  id="navbarDropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  SEARCH
+                </a>
+                <div
+                  className="dropdown-menu dropdown-primary"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <form
+                    className="form-inline form-spacing form-lists-control"
+                    id="searchForm"
+                  >
+                    <input
+                      className="form-control search-select input-lists-control"
+                      type="search"
+                      id="searchText"
+                      placeholder="Search movies"
+                      aria-label="Search"
+                      autocomplete="off"
+                    />
+                  </form>
 
-              <SearchList></SearchList>
-                <form className="form-inline form-spacing" id="searchForm">
+                  <SearchList />
+                </div>
+              </li>
+
+              {/* <button
+                className="btn dropdown-toggle dropdown-list-choices"
+                data-toggle="dropdown"
+              >
+                <span className="caret" />
+              </button>
+              <ul className="dropdown-menu">
+                <li>
+                  <a href="#" onClick={this.showMoviesSearch}>
+                    Movies
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onClick={this.showListsSearch}>
+                    Lists
+                  </a>
+                </li>
+              </ul> */}
+
+              <li className="nav-item mobile-only">
+                <form
+                  className="form-inline form-spacing form-lists-control"
+                  id="searchForm"
+                >
                   <input
-                    className="form-control search-select"
-                    type="text"
+                    className="form-control search-select input-lists-control"
+                    type="search"
                     id="searchText"
-                    placeholder="Search for movies"
+                    placeholder="Search movies"
                     aria-label="Search"
+                    autocomplete="off"
                   />
                 </form>
               </li>
+              <li className="nav-item mobile-only">
+                <SearchList />
+              </li>
+
               {this.CheckIfLoggedIn()}
               {/* <li className="nav-item">
                   <Link to="/signup" className="nav-link">
@@ -184,6 +260,7 @@ class UnconnectedNavbar extends Component {
                   MAKE LIST
                 </Link>
               </li>
+
               <li className="nav-item">
                 <Link to="/premium" className="nav-link">
                   PREMIUM

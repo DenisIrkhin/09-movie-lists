@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import '../css/style.css'
 import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import BannerOne from '../media/images/main-poster-pikachu.jpg'
 import BannerTwo from '../media/images/main-poster-shazam.jpg'
 import BannerThree from '../media/images/main-poster-dumbo.jpg'
 
 class UnconnectedHome extends Component {
-
-  
-
   render() {
     return (
       <div className="bg-light">
@@ -19,15 +16,20 @@ class UnconnectedHome extends Component {
           <p className="top-main-text">
             Start making lists now. Or log in if you're already a member.
           </p>
-          
-            <button className="btn btn-lg btn-color-main" onClick={()=>{
-              if(!this.props.loggedIn){
-                this.props.history.push("/signup")
-              }else{
-                this.props.history.push("/lists/makelist")
+
+          <button
+            className="btn btn-lg btn-color-main"
+            onClick={() => {
+              if (!this.props.loggedIn) {
+                this.props.history.push('/signup')
+              } else {
+                this.props.history.push('/lists/makelist')
               }
-            }}>Get Started</button>
-          
+            }}
+          >
+            Get Started
+          </button>
+
           <div />
         </div>
         <div className="container-fluid second-main">
@@ -41,7 +43,7 @@ class UnconnectedHome extends Component {
             <div className="col-md-3 text-center p-2 three-images">
               <i className="fas fa-list icon-main" />
               <p className="icon-text">
-                Make lists and add your favourite movies{' '}
+                Make lists and add your favourite movies
               </p>
             </div>
             <div className="col-md-3 text-center p-2 three-images">
@@ -112,10 +114,10 @@ class UnconnectedHome extends Component {
   }
 }
 
-let mapStateToProps=function(state){
-  return {loggedIn:state.state.loggedIn}
+let mapStateToProps = function(state) {
+  return { loggedIn: state.state.loggedIn }
 }
 
-let Home=connect(mapStateToProps)(withRouter(UnconnectedHome))
+let Home = connect(mapStateToProps)(withRouter(UnconnectedHome))
 
 export default Home
