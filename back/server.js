@@ -7,10 +7,10 @@ const path = require('path')
 
 // Set process.env variable from .env
 // require('dotenv').config() // we use a command in package.json instead
-console.log('process.env.ML_SERVER_PORT ', process.env.ML_SERVER_PORT)
-console.log('process.env.NODE_ENV ', process.env.NODE_ENV)
-console.log('process.env.ML_CORS ', process.env.ML_CORS)
-console.log('process.env.ML_MONGO_URL ', process.env.ML_MONGO_URL)
+// console.log('process.env.ML_SERVER_PORT ', process.env.ML_SERVER_PORT)
+// console.log('process.env.NODE_ENV ', process.env.NODE_ENV)
+// console.log('process.env.ML_CORS ', process.env.ML_CORS)
+// console.log('process.env.ML_MONGO_URL ', process.env.ML_MONGO_URL)
 
 // Bring server config parameters depending on where the server runs
 const config = require('./config/param')

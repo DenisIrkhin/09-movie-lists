@@ -8,5 +8,5 @@ yarn.lock
 
 
 # Production setting eviroment file. It's for test purpose only on dev machine.
-# /back/.env.prod
-# /back/.env
+/back/.env.prod
+/back/.env
