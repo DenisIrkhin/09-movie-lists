@@ -480,13 +480,19 @@ html {
 }
 
 .top-premium-text {
-  font-size: 18px;
+  font-size: 22px;
 }
 
 @media only screen and (max-width: 600px) {
   .top-premium-text {
     font-size: 16px;
   }
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 500;
+  color: #3a3a3a;
 }
 
 .row-premium-page {
@@ -525,7 +531,7 @@ html {
   margin-bottom: 15px;
 }
 
-.button-premium {
+#button-premium {
   font-size: 14px;
   cursor: pointer;
   color: #a8903d;
@@ -610,8 +616,7 @@ html {
 
 .MouseOver:hover {
   color: red;
-  width:1.5em;
-
+  width: 1.5em;
 }
 
 /* .tag:hover:before{

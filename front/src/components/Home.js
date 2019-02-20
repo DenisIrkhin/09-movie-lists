@@ -14,7 +14,7 @@ class UnconnectedHome extends Component {
         <div className="container-fluid top-main">
           <h1 className="top-main-header">Your Movie Lists</h1>
           <p className="top-main-text">
-            Start making lists now. Or log in if you're already a member.
+            Sign up to start making lists. Or log in if you're already a member.
           </p>
 
           <button
