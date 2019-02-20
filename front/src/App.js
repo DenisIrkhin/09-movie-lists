@@ -35,14 +35,15 @@ class UnconnectedApp extends Component {
     let that = this;
     console.log("fetching to endpoint /user/check");
     axios({
-      method: "",
-      url: "/api/user/check",
+      method: "post",
+      url: "/api/users/check",
       withCredentials: true
     }).then(response => {
       console.log("response", response);
-      let user = response.data.email;
-      console.log("user", user);
-      that.props.dispatch({ type: "Login", payload: user });
+      let email = response.data.email;
+      console.log("user", email);
+      this.props.dispatch({ type: 'login', payload: email })
+
       
     }).then(()=>{
       axios({
@@ -54,7 +55,7 @@ class UnconnectedApp extends Component {
         let responseLists = response.data.lists;
         console.log("responseLists", responseLists);
         
-        this.props.dispatch({ type: 'login', payload: this.state.inputEmail })
+        this.props.dispatch({ type: 'getLists',payload:responseLists })
       });
     })
   }
@@ -142,7 +143,7 @@ class UnconnectedApp extends Component {
   }
 }
 let mapStateToProps = function(state) {
-  return { ...state };
+  return { lists:state.state.lists };
 };
 
 let App = connect(mapStateToProps)(UnconnectedApp);
