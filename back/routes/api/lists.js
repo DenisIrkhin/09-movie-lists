@@ -202,26 +202,63 @@ router.post('/wildsearch', async (req, res) => {
   console.log('req.body from post. /lists/wildsearch ', req.body)
   // console.log('All Cookies: ', req.cookies)
 
+  let lists
+
   let { search } = req.body
+  // Example `top 5 sci fi`
   console.log('search ', search)
-  search=search.split(" ").join("|")
-  //top 5 sci fi
-console.log("search",search)
+
+  // Separate each word of the search string into array
+  let searchArr = search.split(' ')
+
+  // Search string is `top5scifi` for regex search
+  search = searchArr.join('|')
+  console.log('search', search)
+
+  // Regex search through bdo
   try {
-    let lists = await (dbo.collection('lists').find({
+    lists = await (dbo.collection('lists').find({
       $or: [
         { name: { $regex: search, $options: 'i' } },
         { tags: { $regex: search, $options: 'i' } },
         { description: { $regex: search, $options: 'i' } }
       ]
     }).toArray())
-    
+
     console.log('lists', lists)
-    return res.status(200).json({ success: true, lists })
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: true, message: `Something goes wrong`, error })
   }
+
+  // Rank lists.
+  // Idea: find intersections between searchArr and each fieldArr
+  // We will count intersetion only one time - not many
+  // Example. searchArr=[5] doc1=[5,5,5] doc2=[5,5]. Both docs will get rank 1 and not 3 and 2
+  // For that we'll use Sets instead of arrays
+
+  let searchSet = new Set(searchArr)
+  console.log('searchSet ', searchSet)
+
+  let rankedLists = lists.map(list => {
+    let searchRank = 0
+    let nameSet = new Set(list.name.split(' '))
+    let tagsSet = new Set(list.tags.split(' '))
+    let descriptionSet = new Set(list.description.split(' '))
+    searchRank += new Set([...searchSet].filter(x => nameSet.has(x))).size
+    // console.log('searchRank ', searchRank)
+    searchRank += new Set([...searchSet].filter(x => tagsSet.has(x))).size
+    // console.log('searchRank ', searchRank)
+    searchRank += new Set([...searchSet].filter(x => descriptionSet.has(x))).size
+    console.log('searchRank ', searchRank)
+    list.searchRank = searchRank
+    return list
+  })
+  console.log('rankedLists ', rankedLists)
+  let sortedRankedList = rankedLists.sort((a, b) => b.searchRank - a.searchRank)
+  console.log('sortedRankedList ', sortedRankedList)
+
+  return res.status(200).json({ success: true, sortedRankedList })
 })
 
 module.exports = router
