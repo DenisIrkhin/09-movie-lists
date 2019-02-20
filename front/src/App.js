@@ -30,8 +30,9 @@ import SearchListResults from "./components/SearchListResults";
 class UnconnectedApp extends Component {
   constructor(props) {
     super(props);
+    this.state={verified:false}
   }
-  componentDidMount() {
+  componentWillMount() {
     let that = this;
     console.log("fetching to endpoint /user/check");
     axios({
@@ -44,8 +45,9 @@ class UnconnectedApp extends Component {
       console.log("user", email);
       this.props.dispatch({ type: 'login', payload: email })
 
-      
     }).then(()=>{
+      that.setState({verified:true})
+      console.log("checked successfully")
       axios({
         method: "get",
         url: "/api/lists",
@@ -57,7 +59,7 @@ class UnconnectedApp extends Component {
         
         this.props.dispatch({ type: 'getLists',payload:responseLists })
       });
-    })
+    }).catch(()=>{that.setState({verified:true})})
   }
 
   renderHome() {
@@ -98,7 +100,7 @@ class UnconnectedApp extends Component {
   }
   renderMakeList() {
     console.log("makeList component rendered");
-    return <MakeList />;
+    return <MakeList/>;
   }
   renderLists(routerData) {
     console.log("lists component rendered");
@@ -121,25 +123,30 @@ class UnconnectedApp extends Component {
   }
 
   render() {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <Navbar />
-          <Route exact path="/signup" render={this.renderSignup} />
-          <Route exact path="/login" render={this.renderLogin} />
-          <Route exact path="/" render={this.renderHome} />
-          <Route exact path="/premium" render={this.renderPremium} />
-          <Route exact path="/search" render={this.renderSearch} />
-          <Route exact path="/movie" render={this.renderMovie} />
-          <Route exact path="/test" render={this.renderTest} />
-          <Route exact path="/lists/makeList" render={this.renderMakeList} />
-          <Route exact path="/lists" render={this.renderLists} />
-          <Route exact path={"/lists/:id"} render={this.renderList} />
-          <Route exact path={"/searchlistresults/:id"} render={this.renderSearchListResults} />
-          <Route exact path="/loginalert" render={this.renderLoginAlert} />
-        </div>
-      </BrowserRouter>
-    );
+    if(this.state.verified){
+      return (
+        <BrowserRouter>
+          <div className="App">
+            <Navbar />
+            <Route exact path="/signup" render={this.renderSignup} />
+            <Route exact path="/login" render={this.renderLogin} />
+            <Route exact path="/" render={this.renderHome} />
+            <Route exact path="/premium" render={this.renderPremium} />
+            <Route exact path="/search" render={this.renderSearch} />
+            <Route exact path="/movie" render={this.renderMovie} />
+            <Route exact path="/test" render={this.renderTest} />
+            <Route exact path="/lists/makeList" render={this.renderMakeList} />
+            <Route exact path="/lists" render={this.renderLists} />
+            <Route exact path={"/lists/:id"} render={this.renderList} />
+            <Route exact path={"/searchlistresults/:id"} render={this.renderSearchListResults} />
+            <Route exact path="/loginalert" render={this.renderLoginAlert} />
+          </div>
+        </BrowserRouter>
+      );
+    }else{
+      return <div>Page is loading</div>
+    }
+    
   }
 }
 let mapStateToProps = function(state) {

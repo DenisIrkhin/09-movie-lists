@@ -21,6 +21,17 @@ const ModalStyles = {
   }
 };
 
+class MoviesBody extends Component{
+
+  render(){
+    return(
+      <div>
+        <input type="search" placeholder="Search Movies"></input>
+      </div>
+    )
+  }
+}
+
 class TagsBody extends Component {
   constructor(props) {
     super(props);
@@ -29,8 +40,12 @@ class TagsBody extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleInputTag(evt) {
-    if(evt.target.value[evt.target.value.length-1]==="^"){
-      return
+    //this adds constraints to input tags field. for example ^ cant be used and no more than 15 characters
+    if (
+      evt.target.value[evt.target.value.length - 1] === "^" ||
+      evt.target.value.length >= 25
+    ) {
+      return;
     }
     this.props.grandParent.setState({ inputTag: evt.currentTarget.value });
   }
@@ -39,12 +54,17 @@ class TagsBody extends Component {
     evt.preventDefault();
     if (this.props.grandParent.state.inputTag.trim().length) {
       console.log("adding tag", this.props.grandParent.state.inputTag);
-      this.props.grandParent.setState({
-        tags: this.props.grandParent.state.tags.concat(
-          this.props.grandParent.state.inputTag
-        ),
-        inputTag: ""
-      });
+      if (this.props.grandParent.state.tags.length <= 10) {
+        this.props.grandParent.setState({
+          tags: this.props.grandParent.state.tags.concat(
+            this.props.grandParent.state.inputTag
+          ),
+          inputTag: "",
+          message:""
+        })
+      }else{
+        this.props.grandParent.setState({message:"Lists can only have a maximum of 10 tags"})
+      }
     }
   }
 
@@ -77,14 +97,13 @@ class TagsBody extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-        <span>input tags: </span>
           <input
             type="text"
             onChange={this.handleInputTag}
             name="tag"
             value={this.props.grandParent.state.inputTag}
           />
-          <div style={{ maxWidth: "500px", margin: "auto" }}>
+          <div style={{ maxWidth: "200px", margin: "auto" }}>
             {this.displayTags()}
           </div>
         </form>
@@ -120,25 +139,28 @@ class ListPropertiesForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div>
-          <span>List Name:</span>
-          <input
-            type="text"
-            placeholder="List Name"
-            name="listName"
-            onChange={this.inputTextHandler}
-          />
-          <br></br>
-          <TagsBody grandParent={this.props.parent} />
-        </div>
-        <div>
-          <h4>Description</h4>
-          <textarea
-            name="description"
-            cols="40"
-            rows="5"
-            onChange={this.inputTextHandler}
-          />
+        <div className=" row">
+          <span>
+            <span>List Name:</span>
+            <input
+              type="text"
+              placeholder="List Name"
+              name="listName"
+              onChange={this.inputTextHandler}
+            />
+            <br />
+            <span>input tags</span>
+            <TagsBody grandParent={this.props.parent} />
+          </span>
+          <span>
+            <h4>Description</h4>
+            <textarea
+              name="description"
+              cols="40"
+              rows="5"
+              onChange={this.inputTextHandler}
+            />
+          </span>
         </div>
         <input type="submit" />
       </form>
@@ -153,6 +175,8 @@ class UnconnectedMakeList extends Component {
       inputTitle: "",
       inputDescription: "",
       inputTag: "",
+      inputMovieSearch:"",
+      movies:["movie1","movie2","movie3"],
       tags: [],
       message: "",
       confirmedFinishedList: false,
@@ -164,6 +188,7 @@ class UnconnectedMakeList extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.addList = this.addList.bind(this);
   }
+ 
   openModal() {
     this.setState({ modalIsOpen: true });
   }
@@ -185,7 +210,7 @@ class UnconnectedMakeList extends Component {
   addList() {
     let that = this;
     //tags will be sent as a string which separates the movies with ^^ .
-    let tagBody=this.state.tags.join(" ^^ ")
+    let tagBody = this.state.tags.join("^^");
     let reqBody = {
       name: this.state.inputTitle,
       movieArr: ["movie1", "movie2", "movie3"],
@@ -198,16 +223,18 @@ class UnconnectedMakeList extends Component {
       url: "/api/lists/add",
       data: reqBody,
       withCredentials: "include"
-    }).then(response => {
-      console.log("response", response);
-      if (response.data.success) {
-        console.log("successful request")
-        that.setState({ confirmedFinishedList: true });
-        that.props.history.push("/")
-      }else{
-        console.log("error in request")
-      }
-    });
+    })
+      .then(response => {
+        console.log("response", response);
+        if (response.data.success) {
+          console.log("successful request");
+          that.setState({ confirmedFinishedList: true });
+          that.props.history.push("/lists");
+        } else {
+          console.log("error in request");
+        }
+      })
+      .catch(() => console.log("error in request"));
   }
 
   render() {
@@ -219,6 +246,7 @@ class UnconnectedMakeList extends Component {
           <h2>Make A List</h2>
           {this.displayMessage()}
           <ListPropertiesForm parent={this} />
+          <MoviesBody></MoviesBody>
           <Modal
             isOpen={this.state.modalIsOpen}
             onAfterOpen={this.afterOpenModal}

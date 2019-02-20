@@ -11,7 +11,9 @@ let reducer = function(state, action) {
     case "logout":
     if(document.cookie.includes("__sid__")){
       document.cookie='__sid__=""'
+      // document.location.reload()
     }
+    // document.location.reload()
     console.log("action logout used")
     return {...state,state:{...state.state,loggedIn:false,user:"not logged in"}}
       

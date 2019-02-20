@@ -15,6 +15,7 @@ class UnconnectedLoginAlert extends Component{
     render(){
         if(this.props.loggedIn){
             this.props.history.push("/")
+            return(<div></div>)
         }else{
 
         return(
