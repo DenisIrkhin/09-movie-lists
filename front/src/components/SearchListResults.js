@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../css/style.css";
 import { Redirect, Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import {FacebookShareButton,TwitterShareButton} from 'react-share'
 
 import "../css/MakeList.css";
 import { connect } from "react-redux";
@@ -68,6 +69,8 @@ class SearchListResults extends Component {
     let resultsToDom=(elem)=>{
         return <li>
             <Link to={"/lists/"+elem._id}><div>{elem.name}</div></Link>
+            <FacebookShareButton url={window.location.origin+"/lists/"+elem._id} className={"fab fa-facebook"}></FacebookShareButton>
+              <TwitterShareButton url={window.location.origin+"/lists/"+elem._id} className={"fab fa-twitter-square"}></TwitterShareButton>
             <div>{elem.description}</div>
             <span>Tags:  </span><span>
                 {this.displayTags(elem.tags)}

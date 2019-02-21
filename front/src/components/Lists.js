@@ -8,6 +8,7 @@ import App from "../App.js";
 import { withRouter } from "react-router";
 import Modal from "react-modal";
 import { isThisQuarter } from "date-fns";
+import {FacebookShareButton,TwitterShareButton} from 'react-share'
 
 class UnconnectedLists extends Component {
   constructor(props) {
@@ -77,7 +78,8 @@ class UnconnectedLists extends Component {
               <span>{elem.name}</span>
             </Link>
             <span style={{ float: "right" }}>
-              
+              <FacebookShareButton url={window.location.origin+"/lists/"+elem._id} className={"fab fa-facebook"}></FacebookShareButton>
+              <TwitterShareButton url={window.location.origin+"/lists/"+elem._id} className={"fab fa-twitter-square"}></TwitterShareButton>
               <span name="edit" className="far fa-edit MouseOver " />
               <span
                 name="delete"

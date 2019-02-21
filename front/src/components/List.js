@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import App from "../App.js";
 import Modal from "react-modal";
+import {FacebookShareButton,TwitterShareButton} from 'react-share'
 
 class UnconnnectedList extends Component {
   constructor(props) {
@@ -46,6 +47,8 @@ class UnconnnectedList extends Component {
         return (
           <div>
             <h4>List:{this.state.list.name}</h4>
+            <FacebookShareButton url={window.location.href} className={"fab fa-facebook"}></FacebookShareButton>
+              <TwitterShareButton url={window.location.href} className={"fab fa-twitter-square"}></TwitterShareButton>
             <ol>
               {this.state.list.movieArr.map(function(elem) {
                 return (

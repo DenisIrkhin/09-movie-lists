@@ -9,6 +9,7 @@ import axios from "axios";
 import App from "../App.js";
 import Modal from "react-modal";
 import MovieSearchBody from "./MakeListSearchMovie";
+import {FacebookShareButton,TwitterShareButton} from 'react-share'
 
 
 class TagSearchResults extends Component{
@@ -93,6 +94,8 @@ class TagSearchResults extends Component{
                 <div>
                     <li>
                         <Link to={"/lists/"+elem._id}><h5>{elem.name}</h5></Link>
+                        <FacebookShareButton url={window.location.origin+"/lists/"+elem._id} className={"fab fa-facebook"}></FacebookShareButton>
+              <TwitterShareButton url={window.location.origin+"/lists/"+elem._id} className={"fab fa-twitter-square"}></TwitterShareButton>
                         <div>{elem.description}</div>
                         <div>{this.displayTags(elem.tags)}</div>
                     </li>
