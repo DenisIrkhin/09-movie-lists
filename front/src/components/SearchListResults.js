@@ -47,7 +47,7 @@ class SearchListResults extends Component {
     let that = this;
     return tagList.split(" ^^ ").map((elem, index) => {
       return (
-          <Link to={"/searchlistresults/"+elem}>
+          <Link to={"/searchtags/"+elem}>
         <span className>
           {elem}
           <span

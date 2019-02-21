@@ -156,6 +156,7 @@ class TagsBody extends Component {
             onChange={this.handleInputTag}
             name="tag"
             value={this.props.grandParent.state.inputTag}
+            autoComplete="off"
           />
           <div className="tags-holder">{this.displayTags()}</div>
         </form>
@@ -255,7 +256,7 @@ class UnconnectedMakeList extends Component {
   addList() {
     let that = this
     //tags will be sent as a string which separates the movies with ^^ .
-    let tagBody = this.state.tags.join('^^')
+    let tagBody = this.state.tags.join(" ^^ ");
     let reqBody = {
       name: this.state.inputTitle,
       movieArr: this.state.chosenMovies, /////TODO

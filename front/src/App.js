@@ -19,6 +19,7 @@ import Search from './components/Search'
 import Movie from './components/Movie'
 import LoginAlert from './components/LoginAlert'
 import Premium from './components/Premium'
+import TagSearchResults from "./components/TagSearchResults"
 
 import { BACKEND_DOMAIN } from './Global'
 import SearchListResults from './components/SearchListResults'
@@ -126,6 +127,12 @@ class UnconnectedApp extends Component {
     console.log('premium component rendered')
     return <Premium />
   }
+  renderSearchTags(routerData){
+    console.log("searchTags component rendered")
+    let tag=routerData.match.params.id
+    console.log('tag', tag)
+    return <TagSearchResults tag={tag}></TagSearchResults>
+  }
 
   render() {
     if (this.state.verified) {
@@ -149,6 +156,8 @@ class UnconnectedApp extends Component {
               render={this.renderSearchListResults}
             />
             <Route exact path="/loginalert" render={this.renderLoginAlert} />
+            <Route exact path="/searchtags/:id" render={this.renderSearchTags} />
+
           </div>
         </BrowserRouter>
       )
