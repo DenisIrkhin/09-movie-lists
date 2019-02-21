@@ -29,6 +29,10 @@ class ChosenMovies extends Component {
   }
 
   displayMovies() {
+    let addSignVisibility="visible"
+    if(this.props.parent.state.chosenMovies.length<1){
+      addSignVisibility="hidden"
+    }
     let imageAnimationStyle={width:"60px"}
     // let showTrashIcon=()=>{
     //   imageAnimationStyle={width:"600px"}
@@ -38,19 +42,21 @@ class ChosenMovies extends Component {
 
     let movieDOMSArr = moviesArr.map((elem, index) => {
       return (
-        <span style={{ margin: "10px" }}>
+        <span className="container" style={{ margin: "10px" }} onClick={() => this.removeMovie(elem, index)}>
           <img
+            className="image"
             style={imageAnimationStyle}
             src={"https://image.tmdb.org/t/p/w500" + elem.poster_path}
-            onClick={() => this.removeMovie(elem, index)}
+            // onClick={() => this.removeMovie(elem, index)}
             // onMouseOver={()=>{showTrashIcon()}}
           />
+          <div className="middle"><div className="text far fa-trash-alt"></div></div>
           <div style={{ fontSize: ".5em" }}>{elem.original_title}</div>
         </span>
       );
     });
     let retArr = movieDOMSArr.concat(
-      <span className="fas fa-plus-circle" style={{ fontSize: "2.5em" }} />
+      <span className="fas fa-plus-circle" style={{ fontSize: "2.5em",visibility:addSignVisibility }} />
     );
     return retArr;
   }
@@ -258,7 +264,7 @@ class UnconnectedMakeList extends Component {
     let tagBody = this.state.tags.join("^^");
     let reqBody = {
       name: this.state.inputTitle,
-      movieArr: ["movie1", "movie2", "movie3"],
+      movieArr: this.state.chosenMovies,/////TODO
       description: this.state.inputDescription,
       tags: tagBody
     };

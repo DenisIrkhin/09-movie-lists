@@ -93,7 +93,7 @@ class MoviesBody extends Component {
           <form onSubmit={this.handleSubmit}>
             <input
               type="search"
-              placeholder="Search Movies"
+              placeholder="Search and Add Movies"
               onChange={this.handleInputMovie}
               value={this.state.inputMovie}
             />

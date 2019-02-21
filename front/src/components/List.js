@@ -48,7 +48,12 @@ class UnconnnectedList extends Component {
             <h4>List:{this.state.list.name}</h4>
             <ol>
               {this.state.list.movieArr.map(function(elem) {
-                return <li>{elem}</li>;
+                return (
+                <div>
+                  
+                <Link to={"/movies/"+elem.id}><li style={{margin:"10px"}}><img src={"https://image.tmdb.org/t/p/w500" + elem.poster_path} style={{maxHeight:"50px"}}></img>{elem.original_title}</li></Link>
+                </div>
+                )
               })}
             </ol>
           </div>
