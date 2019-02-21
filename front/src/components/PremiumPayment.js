@@ -1,5 +1,6 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout'
+import axios from 'axios'
 
 export default class PremiumPayment extends React.Component {
   onToken = token => {

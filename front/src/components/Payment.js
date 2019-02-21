@@ -1,17 +1,21 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout'
+import axios from 'axios'
 
 export default class Payment extends React.Component {
   onToken = token => {
-    fetch('/save-stripe-token', {
-      method: 'POST',
-      body: JSON.stringify(token)
-    }).then(response => {
-      response.json().then(data => {
-        alert(`We are in business, ${data.email}`)
-      })
+    console.log('token ', token)
+    axios({
+      url:'/api/pmnts',
+      method: 'post',
+      data: token,
+      withCredentials: true
     })
-  }
+    .then(res => {
+      console.log('data ',res.data)
+        alert(`We are in business, ${res.data.email}`)
+      })
+    }
 
   // ...
 
