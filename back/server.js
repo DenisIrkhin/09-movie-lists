@@ -19,6 +19,7 @@ console.log('config ', config)
 const testsRoute = require('./routes/api/tests')
 const usersRoute = require('./routes/api/users')
 const listsRoute = require('./routes/api/lists')
+const pmntsRoute = require('./routes/api/pmnts')
 
 app.use(cookieParser())
 
@@ -35,6 +36,7 @@ app.use(bodyParser.json())
 app.use('/api/tests', testsRoute)
 app.use('/api/users', usersRoute)
 app.use('/api/lists', listsRoute)
+app.use('/api/pmnts', pmntsRoute)
 
 // Serve React static assets if in production
 console.log('process.env.NODE_ENV ', process.env.NODE_ENV)

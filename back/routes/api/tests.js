@@ -18,6 +18,7 @@ setTimeout(() => {
   console.log('Mongodb connected from test.js')
 }, 500)
 
+// @@ POST /api/tests/add
 // Here we will insert new posts into our database
 // when we send back our response, we can send it
 // in this format:
@@ -26,7 +27,7 @@ setTimeout(() => {
 // { username: 'dan', review: 'My rewiew', rating: '5' }
 router.post('/add', async (req, res) => {
   console.log('*******************************************')
-  console.log('req.body for post. /lists/add ', req.body)
+  console.log('req.body for POST /tests/add ', req.body)
 
   try {
     let result = await (dbo.collection('tests').insertOne(req.body))
@@ -39,9 +40,10 @@ router.post('/add', async (req, res) => {
 })
 
 // Get all docs from tests collections
+// @@ GET /api/tests
 router.get('/', async (req, res) => {
   console.log('*******************************************')
-  console.log('req.body for get. /lists/ ', req.body)
+  console.log('req.body for GET /tests ', req.body)
 
   try {
     let result = await (dbo.collection('tests').find({}).toArray())

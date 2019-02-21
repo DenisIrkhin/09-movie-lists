@@ -53,7 +53,7 @@ module.exports = async function getUserIdByCookies (dbo, cookies = {}) {
 // Retruns string userId or throw Error object
 module.exports = async function getUserIdByCookiesWithErrors (dbo, cookies = {}) {
   // Get our cookie from all cookies
-  let mlCookie = (cookies.__sid__).toString()
+  let mlCookie = cookies.__sid__
   console.log('mlCookie: 60 ', mlCookie)
   if (mlCookie === undefined) {
     // errors.cookie = "Can't get cookie and define a user"
@@ -63,6 +63,8 @@ module.exports = async function getUserIdByCookiesWithErrors (dbo, cookies = {})
     return new Promise((resolve, reject) => reject(new Error(`Can't get cookie and define a user`)))
   } else {
     // Find userId by session id
+    // Stringify cookie
+    mlCookie = mlCookie.toString()
 
     try {
       let res = await (dbo.collection('sessions').findOne({ sessionId: mlCookie }))

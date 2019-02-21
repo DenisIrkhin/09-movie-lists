@@ -28,6 +28,7 @@ setTimeout(() => {
 }, 500)
 
 // Here we will insert new users into our `users` collection
+// @@ POST /api/users/signup
 router.post('/signup', async (req, res) => {
   errors = {}
   let emailExists, userId
@@ -91,6 +92,7 @@ router.post('/signup', async (req, res) => {
 
 // Here we will authentificate users with passwords
 // If good authentificated then session id will be created
+// @@ POST /api/users/login
 router.post('/login', async (req, res) => {
   errors = {}
   let user, userId
@@ -144,6 +146,7 @@ router.post('/login', async (req, res) => {
 
 // Define user by cookie if any.
 // If good authentificated then session id will be created
+// @@ POST /api/users/check
 router.post('/check', async (req, res) => {
   errors = {}
   let user, userId
@@ -194,6 +197,7 @@ router.post('/check', async (req, res) => {
 )
 
 // Get all users from `users` collection
+// @@ GET /api/users
 router.get('/', async (req, res) => {
   console.log('******************************************')
   console.log('req.body for get. /users/ ', req.body)

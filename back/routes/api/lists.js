@@ -26,7 +26,7 @@ setTimeout(() => {
 }, 500)
 
 // Insert new lists into our database
-// POST
+// @@ POST /api/lists/add
 router.post('/add', async (req, res) => {
   errors = {}
   console.log('*******************************************')
@@ -59,7 +59,7 @@ router.post('/add', async (req, res) => {
 })
 
 // Get All user's lists
-// GET
+// @@ GET /api/lists
 router.get('/', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from get. /lists/ ', req.body)
@@ -87,7 +87,7 @@ router.get('/', async (req, res) => {
 })
 
 // Update one user's list. Check for sessionId(user) first
-// PUT
+// @@ PUT /api/lists/id
 router.put('/id', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from put. /lists/id ', req.body)
@@ -136,7 +136,7 @@ router.put('/id', async (req, res) => {
 })
 
 // Delete one user's list. Check for sessionId(user) first
-// DELETE
+// @@ DELETE /api/lists/id
 router.delete('/id', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from delete. /lists/id ', req.body)
@@ -176,7 +176,7 @@ router.delete('/id', async (req, res) => {
 })
 
 // Get list by list id. Does NOT check for user.
-// POST
+// @@ POST /api/lists/id
 router.post('/id', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from post. /lists/id ', req.body)
@@ -196,7 +196,7 @@ router.post('/id', async (req, res) => {
 })
 
 // Get list by wildcard search. Does NOT check for user.
-// POST
+// @@ POST /api/lists/wildsearch
 router.post('/wildsearch', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body from post. /lists/wildsearch ', req.body)
@@ -209,7 +209,7 @@ router.post('/wildsearch', async (req, res) => {
   console.log('search ', search)
 
   // Separate each word of the search string into array
-  let searchArr = search.split(' ')
+  let searchArr = search.toLowerCase().split(' ')
 
   // Search string is `top5scifi` for regex search
   search = searchArr.join('|')
@@ -242,9 +242,9 @@ router.post('/wildsearch', async (req, res) => {
 
   let rankedLists = lists.map(list => {
     let searchRank = 0
-    let nameSet = new Set(list.name.split(' '))
-    let tagsSet = new Set(list.tags.split(' '))
-    let descriptionSet = new Set(list.description.split(' '))
+    let nameSet = new Set(list.name.toLowerCase().split(' '))
+    let tagsSet = new Set(list.tags.toLowerCase().split(' '))
+    let descriptionSet = new Set(list.description.toLowerCase().split(' '))
     searchRank += new Set([...searchSet].filter(x => nameSet.has(x))).size
     // console.log('searchRank ', searchRank)
     searchRank += new Set([...searchSet].filter(x => tagsSet.has(x))).size

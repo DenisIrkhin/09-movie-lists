@@ -20,7 +20,7 @@ export default class Payment extends React.Component {
       // ...
       <StripeCheckout
         token={this.onToken}
-        stripeKey="pk_test_NMJL3QUg2ovO05Xg4IF9F164"
+        stripeKey="pk_test_TEntmgKHBcxtwIn7yqNwExZs"
       />
     )
   }
