@@ -377,33 +377,63 @@ html {
 }
 
 @media only screen and (max-width: 600px) {
-  #buttonMovie-large {
+  .buttonMovie-large {
     display: none;
   }
 }
 
 @media only screen and (min-width: 600px) {
-  #buttonMovie-small {
+  .buttonMovie-small {
     display: none;
   }
 }
 
-.add-list-button {
+.add-list-button-left {
+  width: 100%;
   font-size: 14px;
   cursor: pointer;
   color: #a8903d;
   font-weight: 500;
   border: 1px solid #eed479;
   background-color: #fce181;
-  padding-top: 8%;
-  padding-bottom: 8.4%;
-  padding-left: 22%;
-  padding-right: 22%;
-  border-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 0px;
+  box-shadow: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.add-list-button-right {
+  width: 100%;
+  font-size: 14px;
+  cursor: pointer;
+  color: #a8903d;
+  font-weight: 500;
+  border: 1px solid #eed479;
+  background-color: #fce181;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 5px;
+  box-shadow: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.add-list-button-left:hover {
+  color: #917d35;
+  border: 1px solid #dbc268;
+  background-color: #f0d471;
   box-shadow: none;
 }
 
-.add-list-button:hover {
+.add-list-button-right:hover {
   color: #917d35;
   border: 1px solid #dbc268;
   background-color: #f0d471;
@@ -411,13 +441,32 @@ html {
 }
 
 @media only screen and (max-width: 600px) {
-  .add-list-button {
-    font-size: 16px;
-    padding-top: 8%;
-    padding-bottom: 8.4%;
-    padding-left: 20%;
-    padding-right: 20%;
+  .add-list-button-right {
     margin-top: 5%;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .add-list-button-left {
+    margin-top: 5%;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 }
 
@@ -599,7 +648,7 @@ html {
 }
 /*MAKE LISTS*/
 
-.tag {
+/* .tag {
   transition: all ease 300ms;
   position: relative;
 }
@@ -617,7 +666,7 @@ html {
 .MouseOver:hover {
   color: red;
   width: 1.5em;
-}
+} */
 
 /* .tag:hover:before{
   display:block;

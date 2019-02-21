@@ -68,6 +68,14 @@ class UnconnectedNavbar extends Component {
       console.log(searchText)
       this.getMovies(searchText)
     })
+    document
+      .getElementById('searchFormTwo')
+      .addEventListener('submit', event => {
+        event.preventDefault()
+        let searchText = document.getElementById('searchTextTwo').value
+        console.log(searchText)
+        this.getMovies(searchText)
+      })
   }
 
   // getMovie(idArray) {
@@ -88,6 +96,49 @@ class UnconnectedNavbar extends Component {
   //   // return imdbId
   // }
 
+  // seeMore = () => {
+  //   document.getElementById('see-more-small').addEventListener('click', () => {
+  //     let id = document.getElementById('see-more-small').value
+  //     console.log(id)
+  //     axios
+  //       .get(
+  //         'https://api.themoviedb.org/3/movie/' +
+  //           id +
+  //           '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
+  //       )
+  //       .then(function(response) {
+  //         console.log('works?', response.data)
+  //       })
+  //   })
+  // }
+
+  seeMore = () => {
+    //   document.getElementById('see-more-large').addEventListener('click', () => {
+    //     let id = document.getElementById('see-more-large').value
+    //     console.log(id)
+    //   })
+    // }
+    document.getElementById('see-more-large').addEventListener('click', () => {
+      let id = document.getElementById('see-more-large').value
+      if (id) {
+        this.props.history.push('/movie')
+        axios
+          .get(
+            'https://api.themoviedb.org/3/movie/' +
+              id +
+              '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
+          )
+          .then(function(response) {
+            console.log('works?', response.data)
+            return
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    })
+  }
+
   getMovies(searchText) {
     if (searchText === '') {
       this.props.history.push('/')
@@ -107,7 +158,6 @@ class UnconnectedNavbar extends Component {
           // }
           // let imdbId = this.getMovie(arrayId)
           // console.log('imdbId', imdbId[0])
-
           let output = ''
           console.log('after', movies)
           for (let movie of movies) {
@@ -117,7 +167,12 @@ class UnconnectedNavbar extends Component {
 
             <div class="well img-holder-search">
               <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
-              <button class="add-list-button" id="buttonMovie-large">ADD TO LIST</button>
+              <div class="btn-group-vertical" role="group">
+              <button type="button" class="add-list-button-left buttonMovie-large">ADD TO MY LIST</button>
+              <button type="button" class="add-list-button-right buttonMovie-large" id="see-more-large" value="${
+                movie.id
+              }">SEE MORE INFO</button>
+              </div>
             </div>
 
             <div class="text-holder-search">
@@ -129,13 +184,19 @@ class UnconnectedNavbar extends Component {
               <p class="rating-search-result"><strong>Rating:</strong> ${
                 movie.vote_average
               }/10</p>
-              <button class="add-list-button" id="buttonMovie-small">ADD TO LIST</button>
+              <div class="btn-group" role="group">
+              <button type="button" class="add-list-button-left buttonMovie-small" >ADD TO MY LIST</button>
+              <button type="button" class="add-list-button-right buttonMovie-small" id="see-more-small" value="${
+                movie.id
+              }">SEE MORE INFO</button>
+              </div>
             </div>
 
           </div>`
             }
           }
           $('#movies').html(output)
+          this.seeMore()
         })
         .catch(err => {
           console.log(err)
@@ -222,12 +283,12 @@ class UnconnectedNavbar extends Component {
               <li className="nav-item mobile-only">
                 <form
                   className="form-inline form-spacing form-lists-control"
-                  id="searchForm"
+                  id="searchFormTwo"
                 >
                   <input
                     className="form-control search-select input-lists-control"
                     type="search"
-                    id="searchText"
+                    id="searchTextTwo"
                     placeholder="Search movies"
                     aria-label="Search"
                     autocomplete="off"
