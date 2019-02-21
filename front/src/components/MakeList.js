@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import App from "../App.js";
 import Modal from "react-modal";
+import MovieSearchBody from "./MakeListSearchMovie";
 
 const ModalStyles = {
   content: {
@@ -21,21 +22,63 @@ const ModalStyles = {
   }
 };
 
-class MoviesBody extends Component{
+class ChosenMovies extends Component {
+  constructor(props) {
+    super(props);
+    this.displayMovies = this.displayMovies.bind(this);
+  }
 
-  render(){
-    return(
-      <div>
-        <input type="search" placeholder="Search Movies"></input>
+  displayMovies() {
+    let imageAnimationStyle={width:"60px"}
+    // let showTrashIcon=()=>{
+    //   imageAnimationStyle={width:"600px"}
+    // }
+    console.log("displaying movies");
+    let moviesArr = this.props.parent.state.chosenMovies;
+
+    let movieDOMSArr = moviesArr.map((elem, index) => {
+      return (
+        <span style={{ margin: "10px" }}>
+          <img
+            style={imageAnimationStyle}
+            src={"https://image.tmdb.org/t/p/w500" + elem.poster_path}
+            onClick={() => this.removeMovie(elem, index)}
+            // onMouseOver={()=>{showTrashIcon()}}
+          />
+          <div style={{ fontSize: ".5em" }}>{elem.original_title}</div>
+        </span>
+      );
+    });
+    let retArr = movieDOMSArr.concat(
+      <span className="fas fa-plus-circle" style={{ fontSize: "2.5em" }} />
+    );
+    return retArr;
+  }
+
+  removeMovie(elem, index) {
+    console.log("removing Movie");
+    console.log("elem", elem);
+    console.log("index", index);
+    let oldArr = this.props.parent.state.chosenMovies;
+    console.log("oldArr", oldArr);
+    let newArr = oldArr.slice(0);
+    newArr.splice(index, 1);
+    console.log("newArr", newArr);
+    this.props.parent.setState({ chosenMovies: newArr });
+  }
+
+  render() {
+    return (
+      <div className="row" style={{ margin: "20px" }}>
+        {this.displayMovies()}
       </div>
-    )
+    );
   }
 }
 
 class TagsBody extends Component {
   constructor(props) {
     super(props);
-
     this.handleInputTag = this.handleInputTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -60,10 +103,12 @@ class TagsBody extends Component {
             this.props.grandParent.state.inputTag
           ),
           inputTag: "",
-          message:""
-        })
-      }else{
-        this.props.grandParent.setState({message:"Lists can only have a maximum of 10 tags"})
+          message: ""
+        });
+      } else {
+        this.props.grandParent.setState({
+          message: "Lists can only have a maximum of 10 tags"
+        });
       }
     }
   }
@@ -175,8 +220,7 @@ class UnconnectedMakeList extends Component {
       inputTitle: "",
       inputDescription: "",
       inputTag: "",
-      inputMovieSearch:"",
-      movies:["movie1","movie2","movie3"],
+      chosenMovies: [],
       tags: [],
       message: "",
       confirmedFinishedList: false,
@@ -188,7 +232,7 @@ class UnconnectedMakeList extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.addList = this.addList.bind(this);
   }
- 
+
   openModal() {
     this.setState({ modalIsOpen: true });
   }
@@ -207,6 +251,7 @@ class UnconnectedMakeList extends Component {
       );
     }
   }
+
   addList() {
     let that = this;
     //tags will be sent as a string which separates the movies with ^^ .
@@ -245,8 +290,14 @@ class UnconnectedMakeList extends Component {
         <div>
           <h2>Make A List</h2>
           {this.displayMessage()}
-          <ListPropertiesForm parent={this} />
-          <MoviesBody></MoviesBody>
+          <div className="row">
+            <ListPropertiesForm parent={this} />
+            <MovieSearchBody parent={this} />
+          </div>
+          <h4>Your Chosen Movies</h4>
+          <div style={{ width: "50%", margin: "auto" }}>
+            <ChosenMovies parent={this} />
+          </div>
           <Modal
             isOpen={this.state.modalIsOpen}
             onAfterOpen={this.afterOpenModal}

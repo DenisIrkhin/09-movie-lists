@@ -99,14 +99,18 @@ class UnconnectedApp extends Component {
     return <LoginAlert />;
   }
   renderMakeList() {
-    console.log("makeList component rendered");
+    console.log("makelist component rendered");
     return <MakeList/>;
   }
   renderLists(routerData) {
+    
     console.log("lists component rendered");
     return <Lists />;
   }
   renderList(routerData) {
+    if(routerData.match.params.id==="makelist"){
+      return <div></div>
+    }
     console.log("specific list component rendered");
     console.log("path of list", routerData.match.params.id);
     return <List listId={routerData.match.params.id} />;
@@ -135,7 +139,7 @@ class UnconnectedApp extends Component {
             <Route exact path="/search" render={this.renderSearch} />
             <Route exact path="/movie" render={this.renderMovie} />
             <Route exact path="/test" render={this.renderTest} />
-            <Route exact path="/lists/makeList" render={this.renderMakeList} />
+            <Route exact path="/lists/makelist" render={this.renderMakeList} />
             <Route exact path="/lists" render={this.renderLists} />
             <Route exact path={"/lists/:id"} render={this.renderList} />
             <Route exact path={"/searchlistresults/:id"} render={this.renderSearchListResults} />

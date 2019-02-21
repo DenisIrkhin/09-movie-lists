@@ -15,3 +15,33 @@
 .red{
   color:red
 }
+
+.addMovie {
+  transition: all ease 300ms;
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 2rem;
+  float:right
+}
+
+.addMovie:hover {
+  color: green;
+  font-size: 2.5rem;
+  float:right
+
+}
+
+.img {
+  transition: all ease 300ms;
+  position: relative;
+  height:"60px";
+  
+}
+
+.img:hover {
+  color: green;
+
+
+
+}
