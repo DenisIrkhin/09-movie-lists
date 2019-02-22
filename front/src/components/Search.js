@@ -14,7 +14,7 @@ class Search extends Component {
     moviesCheck.addEventListener('click', ({ target }) => {
       if (target.matches('#see-more-large')) {
         let id = target.value
-        this.props.history.push('/movie')
+        this.props.history.push('/movie/'+id)
         axios
           .get(
             'https://api.themoviedb.org/3/movie/' +

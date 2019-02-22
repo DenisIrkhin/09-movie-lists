@@ -77,9 +77,10 @@ class UnconnectedApp extends Component {
     return <Search />
   }
 
-  renderMovie() {
+  renderMovie(routerData) {
+    let movieId=routerData.match.params.id
     console.log('Movie details page rendered')
-    return <Movie />
+    return <Movie movieId={movieId} />
   }
 
   // Render Test comp for fetch data from mongo and understand that it works
@@ -147,7 +148,7 @@ class UnconnectedApp extends Component {
             <Route exact path="/" render={this.renderHome} />
             <Route exact path="/premium" render={this.renderPremium} />
             <Route exact path="/search" render={this.renderSearch} />
-            <Route exact path="/movie" render={this.renderMovie} />
+            <Route exact path="/movie/:id" render={this.renderMovie} />
             <Route exact path="/test" render={this.renderTest} />
             <Route exact path="/lists/makelist" render={this.renderMakeList} />
             <Route exact path="/lists" render={this.renderLists} />
