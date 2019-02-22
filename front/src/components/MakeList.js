@@ -33,7 +33,7 @@ class ChosenMovies extends Component {
     if (this.props.parent.state.chosenMovies.length < 1) {
       addSignVisibility = 'hidden'
     }
-    let imageAnimationStyle = { width: '60px' }
+    // let imageAnimationStyle = { width: '60px', height: '90px' }
     // let showTrashIcon=()=>{
     //   imageAnimationStyle={width:"600px"}
     // }
@@ -43,20 +43,21 @@ class ChosenMovies extends Component {
     let movieDOMSArr = moviesArr.map((elem, index) => {
       return (
         <span
-          className="container"
+          className="each-chosen-movie-holder"
           onClick={() => this.removeMovie(elem, index)}
         >
           <img
             className="image-inside-list"
-            style={imageAnimationStyle}
             src={'https://image.tmdb.org/t/p/w500' + elem.poster_path}
             // onClick={() => this.removeMovie(elem, index)}
             // onMouseOver={()=>{showTrashIcon()}}
           />
           <div className="middle">
-            <div className="text far fa-trash-alt" />
+            <a href="#" className="icon-trash">
+              <i className="far fa-trash-alt" />
+            </a>
           </div>
-          <div>{elem.original_title}</div>
+          {/* <div className="image-inside-list-title">{elem.original_title}</div> */}
         </span>
       )
     })
@@ -76,11 +77,7 @@ class ChosenMovies extends Component {
   }
 
   render() {
-    return (
-      <div className="row" style={{ margin: '20px' }}>
-        {this.displayMovies()}
-      </div>
-    )
+    return <div className="row row-bottom-make">{this.displayMovies()}</div>
   }
 }
 
@@ -192,7 +189,7 @@ class ListPropertiesForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="form-make-list">
-        <h5>List Name:</h5>
+        <h6>List Name:</h6>
         <input
           type="text"
           name="listName"
@@ -200,13 +197,13 @@ class ListPropertiesForm extends Component {
           onChange={this.inputTextHandler}
         />
 
-        <h5>Description:</h5>
+        <h6>Description:</h6>
         <textarea
           name="description"
           onChange={this.inputTextHandler}
           className="text-area-make mb-3"
         />
-        <h5>Input Tags:</h5>
+        <h6>Input Tags:</h6>
         <TagsBody grandParent={this.props.parent} />
         <input type="submit" className="btn make-submit-button" />
       </form>
