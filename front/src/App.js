@@ -14,7 +14,7 @@ import MakeList from './components/MakeList'
 import Lists from './components/Lists'
 import List from './components/List'
 import searchListResults from './components/SearchListResults'
-
+import FilterDropdown from "./components/FilterDropdown"
 import Search from './components/Search'
 import Movie from './components/Movie'
 import LoginAlert from './components/LoginAlert'
@@ -46,18 +46,20 @@ class UnconnectedApp extends Component {
         this.props.dispatch({ type: 'login', payload: email })
       })
       .then(() => {
-        that.setState({ verified: true })
-        console.log('checked successfully')
+        
         axios({
           method: 'get',
           url: '/api/lists',
           withCredentials: true
         }).then(response => {
+          
           console.log('response', response)
           let responseLists = response.data.lists
           console.log('responseLists', responseLists)
 
           this.props.dispatch({ type: 'getLists', payload: responseLists })
+          that.setState({ verified: true })
+        console.log('checked successfully')
         })
       })
       .catch(() => {
@@ -85,7 +87,7 @@ class UnconnectedApp extends Component {
     console.log('test page rendered')
     return (
       <div>
-        <Signup />
+        <FilterDropdown></FilterDropdown>
       </div>
     )
   }
