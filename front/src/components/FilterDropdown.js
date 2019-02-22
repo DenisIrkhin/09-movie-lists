@@ -17,7 +17,12 @@ class UnconnectedFilterDropdown extends Component {
     this.RenderMenu=this.RenderMenu.bind(this)
     this.handleInputSearch=this.handleInputSearch.bind(this)
     this.handleCheck=this.handleCheck.bind(this)
+    this.openMenu=this.openMenu.bind(this)
+    this.closeMenu=this.closeMenu.bind(this)
   }
+
+  openMenu(){this.setState({showMenu:true})}
+  closeMenu(){this.setState({showMenu:false})}
 
   handleInputSearch(evt){
       this.setState({inputSearch:evt.target.value})
@@ -44,7 +49,7 @@ class UnconnectedFilterDropdown extends Component {
     
   }
   //add movie to each of the following checked lists //TODO
-  // reqbody=[listId1,listId2,listId3,list4,movieObject]
+  // reqbody={lists:[listId1,listId2,listId3,list4],movieObject:movieObject]
   handleAddToList(){
     axios({
         post:"",
@@ -92,10 +97,15 @@ class UnconnectedFilterDropdown extends Component {
     
 
   render() {
-      
-    return <div style={{width:"150px",maxheight:"300px",overflowY:"scroll",border:"2px solid"}}>
+    if(this.state.showMenu){
+        document.addEventListener("click",()=>{this.closeMenu()})
+        return <div style={{width:"150px",maxeight:"300px",overflowY:"scroll",border:"2px solid"}}>
        {this.RenderMenu()}
     </div>
+    }else{
+        return <div></div>
+    }
+    
   }
 }
 

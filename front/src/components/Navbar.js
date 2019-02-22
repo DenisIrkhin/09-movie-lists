@@ -142,7 +142,7 @@ class UnconnectedNavbar extends Component {
                 movie.vote_average
               }/10</p>
               <div class="btn-group" role="group">
-              <button type="button" class="add-list-button-left buttonMovie-small" >ADD TO MY LIST</button>
+              <button type="button" class="add-list-button-left buttonMovie-small"  >ADD TO MY LIST</button>
               <button type="button" class="add-list-button-right buttonMovie-small" id="see-more-small" value="${
                 movie.id
               }">SEE MORE INFO</button>
