@@ -22,7 +22,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "cd ../back && nodemon server.js",
-    "dev": "concurrently \"npm run start\" \"npm run server\""
+    "dev": "concurrently \"npm run start\" \"npm run server\"",
+    "inst": "yarn --cwd ../back install && yarn install"
   },
   "proxy": "http://localhost:5050",
   "eslintConfig": {

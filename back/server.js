@@ -14,7 +14,7 @@ const path = require('path')
 
 // Bring server config parameters depending on where the server runs
 const config = require('./config/param')
-console.log('config ', config)
+// console.log('config ', config)
 
 const testsRoute = require('./routes/api/tests')
 const usersRoute = require('./routes/api/users')

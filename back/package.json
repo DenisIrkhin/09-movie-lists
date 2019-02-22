@@ -12,7 +12,8 @@
     "build": "cd ../front && yarn build",
     "prod": "NODE_ENV=production node server.js",
     "do-prod": "NODE_ENV=production node -r dotenv/config server.js",
-    "do-b-run": "yarn --cwd ../front build && NODE_ENV=production node -r dotenv/config server.js"
+    "do-b-run": "yarn --cwd ../front build && NODE_ENV=production node -r dotenv/config server.js",
+    "inst": "yarn --cwd ../front install && yarn install"
   },
   "keywords": [],
   "author": "",
