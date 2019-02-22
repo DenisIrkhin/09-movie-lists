@@ -18,7 +18,8 @@ const ModalStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    zIndex: '50000000000'
+    zIndex: '50000000000',
+    textAlign: 'center'
   }
 }
 
@@ -253,7 +254,7 @@ class UnconnectedMakeList extends Component {
   addList() {
     let that = this
     //tags will be sent as a string which separates the movies with ^^ .
-    let tagBody = this.state.tags.join(" ^^ ");
+    let tagBody = this.state.tags.join(' ^^ ')
     let reqBody = {
       name: this.state.inputTitle,
       movieArr: this.state.chosenMovies, /////TODO
@@ -309,8 +310,13 @@ class UnconnectedMakeList extends Component {
             style={ModalStyles}
           >
             <h5>Confirm to finish making List</h5>
-            <button onClick={this.addList}>Confirm</button>
-            <button onClick={() => this.setState({ modalIsOpen: false })}>
+            <button onClick={this.addList} className="button-modal-list">
+              Confirm
+            </button>
+            <button
+              onClick={() => this.setState({ modalIsOpen: false })}
+              className="button-modal-list"
+            >
               Not yet
             </button>
           </Modal>

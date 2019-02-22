@@ -96,49 +96,6 @@ class UnconnectedNavbar extends Component {
   //   // return imdbId
   // }
 
-  // seeMore = () => {
-  //   document.getElementById('see-more-small').addEventListener('click', () => {
-  //     let id = document.getElementById('see-more-small').value
-  //     console.log(id)
-  //     axios
-  //       .get(
-  //         'https://api.themoviedb.org/3/movie/' +
-  //           id +
-  //           '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
-  //       )
-  //       .then(function(response) {
-  //         console.log('works?', response.data)
-  //       })
-  //   })
-  // }
-
-  seeMore = () => {
-    //   document.getElementById('see-more-large').addEventListener('click', () => {
-    //     let id = document.getElementById('see-more-large').value
-    //     console.log(id)
-    //   })
-    // }
-    document.getElementById('see-more-large').addEventListener('click', () => {
-      let id = document.getElementById('see-more-large').value
-      if (id) {
-        this.props.history.push('/movie')
-        axios
-          .get(
-            'https://api.themoviedb.org/3/movie/' +
-              id +
-              '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
-          )
-          .then(function(response) {
-            console.log('works?', response.data)
-            return
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      }
-    })
-  }
-
   getMovies(searchText) {
     if (searchText === '') {
       this.props.history.push('/')
@@ -196,7 +153,6 @@ class UnconnectedNavbar extends Component {
             }
           }
           $('#movies').html(output)
-          this.seeMore()
         })
         .catch(err => {
           console.log(err)
