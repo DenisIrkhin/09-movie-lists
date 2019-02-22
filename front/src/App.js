@@ -137,6 +137,11 @@ class UnconnectedApp extends Component {
     return <TagSearchResults tag={tag}></TagSearchResults>
   }
 
+  closePopup(event){
+    event.stopPropagation()
+    this.props.dispatch()
+  }
+
   render() {
     if (this.state.verified) {
       return (

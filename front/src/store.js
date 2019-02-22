@@ -7,7 +7,6 @@ let reducer = function(state, action) {
     console.log("action login used")
     return {...state,state:{...state.state,loggedIn:true,user:action.payload}}
 
-
     case "logout":
     if(document.cookie.includes("__sid__")){
       document.cookie='__sid__=""'
