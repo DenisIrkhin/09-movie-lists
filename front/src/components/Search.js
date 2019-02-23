@@ -137,7 +137,7 @@ class Search extends Component {
       }
       if(target.matches("#addMovieToLists")){
         let id=target.value
-        console.log('target.value', target.value)
+        console.log('target', target)
         console.log("fetch to get specific movie object based on")
         axios.get(
           'https://api.themoviedb.org/3/movie/' +
@@ -155,13 +155,20 @@ class Search extends Component {
   renderFilterDropdown(){
     if(this.state.addingToList){
       return(
-        <FilterDropdown></FilterDropdown>
+        <FilterDropdown movie={this.state.movie} xPos={this.state.xPos} yPos={this.state.yPos} parent={this}></FilterDropdown>
       )
     }
   }
   render() {
     return (
-      <div className="container-fluid main-container-search vh-100">
+      <div className="container-fluid main-container-search vh-100" onMouseMove={(e)=>{
+        // console.log("event triggered")
+        // console.log('e.clientX', e.clientX)
+        // console.log('e.clientY', e.clientY)
+        // console.log('window.scrollX', window.scrollX)
+        // console.log('window.scrollY', window.scrollY)
+
+        this.setState({xPos:e.clientX,yPos:e.clientY})}}>
         <div id="movies" className="row pt-5" />
         {this.renderFilterDropdown()}
       </div>
