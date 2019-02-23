@@ -125,7 +125,7 @@ class UnconnectedNavbar extends Component {
             <div class="well img-holder-search">
               <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
               <div class="btn-group-vertical" role="group">
-              <button type="button" class="add-list-button-left buttonMovie-large" onClick={console.log("i just clicked to add list")}>ADD TO MY LIST</button>
+              <button type="button" class="add-list-button-left buttonMovie-large" id="addMovieToLists" value="${movie.id}" >ADD TO MY LIST</button>
               <button type="button" class="add-list-button-right buttonMovie-large" id="see-more-large" value="${
                 movie.id
               }">SEE MORE INFO</button>
@@ -142,7 +142,7 @@ class UnconnectedNavbar extends Component {
                 movie.vote_average
               }/10</p>
               <div class="btn-group" role="group">
-              <button type="button" class="add-list-button-left buttonMovie-small"  >ADD TO MY LIST</button>
+              <button type="button" class="add-list-button-left buttonMovie-small" id="addMovieToLists" value="${movie.id}" >ADD TO MY LIST</button>
               <button type="button" class="add-list-button-right buttonMovie-small" id="see-more-small" value="${
                 movie.id
               }">SEE MORE INFO</button>

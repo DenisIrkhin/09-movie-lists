@@ -3,13 +3,17 @@ import axios from 'axios'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import $ from 'jquery'
+import FilterDropdown from './FilterDropdown';
 
 class Search extends Component {
   constructor() {
     super()
+    this.state={addingToList:false}
+    this.renderFilterDropdown=this.renderFilterDropdown.bind(this)
   }
 
   componentDidMount() {
+    let that=this
     let moviesCheck = document.getElementById('movies')
     moviesCheck.addEventListener('click', ({ target }) => {
       if (target.matches('#see-more-large')) {
@@ -131,13 +135,35 @@ class Search extends Component {
             console.log(err)
           })
       }
+      if(target.matches("#addMovieToLists")){
+        let id=target.value
+        console.log('target.value', target.value)
+        console.log("fetch to get specific movie object based on")
+        axios.get(
+          'https://api.themoviedb.org/3/movie/' +
+            id +
+            '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
+        ).then((response)=>{
+          console.log('response', response)
+          let movie=response.data
+          console.log('movie', movie)
+          that.setState({movie:movie,addingToList:true})
+        })
+      }
     })
   }
-
+  renderFilterDropdown(){
+    if(this.state.addingToList){
+      return(
+        <FilterDropdown></FilterDropdown>
+      )
+    }
+  }
   render() {
     return (
       <div className="container-fluid main-container-search vh-100">
         <div id="movies" className="row pt-5" />
+        {this.renderFilterDropdown()}
       </div>
     )
   }

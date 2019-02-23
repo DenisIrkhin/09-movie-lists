@@ -16,9 +16,10 @@ class UnconnectedFilterDropdown extends Component {
     this.state = {
       showMenu: true,
       inputSearch: "",
+      movie:this.props.movie,
       checkedListsIds: [],
-      xPos: "",
-      yPos: ""
+      xPos: this.props.clientX,
+      yPos: this.props.clientY
     };
     this.RenderMenu = this.RenderMenu.bind(this);
     this.handleInputSearch = this.handleInputSearch.bind(this);
