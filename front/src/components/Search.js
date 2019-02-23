@@ -3,22 +3,22 @@ import axios from 'axios'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import $ from 'jquery'
-import FilterDropdown from './FilterDropdown';
+import FilterDropdown from './FilterDropdown'
 
 class Search extends Component {
   constructor() {
     super()
-    this.state={addingToList:false}
-    this.renderFilterDropdown=this.renderFilterDropdown.bind(this)
+    this.state = { addingToList: false }
+    this.renderFilterDropdown = this.renderFilterDropdown.bind(this)
   }
 
   componentDidMount() {
-    let that=this
+    let that = this
     let moviesCheck = document.getElementById('movies')
     moviesCheck.addEventListener('click', ({ target }) => {
       if (target.matches('#see-more-large')) {
         let id = target.value
-        this.props.history.push('/movie/'+id)
+        this.props.history.push('/movie/' + id)
         axios
           .get(
             'https://api.themoviedb.org/3/movie/' +
@@ -135,40 +135,51 @@ class Search extends Component {
             console.log(err)
           })
       }
-      if(target.matches("#addMovieToLists")){
-        let id=target.value
+      if (target.matches('#addMovieToLists')) {
+        let id = target.value
         console.log('target', target)
-        console.log("fetch to get specific movie object based on")
-        axios.get(
-          'https://api.themoviedb.org/3/movie/' +
-            id +
-            '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
-        ).then((response)=>{
-          console.log('response', response)
-          let movie=response.data
-          console.log('movie', movie)
-          that.setState({movie:movie,addingToList:true})
-        })
+        console.log('fetch to get specific movie object based on')
+        axios
+          .get(
+            'https://api.themoviedb.org/3/movie/' +
+              id +
+              '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
+          )
+          .then(response => {
+            console.log('response', response)
+            let movie = response.data
+            console.log('movie', movie)
+            that.setState({ movie: movie, addingToList: true })
+          })
       }
     })
   }
-  renderFilterDropdown(){
-    if(this.state.addingToList){
-      return(
-        <FilterDropdown movie={this.state.movie} xPos={this.state.xPos} yPos={this.state.yPos} parent={this}></FilterDropdown>
+  renderFilterDropdown() {
+    if (this.state.addingToList) {
+      return (
+        <FilterDropdown
+          movie={this.state.movie}
+          xPos={this.state.xPos}
+          yPos={this.state.yPos}
+          parent={this}
+        />
       )
     }
   }
   render() {
     return (
-      <div className="container-fluid main-container-search vh-100" onMouseMove={(e)=>{
-        // console.log("event triggered")
-        // console.log('e.clientX', e.clientX)
-        // console.log('e.clientY', e.clientY)
-        // console.log('window.scrollX', window.scrollX)
-        // console.log('window.scrollY', window.scrollY)
+      <div
+        className="container-fluid main-container-search"
+        onMouseMove={e => {
+          // console.log("event triggered")
+          // console.log('e.clientX', e.clientX)
+          // console.log('e.clientY', e.clientY)
+          // console.log('window.scrollX', window.scrollX)
+          // console.log('window.scrollY', window.scrollY)
 
-        this.setState({xPos:e.clientX,yPos:e.clientY})}}>
+          this.setState({ xPos: e.clientX, yPos: e.clientY })
+        }}
+      >
         <div id="movies" className="row pt-5" />
         {this.renderFilterDropdown()}
       </div>

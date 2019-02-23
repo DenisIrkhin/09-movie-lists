@@ -311,13 +311,13 @@ class UnconnectedMakeList extends Component {
           >
             <h5>Confirm to finish making List</h5>
             <button onClick={this.addList} className="button-modal-list">
-              Confirm
+              CONFIRM
             </button>
             <button
               onClick={() => this.setState({ modalIsOpen: false })}
               className="button-modal-list"
             >
-              Not yet
+              NOT YET
             </button>
           </Modal>
         </div>
