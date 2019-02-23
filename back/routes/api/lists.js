@@ -135,6 +135,60 @@ router.put('/id', async (req, res) => {
   }
 })
 
+// Push movieObject to movieArr of several lists. Check for sessionId(user) first
+// @@ PUT /api/lists/add-movie
+router.put('/add-movie', async (req, res) => {
+  console.log('*******************************************')
+  console.log('req.body from put. /lists/add-movie ', req.body)
+  console.log('All Cookies: ', req.cookies)
+
+  let listArrObjectIds = req.body.lists.map(el => {
+    console.log(ObjectID(el))
+    return ObjectID(el)
+  })
+  console.log('listArrObjectIds', listArrObjectIds)
+  let { movieObject } = req.body
+  console.log('movieObject', movieObject)
+
+  let userId = ''
+
+  try {
+    // Get user' email by cookie
+    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    console.log('userId 71', userId)
+  } catch (err) {
+    console.log('err103 when resolving getUserIdByCookies', err)
+    return res.status(400).json({ success: false, message: `Can't define user`, error: err.message })
+  }
+
+  // Search for id and that userId of list maches with userId
+  // in case filter condition is not true (user does NOT match current user)
+  // Mongo does NOT throw err but return result with result.modifiedCount = 0
+  // We handle this
+  // NOTE: { returnOriginal: false } is MongoClient implementation.
+  // In mongoose we can try { new: true}
+  // in MongoDocs {returnNewDocument : true }
+  try {
+    let result = await (dbo.collection('lists').updateMany(
+      // { $and: [{ _id: ObjectID(listId) }, { userId }] },
+      { $and: [{ _id: { $in: listArrObjectIds } }, { userId }] },
+      { $push: {
+        movieArr: movieObject
+      } },
+      { returnOriginal: false }
+    ))
+    console.log('result', result.result)
+    // console.log('result.value', result.value)
+    if (result.modifiedCount === 0) {
+      return res.status(400).json({ success: false, message: `You don't have right to change that list` })
+    }
+    return res.status(200).json({ success: true, message: `List updated`, result: result.result })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ success: true, message: `Something goes wrong`, error })
+  }
+})
+
 // Delete one user's list. Check for sessionId(user) first
 // @@ DELETE /api/lists/id
 router.delete('/id', async (req, res) => {
