@@ -128,7 +128,7 @@ class UnconnectedLists extends Component {
       return <Redirect to="/loginalert" />
     } else {
       return (
-        <div className="container-fluid main-container-lists vh-100">
+        <div className="container-fluid main-container-lists">
           <h2>Your Lists</h2>
           <div className="container">
             <div className="row">

@@ -45,35 +45,43 @@ class UnconnnectedList extends Component {
         return <h4>There is no list to be displayed</h4>
       } else {
         return (
-          <div className="bg-success">
-            <h4>List:{this.state.list.name}</h4>
-            <FacebookShareButton
-              url={window.location.href}
-              className={'fab fa-facebook'}
-            />
-            <TwitterShareButton
-              url={window.location.href}
-              className={'fab fa-twitter-square'}
-            />
-            <ol>
-              {this.state.list.movieArr.map(function(elem) {
-                return (
-                  <div>
-                    <Link to={'/movie/' + elem.id}>
-                      <li style={{ margin: '10px' }}>
+          <div className="container-fluid main-container-list">
+            <div className="container">
+              <div className="title-social-list">
+                <h3>List: {this.state.list.name}</h3>
+                <span className="list-icons">
+                  <FacebookShareButton
+                    url={window.location.href}
+                    className={'fab fa-facebook ml-1 mr-1 icon-list'}
+                  />
+                  <TwitterShareButton
+                    url={window.location.href}
+                    className={'fab fa-twitter-square ml-1 mr-1 icon-list'}
+                  />
+                </span>
+              </div>
+              <ol className="single-list-holder">
+                {this.state.list.movieArr.map(function(elem) {
+                  return (
+                    <div>
+                      <li className="list-item">
                         <img
                           src={
                             'https://image.tmdb.org/t/p/w500' + elem.poster_path
                           }
                           style={{ maxHeight: '50px' }}
                         />
-                        {elem.original_title}
+                        <Link to={'/movie/' + elem.id}>
+                          <span className="title-list">
+                            {elem.original_title}
+                          </span>
+                        </Link>
                       </li>
-                    </Link>
-                  </div>
-                )
-              })}
-            </ol>
+                    </div>
+                  )
+                })}
+              </ol>
+            </div>
           </div>
         )
       }
