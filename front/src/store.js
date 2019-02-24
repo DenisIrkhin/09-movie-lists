@@ -19,7 +19,7 @@ let reducer = function(state, action) {
       console.log("action logout used");
       return {
         ...state,
-        state: { ...state.state, loggedIn: false, user: "not logged in" }
+        state: { ...state.state, loggedIn: false, user: "not logged in",lists:[] }
       };
 
     case "getLists":

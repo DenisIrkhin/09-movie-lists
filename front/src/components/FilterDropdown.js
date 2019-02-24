@@ -105,7 +105,9 @@ class UnconnectedFilterDropdown extends Component {
         </li>
       );
     };
+    
     let mappedMenuOptions = filteredMenu.map(makeMenuOptions);
+    if(mappedMenuOptions.length===0){mappedMenuOptions= <Link to="./lists/makelist"><div>No lists. Click here to create a List</div></Link>}
 
     return (
       <div
