@@ -8,6 +8,7 @@ import App from '../App.js'
 import { withRouter } from 'react-router'
 import Modal from 'react-modal'
 import { isThisQuarter } from 'date-fns'
+import {EditLists} from "./EditList"
 import { FacebookShareButton, TwitterShareButton } from 'react-share'
 
 class UnconnectedLists extends Component {
@@ -15,6 +16,7 @@ class UnconnectedLists extends Component {
     super(props)
     this.displayLists = this.displayLists.bind(this)
     this.deleteList = this.deleteList.bind(this)
+    this.editList=this.editList.bind(this)
   }
   componentDidMount() {
     console.log('fetched to get list')
@@ -44,6 +46,11 @@ class UnconnectedLists extends Component {
       console.log('responseLists', responseLists)
       this.props.dispatch({ type: 'getLists', payload: responseLists })
     })
+  }
+
+  editList(list){
+    this.props.dispatch({type:"editList",payload:list})
+    this.props.history.push("./lists/editlist")
   }
 
   deleteList(listId) {
@@ -86,7 +93,9 @@ class UnconnectedLists extends Component {
                 url={window.location.origin + '/lists/' + elem._id}
                 className={'fab fa-twitter-square'}
               />
-              <span name="edit" className="far fa-edit MouseOver " />
+              <span name="edit" className="far fa-edit MouseOver " onClick={()=>{
+                that.editList(elem);
+              }} />
               <span
                 name="delete"
                 className="fas fa-trash-alt MouseOver "

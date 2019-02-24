@@ -23,6 +23,7 @@ import TagSearchResults from "./components/TagSearchResults"
 
 import { BACKEND_DOMAIN } from './Global'
 import SearchListResults from './components/SearchListResults'
+import EditList from './components/EditList';
 
 //GLOBAL VARIABLES
 
@@ -108,12 +109,16 @@ class UnconnectedApp extends Component {
     console.log('makelist component rendered')
     return <MakeList />
   }
+  renderEditList(){
+    console.log("editlist component rendered")
+    return <EditList></EditList>
+  }
   renderLists(routerData) {
     console.log('lists component rendered')
     return <Lists />
   }
   renderList(routerData) {
-    if (routerData.match.params.id === 'makelist') {
+    if (routerData.match.params.id === 'makelist' || routerData.match.params.id==='editlist') {
       return <div />
     }
     console.log('specific list component rendered')
@@ -158,6 +163,7 @@ class UnconnectedApp extends Component {
             <Route exact path="/lists/makelist" render={this.renderMakeList} />
             <Route exact path="/lists" render={this.renderLists} />
             <Route exact path={'/lists/:id'} render={this.renderList} />
+            <Route exact path={'/lists/editlist'} render={this.renderEditList} />
             <Route
               exact
               path={'/searchlistresults/:id'}
