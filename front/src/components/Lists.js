@@ -8,7 +8,7 @@ import App from '../App.js'
 import { withRouter } from 'react-router'
 import Modal from 'react-modal'
 import { isThisQuarter } from 'date-fns'
-import {EditLists} from "./EditList"
+import { EditLists } from './EditList'
 import { FacebookShareButton, TwitterShareButton } from 'react-share'
 
 class UnconnectedLists extends Component {
@@ -16,7 +16,7 @@ class UnconnectedLists extends Component {
     super(props)
     this.displayLists = this.displayLists.bind(this)
     this.deleteList = this.deleteList.bind(this)
-    this.editList=this.editList.bind(this)
+    this.editList = this.editList.bind(this)
   }
   componentDidMount() {
     console.log('fetched to get list')
@@ -48,9 +48,9 @@ class UnconnectedLists extends Component {
     })
   }
 
-  editList(list){
-    this.props.dispatch({type:"editList",payload:list})
-    this.props.history.push("./lists/editlist")
+  editList(list) {
+    this.props.dispatch({ type: 'editList', payload: list })
+    this.props.history.push('./lists/editlist')
   }
 
   deleteList(listId) {
@@ -80,25 +80,29 @@ class UnconnectedLists extends Component {
         // console.log('index', index)
 
         return (
-          <li>
+          <li className="each-list">
             <Link to={'lists/' + elem._id}>
-              <span>{elem.name}</span>
+              <span className="title-lists">{elem.name}</span>
             </Link>
-            <span style={{ float: 'right' }}>
+            <span className="lists-icons">
               <FacebookShareButton
                 url={window.location.origin + '/lists/' + elem._id}
-                className={'fab fa-facebook'}
+                className={'fab fa-facebook ml-1 mr-1 icon-lists'}
               />
               <TwitterShareButton
                 url={window.location.origin + '/lists/' + elem._id}
-                className={'fab fa-twitter-square'}
+                className={'fab fa-twitter-square ml-1 mr-1 icon-lists'}
               />
-              <span name="edit" className="far fa-edit MouseOver " onClick={()=>{
-                that.editList(elem);
-              }} />
+              <span
+                name="edit"
+                className="far fa-edit MouseOver ml-1 mr-1 icon-lists"
+                onClick={() => {
+                  that.editList(elem)
+                }}
+              />
               <span
                 name="delete"
-                className="fas fa-trash-alt MouseOver "
+                className="fas fa-trash-alt MouseOver ml-1 mr-1 icon-lists"
                 onClick={() => that.deleteList(elem._id)}
               />
             </span>
@@ -124,9 +128,13 @@ class UnconnectedLists extends Component {
       return <Redirect to="/loginalert" />
     } else {
       return (
-        <div>
+        <div className="container-fluid main-container-lists vh-100">
           <h2>Your Lists</h2>
-          <ol>{this.displayLists()}</ol>
+          <div className="container">
+            <div className="row">
+              <ul className="lists-holder">{this.displayLists()}</ul>
+            </div>
+          </div>
         </div>
       )
     }

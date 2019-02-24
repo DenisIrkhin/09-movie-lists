@@ -161,7 +161,7 @@ html {
   font-weight: 500;
   border: 1px solid #eed479;
   background-color: #fce181;
-  box-shadow: none;
+  box-shadow: none !important;
   border-radius: 5px;
 }
 
@@ -169,7 +169,11 @@ html {
   color: #917d35;
   border: 1px solid #dbc268;
   background-color: #f0d471;
-  box-shadow: none;
+  box-shadow: none !important;
+}
+
+.btn-color-main:focus {
+  box-shadow: none !important;
 }
 
 .second-main {
@@ -398,7 +402,7 @@ html {
   border-bottom-right-radius: 0px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 0px;
-  box-shadow: none;
+  box-shadow: none !important;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 20px;
@@ -417,7 +421,7 @@ html {
   border-bottom-right-radius: 5px;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 5px;
-  box-shadow: none;
+  box-shadow: none !important;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 20px;
@@ -428,14 +432,14 @@ html {
   color: #917d35;
   border: 1px solid #dbc268;
   background-color: #f0d471;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .add-list-button-right:hover {
   color: #917d35;
   border: 1px solid #dbc268;
   background-color: #f0d471;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 @media only screen and (max-width: 600px) {
@@ -532,7 +536,7 @@ html {
   font-weight: 500;
   border: 1px solid #eed479;
   background-color: #fce181;
-  box-shadow: none;
+  box-shadow: none !important;
   padding-top: 3%;
   padding-bottom: 3%;
   padding-left: 6%;
@@ -544,11 +548,15 @@ html {
   color: #917d35;
   border: 1px solid #dbc268;
   background-color: #f0d471;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .button-movie-page:focus {
-  box-shadow: none;
+  box-shadow: none !important;
+}
+
+.button-movie-page:focus {
+  box-shadow: none !important;
 }
 
 .single-movie-holder ul {
@@ -652,7 +660,7 @@ html {
   font-weight: 500;
   border: 1px solid #eed479;
   background-color: #fce181;
-  box-shadow: none;
+  box-shadow: none !important;
   padding-top: 4%;
   padding-bottom: 4%;
   padding-left: 14%;
@@ -664,11 +672,11 @@ html {
   color: #917d35;
   border: 1px solid #dbc268;
   background-color: #f0d471;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 #button-premium:focus {
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 /*LOGIN*/
@@ -687,7 +695,7 @@ html {
   font-weight: 500;
   border: 1px solid #eed479;
   background-color: #fce181;
-  box-shadow: none;
+  box-shadow: none !important;
   padding-top: 4%;
   padding-bottom: 4%;
   padding-left: 34%;
@@ -699,11 +707,75 @@ html {
   color: #917d35;
   border: 1px solid #dbc268;
   background-color: #f0d471;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .button-login-signup:focus {
-  box-shadow: none;
+  box-shadow: none !important;
+}
+
+/*LISTS*/
+
+.main-container-lists {
+  min-height: 100%;
+  padding-top: 5%;
+  padding-bottom: 10%;
+  background-color: #edeae5;
+  margin: auto;
+  justify-content: center;
+}
+
+.lists-holder {
+  width: 70%;
+  text-align: left;
+  margin: auto;
+  margin-top: 4%;
+  justify-content: center;
+  padding: 4%;
+  background: #f7f7f7;
+  border-radius: 5px;
+  border: 1px solid rgb(202, 202, 202);
+}
+
+.each-list {
+  width: 100%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-radius: 5px;
+  list-style-type: none;
+  background: white;
+  border: 1px solid rgb(221, 221, 221);
+}
+
+.title-lists {
+  color: rgb(83, 83, 83);
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.title-lists:hover {
+  color: blue;
+}
+
+.lists-icons {
+  float: right;
+}
+
+.icon-lists {
+  color: rgb(83, 83, 83);
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  transition: top ease 0.5s;
+}
+
+.icon-lists:hover {
+  top: -3px;
 }
 
 .modal-message {
