@@ -166,6 +166,14 @@ class Search extends Component {
       )
     }
   }
+
+  //Returns the last saved local storage result and returns as ouput
+  //Works with back button and refresh
+  checkLocalStorage = () => {
+    let output = $($.parseHTML(localStorage.getItem('movies')))
+    $('#movies').html(output)
+  }
+
   render() {
     return (
       <div
@@ -181,6 +189,7 @@ class Search extends Component {
         }}
       >
         <div id="movies" className="row pt-5" />
+        {this.checkLocalStorage()}
         {this.renderFilterDropdown()}
       </div>
     )

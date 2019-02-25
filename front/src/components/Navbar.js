@@ -8,6 +8,12 @@ import $ from 'jquery'
 import SearchList from './SearchBarList'
 
 class UnconnectedNavbar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      moviesSearch: ''
+    }
+  }
   CheckIfLoggedIn() {
     if (!this.props.loggedIn) {
       return (
@@ -150,7 +156,11 @@ class UnconnectedNavbar extends Component {
           </div>`
             }
           }
+          this.setState({ moviesSearch: output })
+          //Pushes the html content to the local storage to access from the search as history
+          localStorage.setItem('movies', this.state.moviesSearch)
           $('#movies').html(output)
+          console.log('STATE', this.state.moviesSearch)
         })
         .catch(err => {
           console.log(err)
