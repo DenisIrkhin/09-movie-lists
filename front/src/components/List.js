@@ -13,24 +13,24 @@
 //     super(props)
 //     this.state = { list: [] }
 //     this.displayList = this.displayList.bind(this)
-import React, { Component } from "react";
-import "../css/style.css";
-import { Redirect, Link } from "react-router-dom";
-import "../css/LoginSignup.css";
-import { connect } from "react-redux";
-import axios from "axios";
-import App from "../App.js";
-import Modal from "react-modal";
-import {withRouter} from 'react-router'
-import {FacebookShareButton,TwitterShareButton} from 'react-share'
+import React, { Component } from 'react'
+import '../css/style.css'
+import { Redirect, Link } from 'react-router-dom'
+import '../css/LoginSignup.css'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import App from '../App.js'
+import Modal from 'react-modal'
+import { withRouter } from 'react-router'
+import { FacebookShareButton, TwitterShareButton } from 'react-share'
 
 class UnconnnectedList extends Component {
   constructor(props) {
-    super(props);
-    this.state = { list: [] };
-    this.displayList = this.displayList.bind(this);
+    super(props)
+    this.state = { list: [] }
+    this.displayList = this.displayList.bind(this)
     this.deleteList = this.deleteList.bind(this)
-    this.editList=this.editList.bind(this)
+    this.editList = this.editList.bind(this)
   }
   componentDidMount() {
     let that = this
@@ -87,9 +87,9 @@ class UnconnnectedList extends Component {
   //     this.props.history.push("./")
   //   })
   // }
-  editList(list){
-    this.props.dispatch({type:"editList",payload:list})
-    this.props.history.push("./editlist")
+  editList(list) {
+    this.props.dispatch({ type: 'editList', payload: list })
+    this.props.history.push('./editlist')
   }
   deleteList(listId) {
     let that = this
@@ -118,28 +118,30 @@ class UnconnnectedList extends Component {
       let responseLists = response.data.lists
       console.log('responseLists', responseLists)
       this.props.dispatch({ type: 'getLists', payload: responseLists })
-      this.props.history.push("./")
+      this.props.history.push('./')
     })
   }
 
-//elem is list object
-  ownerTools(elem){
-    let that=this
-    if(elem.userId===this.props.userId){
-
-    
-    return(
-      <div>
-      <span name="edit" className="far fa-edit MouseOver " onClick={()=>{
-        that.editList(elem);
-      }} />
-      <span
-                name="delete"
-                className="fas fa-trash-alt MouseOver "
-                onClick={() => that.deleteList(elem._id)}
-              />
-              </div>
-    )
+  //elem is list object
+  ownerTools(elem) {
+    let that = this
+    if (elem.userId === this.props.userId) {
+      return (
+        <React.Fragment>
+          <span
+            name="edit"
+            className="far fa-edit ml-1 mr-1 icon-list "
+            onClick={() => {
+              that.editList(elem)
+            }}
+          />
+          <span
+            name="delete"
+            className="fas fa-trash-alt ml-1 mr-1 icon-list"
+            onClick={() => that.deleteList(elem._id)}
+          />
+        </React.Fragment>
+      )
     }
   }
 
@@ -191,7 +193,7 @@ class UnconnnectedList extends Component {
                 })}
               </ol>
             </div>
-          {/* <div>
+            {/* <div>
             <h4>List:{this.state.list.name}</h4>
             <FacebookShareButton url={window.location.href} className={"fab fa-facebook"}></FacebookShareButton>
             <TwitterShareButton url={window.location.href} className={"fab fa-twitter-square"}></TwitterShareButton>
@@ -218,10 +220,10 @@ class UnconnnectedList extends Component {
   }
 }
 
-let mapStateToProps=function(state){
-    return {userId:state.state.userId}
+let mapStateToProps = function(state) {
+  return { userId: state.state.userId }
 }
 
-let List = connect(mapStateToProps)(withRouter(UnconnnectedList));
+let List = connect(mapStateToProps)(withRouter(UnconnnectedList))
 
 export default List
