@@ -332,7 +332,6 @@ html {
 
 .title-search-result {
   font-size: 28px;
-  font-weight: 500;
   color: #414141;
   margin-bottom: 15px;
 }
@@ -737,6 +736,12 @@ html {
   border: 1px solid rgb(202, 202, 202);
 }
 
+@media only screen and (max-width: 600px) {
+  .lists-holder {
+    text-align: center;
+  }
+}
+
 .each-list {
   width: 100%;
   margin-bottom: 2%;
@@ -758,12 +763,24 @@ html {
   cursor: pointer;
 }
 
+@media only screen and (max-width: 600px) {
+  .title-lists {
+    display: block;
+  }
+}
+
 .title-lists:hover {
   color: blue;
 }
 
 .lists-icons {
   float: right;
+}
+
+@media only screen and (max-width: 600px) {
+  .lists-icons {
+    float: none;
+  }
 }
 
 .icon-lists {
@@ -858,6 +875,41 @@ html {
   margin-left: 10px;
 }
 /*MAKE LISTS*/
+
+.search-add-list {
+  width: 100%;
+}
+
+.add-to-list-button {
+  width: 100%;
+  font-size: 14px;
+  cursor: pointer;
+  color: #a8903d;
+  font-weight: 500;
+  border: 1px solid #eed479;
+  background-color: #fce181;
+  box-shadow: none !important;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-radius: 5px;
+}
+
+.add-to-list-button:hover {
+  color: #917d35;
+  border: 1px solid #dbc268;
+  background-color: #f0d471;
+  box-shadow: none !important;
+}
+
+.add-to-list-button:focus {
+  box-shadow: none !important;
+}
+
+.list-search-add-list {
+  list-style: none;
+}
 
 /* .tag {
   transition: all ease 300ms;

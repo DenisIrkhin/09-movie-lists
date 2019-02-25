@@ -207,9 +207,23 @@ html {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
+  background-color: gray;
+  height: 90px;
+  width: 60px;
+  padding: 0;
+  opacity: 0.7;
+}
+
+@media only screen and (max-width: 768px) {
+  .icon-trash {
+    height: 110px;
+    width: 80px;
+  }
 }
 
 .icon-trash:hover {
+  opacity: 0.8;
+  text-decoration: none;
   color: white;
 }
 
@@ -222,6 +236,11 @@ html {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.trash {
+  position: relative;
+  top: calc(50% - 12px);
 }
 
 .each-chosen-movie-holder:hover .middle {

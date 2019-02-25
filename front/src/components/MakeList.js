@@ -55,7 +55,7 @@ class ChosenMovies extends Component {
           />
           <div className="middle">
             <a href="#" className="icon-trash">
-              <i className="far fa-trash-alt" />
+              <i className="far fa-trash-alt trash" />
             </a>
           </div>
           {/* <div className="image-inside-list-title">{elem.original_title}</div> */}
