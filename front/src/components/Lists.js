@@ -133,8 +133,10 @@ class UnconnectedLists extends Component {
   }
 
   displayTags(){
+
+    
     let renderDomElement=(elem)=>{
-      return <span><span>{elem}</span><span className="fas fa-tag"></span></span>
+      return <Link to={"./searchtags/"+elem}><span><span>{elem}</span><span className="fas fa-tag"></span></span></Link>
     }
     return this.state.uniqueTags.map(renderDomElement)
   }
@@ -184,6 +186,7 @@ class UnconnectedLists extends Component {
         </div>
         <div>
           <h2>Your Tags</h2>
+          {this.displayTags()}
         </div>
         </div>
 

@@ -31,7 +31,7 @@ class TagSearchResults extends Component{
             data: {search:""}
           }).then(response => {
             console.log("response", response);
-            let allLists=response.data.sortedRankedList
+            let allLists=response.data.sortedRankedLists
             console.log('allLists', allLists)
             if(this.props.tag===this.state.tag){
                 return
