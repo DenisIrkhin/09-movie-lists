@@ -179,7 +179,7 @@ router.post('/check', async (req, res) => {
   }
 
   // Take out fields we need from user obj
-  let { email } = user
+  let { email, _id } = user
 
   // Create new session id and save it to dbo
   let sessionId = sessionIdGenerator()
@@ -188,7 +188,7 @@ router.post('/check', async (req, res) => {
     let result = await (dbo.collection('sessions').insertOne(sessionElem))
     console.log('new session doc added', result.ops[0])
     res.cookie('__sid__', `${sessionId}`)
-    return res.status(200).json({ success: true, message: 'user found', email })
+    return res.status(200).json({ success: true, message: 'user found', email, userId: _id })
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: false, message: 'Something goes wrong', error })
