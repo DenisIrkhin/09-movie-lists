@@ -19,6 +19,7 @@ class UnconnectedLists extends Component {
     this.deleteList = this.deleteList.bind(this);
     this.editList = this.editList.bind(this);
     this.setDisplayedTags = this.setDisplayedTags.bind(this);
+    this.displayTags=this.displayTags.bind(this)
 
   }
   
@@ -131,6 +132,12 @@ class UnconnectedLists extends Component {
     } catch {}
   }
 
+  displayTags(){
+    let renderDomElement=(elem)=>{
+      return <span><span>{elem}</span><span className="fas fa-tag"></span></span>
+    }
+    return this.state.uniqueTags.map(renderDomElement)
+  }
   setDisplayedTags() {
     if (true) {
       console.log("displaying all tags in the lists.....");
@@ -166,7 +173,7 @@ class UnconnectedLists extends Component {
     if (!this.props.loggedIn) {
       return <Redirect to="/loginalert" />;
     } else {
-      return (
+      return (<div className="row">
         <div className="container-fluid main-container-lists">
           <h2>Your Lists</h2>
           <div className="container">
@@ -175,6 +182,11 @@ class UnconnectedLists extends Component {
             </div>
           </div>
         </div>
+        <div>
+          <h2>Your Tags</h2>
+        </div>
+        </div>
+
       );
     }
   }

@@ -40,7 +40,7 @@ class SearchListResults extends Component {
     }).then(response => {
       console.log("response", response);
       if(searchQuery!==that.state.searchQuery){
-      that.setState({ results: response.data.sortedRankedList ,searchQuery:searchQuery});
+      that.setState({ results: response.data.sortedRankedLists ,searchQuery:searchQuery});
       }
     })
   }
