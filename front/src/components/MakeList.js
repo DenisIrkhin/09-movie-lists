@@ -106,7 +106,7 @@ class TagsBody extends Component {
       if (this.props.grandParent.state.tags.length <= 10) {
         this.props.grandParent.setState({
           tags: this.props.grandParent.state.tags.concat(
-            this.props.grandParent.state.inputTag
+            this.props.grandParent.state.inputTag.trim()
           ),
           inputTag: '',
           message: ''
