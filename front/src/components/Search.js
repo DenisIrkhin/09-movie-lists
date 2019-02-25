@@ -13,6 +13,9 @@ class Search extends Component {
   }
 
   componentDidMount() {
+    {
+      this.checkLocalStorage()
+    }
     let that = this
     let moviesCheck = document.getElementById('movies')
     moviesCheck.addEventListener('click', ({ target }) => {
@@ -189,7 +192,6 @@ class Search extends Component {
         }}
       >
         <div id="movies" className="row pt-5" />
-        {this.checkLocalStorage()}
         {this.renderFilterDropdown()}
       </div>
     )
