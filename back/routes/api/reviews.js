@@ -208,7 +208,7 @@ router.post('/id', async (req, res) => {
   }
 })
 
-// Get review by wildcard search. Does NOT check for user.
+// Get review by wildcard search through reviewText. Does NOT check for user.
 // @@ POST /api/reviews/wildsearch
 router.post('/wildsearch', async (req, res) => {
   console.log('*******************************************')
