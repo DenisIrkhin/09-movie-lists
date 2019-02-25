@@ -309,10 +309,10 @@ router.post('/wildsearch', async (req, res) => {
     return list
   })
   console.log('rankedLists ', rankedLists)
-  let sortedRankedList = rankedLists.sort((a, b) => b.searchRank - a.searchRank)
-  console.log('sortedRankedList ', sortedRankedList)
+  let sortedRankedLists = rankedLists.sort((a, b) => b.searchRank - a.searchRank)
+  console.log('sortedRankedLists ', sortedRankedLists)
 
-  return res.status(200).json({ success: true, sortedRankedList })
+  return res.status(200).json({ success: true, sortedRankedLists })
 })
 
 module.exports = router
