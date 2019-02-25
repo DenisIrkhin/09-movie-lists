@@ -82,6 +82,14 @@ class UnconnectedFilterDropdown extends Component {
   }
   //renders menu with filter
   RenderMenu() {
+    if(this.props.loggedIn===false){
+      
+      this.props.parent.setState({message:"To add movies to a list please log in or sign up, then make a list"})
+      this.closeMenu()
+      window.scrollTo(0,0)
+      
+      return
+    }
     let listArr = this.props.lists
     // console.log("listArr", listArr);
 

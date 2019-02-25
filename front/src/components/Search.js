@@ -8,7 +8,7 @@ import FilterDropdown from './FilterDropdown'
 class Search extends Component {
   constructor() {
     super()
-    this.state = { addingToList: false }
+    this.state = { addingToList: false,message:"" }
     this.renderFilterDropdown = this.renderFilterDropdown.bind(this)
   }
 
@@ -169,6 +169,15 @@ class Search extends Component {
       )
     }
   }
+  displayMessage() {
+    if (this.state.message) {
+      return (
+        <div className="jump" style={{ color: 'red', fontSize:"30px",marginTop:"20px" }}>
+          {this.state.message}
+        </div>
+      )
+    }
+  }
 
   //Returns the last saved local storage result and returns as ouput
   //Works with back button and refresh
@@ -191,6 +200,7 @@ class Search extends Component {
           this.setState({ xPos: e.clientX, yPos: e.clientY })
         }}
       >
+      {this.displayMessage()}
         <div id="movies" className="row pt-5" />
         {this.renderFilterDropdown()}
       </div>

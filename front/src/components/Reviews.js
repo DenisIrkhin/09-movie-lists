@@ -13,8 +13,10 @@ import Modal from 'react-modal'
 
 class Reviews extends Component{
     constructor(props){
+        super(props)
         this.state={reviews:[]}
     }
+    
 }
 
 
