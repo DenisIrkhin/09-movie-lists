@@ -24,8 +24,6 @@ class UnconnectedLists extends Component {
   }
   
   componentDidMount() {
-    this.setDisplayedTags()
-
     console.log("fetched to get list");
     console.log("url: /api/lists");
     axios({
@@ -37,6 +35,7 @@ class UnconnectedLists extends Component {
       let responseLists = response.data.lists;
       console.log("responseLists", responseLists);
       this.props.dispatch({ type: "getLists", payload: responseLists });
+      this.setDisplayedTags()
     });
   }
 
