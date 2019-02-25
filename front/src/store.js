@@ -7,7 +7,7 @@ let reducer = function(state, action) {
       console.log("action login used");
       return {
         ...state,
-        state: { ...state.state, loggedIn: true, user: action.payload }
+        state: { ...state.state, loggedIn: true, user: action.payload.email,userId:action.payload.userId }
       };
 
     case "logout":

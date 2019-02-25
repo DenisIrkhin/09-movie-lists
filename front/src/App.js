@@ -44,7 +44,9 @@ class UnconnectedApp extends Component {
         console.log('response', response)
         let email = response.data.email
         console.log('user', email)
-        this.props.dispatch({ type: 'login', payload: email })
+        let userId=response.data.userId
+        console.log('userId', userId)
+        this.props.dispatch({ type: 'login', payload: {email:email,userId:userId}})
       })
       .then(() => {
         
