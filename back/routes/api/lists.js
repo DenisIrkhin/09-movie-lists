@@ -70,10 +70,10 @@ router.get('/', async (req, res) => {
 // @@ PUT /api/lists/id
 router.put('/id', async (req, res) => {
   console.log('*******************************************')
-  console.log('req.body from put. /lists/id ', req.body)
+  console.log('req.body from PUT /lists/id ', req.body)
   console.log('All Cookies: ', req.cookies)
 
-  let userId = ''
+  let userId
 
   try {
     // Get user' email by cookie
@@ -86,8 +86,12 @@ router.put('/id', async (req, res) => {
 
   // Create updated list from req.body for future saving it in dbo
   let { listId, name, movieArr, description, tags } = req.body
-  const updatedList = new List({ userId, name, movieArr, description, tags })
-  console.log('updatedList', updatedList)
+  // We can't create new mongoose List here, this way new List will create _id
+  let updatedList = { name, movieArr, description, tags }
+  // Mongo can't update _id, but mongoose scheme generate it, do we need to delete it before update
+  // const updatedList = new List({})
+
+  console.log('updatedList 94', updatedList)
 
   // Search for id and that userId of list maches with userId
   // in case filter condition is not true (user does NOT match current user)
@@ -98,7 +102,7 @@ router.put('/id', async (req, res) => {
   // in MongoDocs {returnNewDocument : true }
   try {
     let result = await (List.findOneAndUpdate(
-      { $and: [{ _id: ObjectID(listId) }, { userId }] },
+      { $and: [{ _id: listId }, { userId }] },
       // { _id: ObjectID(listId) },
       { $set: updatedList },
       { new: true }
@@ -119,7 +123,7 @@ router.put('/id', async (req, res) => {
 // @@ PUT /api/lists/add-movie
 router.put('/add-movie', async (req, res) => {
   console.log('*******************************************')
-  console.log('req.body from put. /lists/add-movie ', req.body)
+  console.log('req.body from PUT /lists/add-movie ', req.body)
   console.log('All Cookies: ', req.cookies)
 
   let listArrObjectIds = req.body.lists.map(el => {
