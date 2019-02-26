@@ -20,6 +20,7 @@ import Movie from './components/Movie'
 import LoginAlert from './components/LoginAlert'
 import Premium from './components/Premium'
 import TagSearchResults from './components/TagSearchResults'
+import MyReviews from "./components/MyReviews"
 
 import { BACKEND_DOMAIN } from './Global'
 import SearchListResults from './components/SearchListResults'
@@ -92,7 +93,7 @@ class UnconnectedApp extends Component {
     console.log('test page rendered')
     return (
       <div>
-        <FilterDropdown />
+        <MyReviews></MyReviews>
       </div>
     )
   }
@@ -147,6 +148,10 @@ class UnconnectedApp extends Component {
     console.log('tag', tag)
     return <TagSearchResults tag={tag} />
   }
+  renderMyReviews(){
+    console.log("routing to My reviews page")
+    return <MyReviews></MyReviews>
+  }
 
   closePopup(event) {
     event.stopPropagation()
@@ -169,6 +174,8 @@ class UnconnectedApp extends Component {
             <Route exact path="/lists/makelist" render={this.renderMakeList} />
             <Route exact path="/lists" render={this.renderLists} />
             <Route exact path={'/lists/:id'} render={this.renderList} />
+            <Route exact path={'/reviews'} render={this.renderMyReviews} />
+
             <Route
               exact
               path={'/lists/editlist'}
