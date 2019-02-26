@@ -8,6 +8,12 @@ import $ from 'jquery'
 import SearchList from './SearchBarList'
 
 class UnconnectedNavbar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      moviesSearch: ''
+    }
+  }
   CheckIfLoggedIn() {
     if (!this.props.loggedIn) {
       return (
@@ -125,7 +131,9 @@ class UnconnectedNavbar extends Component {
             <div class="well img-holder-search">
               <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
               <div class="btn-group-vertical" role="group">
-              <button type="button" class="add-list-button-left buttonMovie-large" onClick={console.log("i just clicked to add list")}>ADD TO MY LIST</button>
+              <button type="button" class="add-list-button-left buttonMovie-large" id="addMovieToLists" value="${
+                movie.id
+              }" >ADD TO MY LIST</button>
               <button type="button" class="add-list-button-right buttonMovie-large" id="see-more-large" value="${
                 movie.id
               }">SEE MORE INFO</button>
@@ -135,14 +143,10 @@ class UnconnectedNavbar extends Component {
             <div class="text-holder-search">
               <h5 class="title-search-result">${movie.title}</h5>
               <p class="text-search-result">${movie.overview}</p>
-              <p class="release-search-result"><strong>Release date:</strong> ${
-                movie.release_date
-              }</p>
-              <p class="rating-search-result"><strong>Rating:</strong> ${
-                movie.vote_average
-              }/10</p>
               <div class="btn-group" role="group">
-              <button type="button" class="add-list-button-left buttonMovie-small"  >ADD TO MY LIST</button>
+              <button type="button" class="add-list-button-left buttonMovie-small" id="addMovieToLists" value="${
+                movie.id
+              }" >ADD TO MY LIST</button>
               <button type="button" class="add-list-button-right buttonMovie-small" id="see-more-small" value="${
                 movie.id
               }">SEE MORE INFO</button>
@@ -152,7 +156,11 @@ class UnconnectedNavbar extends Component {
           </div>`
             }
           }
+          this.setState({ moviesSearch: output })
+          //Pushes the html content to the local storage to access from the search as history
+          localStorage.setItem('movies', this.state.moviesSearch)
           $('#movies').html(output)
+          console.log('STATE', this.state.moviesSearch)
         })
         .catch(err => {
           console.log(err)

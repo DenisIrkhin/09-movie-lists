@@ -228,6 +228,7 @@ router.post('/check', async (req, res) => {
   }
 
   // Take out fields we need from user obj
+
   let { _id, email, avatar } = user
 
   // Create JWT token
@@ -241,11 +242,14 @@ router.post('/check', async (req, res) => {
   // Email just for simplify human readability of dbo
   const sessionElem = new Session({ userId, sessionId, jwtToken, email })
 
+
   try {
     const result = await (sessionElem.save())
     console.log('new session doc added', result)
     res.cookie('__sid__', `${sessionId}`)
+
     return res.status(200).json({ success: true, jwtToken, message: 'Logged in successfully' })
+
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: false, message: 'Something goes wrong', error })

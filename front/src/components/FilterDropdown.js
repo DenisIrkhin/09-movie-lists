@@ -1,85 +1,107 @@
-import React, { Component } from "react";
-import "../css/style.css";
-import { Redirect, Link } from "react-router-dom";
-import "../css/LoginSignup.css";
-import { connect } from "react-redux";
-import axios from "axios";
-import App from "../App.js";
-import { withRouter } from "react-router";
-import Modal from "react-modal";
-import { isThisQuarter } from "date-fns";
-import "../css/FilterDropdown.css";
+import React, { Component } from 'react'
+import '../css/style.css'
+import { Redirect, Link } from 'react-router-dom'
+import '../css/LoginSignup.css'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import App from '../App.js'
+import { withRouter } from 'react-router'
+import Modal from 'react-modal'
+import { isThisQuarter } from 'date-fns'
+import '../css/FilterDropdown.css'
 
 class UnconnectedFilterDropdown extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       showMenu: true,
-      inputSearch: "",
+      inputSearch: '',
+      movie: this.props.movie,
       checkedListsIds: [],
-      xPos: "",
-      yPos: ""
-    };
-    this.RenderMenu = this.RenderMenu.bind(this);
-    this.handleInputSearch = this.handleInputSearch.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
-    this.openMenu = this.openMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
+      xPos: this.props.xPos,
+      yPos: this.props.yPos
+    }
+    this.RenderMenu = this.RenderMenu.bind(this)
+    this.handleInputSearch = this.handleInputSearch.bind(this)
+    this.handleCheck = this.handleCheck.bind(this)
+    // this.openMenu = this.openMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this)
+    this.handleAddToList = this.handleAddToList.bind(this)
   }
 
-  openMenu(evt) {
-    this.setState({ showMenu: true, xPos: evt.clientX, yPos: evt.clientY });
+  componentDidMount() {
+    console.log('Filter xPos', this.state.xPos)
+    console.log('Filter yPos', this.state.yPos)
   }
+  // openMenu(evt) {
+  //   this.setState({ showMenu: true, xPos: evt.clientX, yPos: evt.clientY });
+  // }
   closeMenu() {
-    this.setState({ showMenu: false });
+    this.setState({ showMenu: false })
+    this.props.parent.setState({ addingToList: false })
   }
 
   handleInputSearch(evt) {
-    this.setState({ inputSearch: evt.target.value });
+    this.setState({ inputSearch: evt.target.value })
   }
 
   handleCheck(evt) {
-    console.log("evt", evt);
-    let listId = evt.currentTarget.name;
+    console.log('evt', evt)
+    let listId = evt.currentTarget.name
     if (evt.currentTarget.checked) {
-      let newArr = this.state.checkedListsIds.slice(0);
-      console.log("checkedListId before", newArr);
-      newArr.push(listId);
-      console.log("checkedListId after", newArr);
-      this.setState({ checkedListsIds: newArr });
+      let newArr = this.state.checkedListsIds.slice(0)
+      // console.log("checkedListId before", newArr);
+      newArr.push(listId)
+      // console.log("checkedListId after", newArr);
+      this.setState({ checkedListsIds: newArr })
     } else {
-      let arr = this.state.checkedListsIds.slice(0);
-      console.log("checkedListId before", arr);
-      let index = arr.indexOf(listId);
-      arr.splice(index, 1);
-      console.log("checkedListId after", arr);
-      this.setState({ checkedListsIds: arr });
+      let arr = this.state.checkedListsIds.slice(0)
+      // console.log("checkedListId before", arr);
+      let index = arr.indexOf(listId)
+      arr.splice(index, 1)
+      // console.log("checkedListId after", arr);
+      this.setState({ checkedListsIds: arr })
     }
   }
   //add movie to each of the following checked lists //TODO
   // reqbody={lists:[listId1,listId2,listId3,list4],movieObject:movieObject]
   handleAddToList() {
+    console.log('added movie to lists')
+    let that = this
     axios({
-      post: "",
-      url: "",
-      data: "",
+      method: 'put',
+      url: '/api/lists/add-movie/',
+      data: {
+        movieObject: this.props.movie,
+        lists: this.state.checkedListsIds
+      },
       withCredentials: true
-    });
+    }).then(response => {
+      this.closeMenu()
+    })
   }
   //renders menu with filter
   RenderMenu() {
-    let listArr = this.props.lists;
-    console.log("listArr", listArr);
+    if(this.props.loggedIn===false){
+      
+      this.props.parent.setState({message:"To add movies to a list please log in or sign up, then make a list"})
+      this.closeMenu()
+      window.scrollTo(0,0)
+      
+      return
+    }
+    let listArr = this.props.lists
+    // console.log("listArr", listArr);
 
     let filterMenu = elem => {
-      return elem.name.includes(this.state.inputSearch);
-    };
-    let filteredMenu = listArr.filter(filterMenu);
-    console.log("filteredMenu", filteredMenu);
+      return elem.name.includes(this.state.inputSearch)
+    }
+    let filteredMenu = listArr.filter(filterMenu)
+    // console.log("filteredMenu", filteredMenu);
     let makeMenuOptions = elem => {
-      let checked = false;
+      let checked = false
       if (this.state.checkedListsIds.includes(elem._id)) {
-        checked = true;
+        checked = true
       }
       return (
         <li>
@@ -89,37 +111,57 @@ class UnconnectedFilterDropdown extends Component {
             type="checkbox"
             checked={checked}
           />
-          <span>{elem.name}</span>
+          <span> {elem.name}</span>
         </li>
-      );
-    };
-    let mappedMenuOptions = filteredMenu.map(makeMenuOptions);
+      )
+    }
+
+    let mappedMenuOptions = filteredMenu.map(makeMenuOptions)
+    if (mappedMenuOptions.length === 0) {
+      mappedMenuOptions = (
+        <Link to="./lists/makelist">
+          <div>No lists. Click here to create a List</div>
+        </Link>
+      )
+    }
 
     return (
       <div
         style={{
-          position: "absolute",
-          top: this.state.yPos,
-          left: this.state.xPos,
-          width: "150px",
-          maxeight: "300px",
-          overflowY: "scroll",
-          border: "2px solid"
+          position: 'absolute',
+          top: this.state.yPos + window.scrollY,
+          left: this.state.xPos + window.scrollX,
+          width: '250px',
+          maxHeight: '300px',
+          overflowY: 'scroll',
+          border: '1px solid rgb(207, 206, 206)',
+          background: 'white',
+          padding: '2%',
+          textAlign: 'left',
+          borderRadius: '5px'
         }}
+        className="add-list-holder"
         onClick={evt => {
-          evt.stopPropagation();
+          evt.stopPropagation()
         }}
       >
         <input
           type="search"
           name="search"
           onChange={this.handleInputSearch}
-          placeholder="Search Your Lists"
+          placeholder=" Search Your Lists"
+          className="search-add-list"
         />
-        <input type="button" name="addToListButton" value="Add To List" />
-        <ol>{mappedMenuOptions}</ol>
+        <input
+          type="button"
+          name="addToListButton"
+          onClick={this.handleAddToList}
+          value="Add To List"
+          className="add-to-list-button mb-2"
+        />
+        <ol className="list-search-add-list p-0">{mappedMenuOptions}</ol>
       </div>
-    );
+    )
   }
 
   render() {
@@ -129,32 +171,31 @@ class UnconnectedFilterDropdown extends Component {
           <div
             className="transparent"
             style={{
-              position: "absolute",
-              backgroundColor: "rgba(0,0,0,0)",
-              width: "100%",
-              height: "100%",
-              zIndex: "10000000000",
-              top:"0px"
-              
+              position: 'absolute',
+              backgroundColor: 'rgba(0,0,0,0)',
+              width: document.body.scrollWidth,
+              height: document.body.scrollHeight,
+              zIndex: '10000000000',
+              top: '0px'
             }}
             onClick={evt => {
-              this.closeMenu(evt);
+              this.closeMenu(evt)
             }}
           >
             {this.RenderMenu()}
           </div>
         </div>
-      );
+      )
     } else {
-      return <div />;
+      return <div />
     }
   }
 }
 
 let mapStateToProps = function(state) {
-  return { loggedIn: state.state.loggedIn, lists: state.state.lists };
-};
+  return { loggedIn: state.state.loggedIn, lists: state.state.lists }
+}
 
-let FilterDropdown = connect(mapStateToProps)(UnconnectedFilterDropdown);
+let FilterDropdown = connect(mapStateToProps)(UnconnectedFilterDropdown)
 
-export default FilterDropdown;
+export default FilterDropdown

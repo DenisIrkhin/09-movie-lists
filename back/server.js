@@ -19,11 +19,19 @@ const app = express()
 const config = require('./config/param')
 // console.log('config ', config)
 
+
 // Might be usefull
 // basically tells the system whether you want to use a simple algorithm for shallow parsing (i.e. false) or complex algorithm for deep parsing that can deal with nested objects (i.e. true).
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+const testsRoute = require('./routes/api/tests')
+const usersRoute = require('./routes/api/users')
+const listsRoute = require('./routes/api/lists')
+const reviewsRoute = require('./routes/api/reviews')
+const pmntsRoute = require('./routes/api/pmnts')
+
 
 // Use cookieParser
 app.use(cookieParser())
@@ -62,6 +70,7 @@ const profilesRoute = require('./routes/api/profiles')
 app.use('/api/tests', testsRoute)
 app.use('/api/users', usersRoute)
 app.use('/api/lists', listsRoute)
+app.use('/api/reviews', reviewsRoute)
 app.use('/api/pmnts', pmntsRoute)
 app.use('/api/profiles', profilesRoute)
 

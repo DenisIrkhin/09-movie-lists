@@ -55,7 +55,7 @@ class ChosenMovies extends Component {
           />
           <div className="middle">
             <a href="#" className="icon-trash">
-              <i className="far fa-trash-alt" />
+              <i className="far fa-trash-alt trash" />
             </a>
           </div>
           {/* <div className="image-inside-list-title">{elem.original_title}</div> */}
@@ -106,7 +106,7 @@ class TagsBody extends Component {
       if (this.props.grandParent.state.tags.length <= 10) {
         this.props.grandParent.setState({
           tags: this.props.grandParent.state.tags.concat(
-            this.props.grandParent.state.inputTag
+            this.props.grandParent.state.inputTag.trim()
           ),
           inputTag: '',
           message: ''
@@ -311,13 +311,13 @@ class UnconnectedMakeList extends Component {
           >
             <h5>Confirm to finish making List</h5>
             <button onClick={this.addList} className="button-modal-list">
-              Confirm
+              CONFIRM
             </button>
             <button
               onClick={() => this.setState({ modalIsOpen: false })}
               className="button-modal-list"
             >
-              Not yet
+              NOT YET
             </button>
           </Modal>
         </div>

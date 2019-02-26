@@ -14,15 +14,16 @@ import MakeList from './components/MakeList'
 import Lists from './components/Lists'
 import List from './components/List'
 import searchListResults from './components/SearchListResults'
-import FilterDropdown from "./components/FilterDropdown"
+import FilterDropdown from './components/FilterDropdown'
 import Search from './components/Search'
 import Movie from './components/Movie'
 import LoginAlert from './components/LoginAlert'
 import Premium from './components/Premium'
-import TagSearchResults from "./components/TagSearchResults"
+import TagSearchResults from './components/TagSearchResults'
 
 import { BACKEND_DOMAIN } from './Global'
 import SearchListResults from './components/SearchListResults'
+import EditList from './components/EditList'
 
 //GLOBAL VARIABLES
 
@@ -43,23 +44,26 @@ class UnconnectedApp extends Component {
         console.log('response', response)
         let email = response.data.email
         console.log('user', email)
-        this.props.dispatch({ type: 'login', payload: email })
+        let userId = response.data.userId
+        console.log('userId', userId)
+        this.props.dispatch({
+          type: 'login',
+          payload: { email: email, userId: userId }
+        })
       })
       .then(() => {
-        
         axios({
           method: 'get',
           url: '/api/lists',
           withCredentials: true
         }).then(response => {
-          
           console.log('response', response)
           let responseLists = response.data.lists
           console.log('responseLists', responseLists)
 
           this.props.dispatch({ type: 'getLists', payload: responseLists })
           that.setState({ verified: true })
-        console.log('checked successfully')
+          console.log('checked successfully')
         })
       })
       .catch(() => {
@@ -78,7 +82,7 @@ class UnconnectedApp extends Component {
   }
 
   renderMovie(routerData) {
-    let movieId=routerData.match.params.id
+    let movieId = routerData.match.params.id
     console.log('Movie details page rendered')
     return <Movie movieId={movieId} />
   }
@@ -88,7 +92,7 @@ class UnconnectedApp extends Component {
     console.log('test page rendered')
     return (
       <div>
-        <FilterDropdown></FilterDropdown>
+        <FilterDropdown />
       </div>
     )
   }
@@ -108,12 +112,19 @@ class UnconnectedApp extends Component {
     console.log('makelist component rendered')
     return <MakeList />
   }
+  renderEditList() {
+    console.log('editlist component rendered')
+    return <EditList />
+  }
   renderLists(routerData) {
     console.log('lists component rendered')
     return <Lists />
   }
   renderList(routerData) {
-    if (routerData.match.params.id === 'makelist') {
+    if (
+      routerData.match.params.id === 'makelist' ||
+      routerData.match.params.id === 'editlist'
+    ) {
       return <div />
     }
     console.log('specific list component rendered')
@@ -130,14 +141,14 @@ class UnconnectedApp extends Component {
     console.log('premium component rendered')
     return <Premium />
   }
-  renderSearchTags(routerData){
-    console.log("searchTags component rendered")
-    let tag=routerData.match.params.id
+  renderSearchTags(routerData) {
+    console.log('searchTags component rendered')
+    let tag = routerData.match.params.id
     console.log('tag', tag)
-    return <TagSearchResults tag={tag}></TagSearchResults>
+    return <TagSearchResults tag={tag} />
   }
 
-  closePopup(event){
+  closePopup(event) {
     event.stopPropagation()
     this.props.dispatch()
   }
@@ -160,12 +171,20 @@ class UnconnectedApp extends Component {
             <Route exact path={'/lists/:id'} render={this.renderList} />
             <Route
               exact
+              path={'/lists/editlist'}
+              render={this.renderEditList}
+            />
+            <Route
+              exact
               path={'/searchlistresults/:id'}
               render={this.renderSearchListResults}
             />
             <Route exact path="/loginalert" render={this.renderLoginAlert} />
-            <Route exact path="/searchtags/:id" render={this.renderSearchTags} />
-
+            <Route
+              exact
+              path="/searchtags/:id"
+              render={this.renderSearchTags}
+            />
           </div>
         </BrowserRouter>
       )

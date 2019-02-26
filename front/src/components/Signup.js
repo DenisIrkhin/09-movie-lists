@@ -67,7 +67,18 @@ class UnconnectedSignup extends Component {
       .then(response => {
         console.log('post signup was successful')
         console.log('response', response)
-        this.props.dispatch({ type: 'login', payload: this.state.inputEmail })
+        axios({
+            method: "get",
+            url: "api/lists",
+            withCredentials: true
+          }).then(response => {
+            console.log("response", response);
+            let responseLists = response.data.lists;
+            console.log("responseLists", responseLists);
+            this.props.dispatch({ type: "getLists", payload: responseLists });
+            this.props.dispatch({ type: 'login', payload: {email:this.state.inputEmail} })
+            
+          })
       })
       .catch(e => {
         console.log('error', e)

@@ -82,7 +82,7 @@ class UnconnectedLogin extends Component {
             let responseLists = response.data.lists;
             console.log("responseLists", responseLists);
             this.props.dispatch({ type: "getLists", payload: responseLists });
-            this.props.dispatch({ type: 'login', payload: this.state.inputEmail })
+            this.props.dispatch({ type: 'login', payload: {email:this.state.inputEmail}})
             
           });
         } else {
