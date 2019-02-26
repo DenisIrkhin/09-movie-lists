@@ -52,9 +52,8 @@ class SearchListResults extends Component {
     return tagList.split(' ^^ ').map((elem, index) => {
       return (
         <Link to={'/searchtags/' + elem}>
-          <span className>
-            {elem}
-            <span name={index} className="fas fa-tag" />
+          <span className="wild-tags ml-1 mr-1">
+            {elem} <span name={index} className="fas fa-tag" />
           </span>
         </Link>
       )
@@ -66,18 +65,20 @@ class SearchListResults extends Component {
     console.log('displaying results')
     let resultsToDom = elem => {
       return (
-        <li>
+        <li className="list-item">
           <Link to={'/lists/' + elem._id}>
-            <div>{elem.name}</div>
+            <div className="title-lists">{elem.name}</div>
           </Link>
-          <FacebookShareButton
-            url={window.location.origin + '/lists/' + elem._id}
-            className={'fab fa-facebook'}
-          />
-          <TwitterShareButton
-            url={window.location.origin + '/lists/' + elem._id}
-            className={'fab fa-twitter-square'}
-          />
+          <span className="list-icons">
+            <FacebookShareButton
+              url={window.location.origin + '/lists/' + elem._id}
+              className={'fab fa-facebook ml-1 mr-1 icon-list'}
+            />
+            <TwitterShareButton
+              url={window.location.origin + '/lists/' + elem._id}
+              className={'fab fa-twitter-square ml-1 mr-1 icon-list'}
+            />
+          </span>
           <div>{elem.description}</div>
           <span>Tags: </span>
           <span>{this.displayTags(elem.tags)}</span>
@@ -93,10 +94,17 @@ class SearchListResults extends Component {
     }
     this.startSearch()
     return (
-      <ol onhashchange={window.onhashchange}>
-        There are no results by that name
-        {this.displayResults()}
-      </ol>
+      <div className="container-fluid main-container-wild-search">
+        <h3 className="mb-5">These are your search results</h3>
+        <div className="container">
+          <ol
+            onhashchange={window.onhashchange}
+            className="wild-results-holder mt-3"
+          >
+            {this.displayResults()}
+          </ol>
+        </div>
+      </div>
     )
   }
 }

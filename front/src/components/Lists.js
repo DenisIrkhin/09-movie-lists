@@ -178,19 +178,17 @@ class UnconnectedLists extends Component {
       return <Redirect to="/loginalert" />
     } else {
       return (
-        <div className="row">
-          <div className="container-fluid main-container-lists">
-            <div className="container">
-              <div className="row">
-                <ul className="col-md-8 lists-holder">
-                  <h4 className="text-center mb-3">Your Lists</h4>
-                  {this.displayLists()}
-                </ul>
+        <div className="container-fluid main-container-lists">
+          <div className="container">
+            <div className="row">
+              <ul className="col-md-8 lists-holder">
+                <h4 className="text-center mb-3">Your Lists</h4>
+                {this.displayLists()}
+              </ul>
 
-                <div className="col-md-3 tags-holder-lists">
-                  <h4 className="text-center mb-3">Your Tags</h4>
-                  {this.displayTags()}
-                </div>
+              <div className="col-md-3 tags-holder-lists">
+                <h4 className="text-center mb-3">Your Tags</h4>
+                {this.displayTags()}
               </div>
             </div>
           </div>

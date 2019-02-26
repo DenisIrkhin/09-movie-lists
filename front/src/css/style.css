@@ -949,6 +949,53 @@ html {
   list-style: none;
 }
 
+/*WILD SEARCH RESULTS*/
+
+.main-container-wild-search {
+  min-height: 100vh;
+  padding-top: 5%;
+  padding-bottom: 10%;
+  background-color: #edeae5;
+  margin: auto;
+  justify-content: center;
+}
+
+.wild-results-holder {
+  width: 70%;
+  text-align: left;
+  margin: auto;
+  margin-top: 4%;
+  justify-content: center;
+  padding: 4%;
+  padding-left: 6%;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid rgb(202, 202, 202);
+}
+
+@media only screen and (max-width: 600px) {
+  .wild-results-holder {
+    width: 90%;
+    padding: 6%;
+    padding-left: 10%;
+  }
+}
+
+.wild-tags {
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+  color: black;
+  /* transition: all ease 300ms;
+    position: relative;
+    margin-left: 5px;
+    margin-right: 5px; */
+}
+
+.wild-tags:hover {
+  color: blue;
+}
+
 /* .tag {
   transition: all ease 300ms;
   position: relative;
