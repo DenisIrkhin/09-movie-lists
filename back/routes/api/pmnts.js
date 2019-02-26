@@ -1,32 +1,12 @@
 const express = require('express')
 const router = express.Router()
-// const ObjectID = require('mongodb').ObjectID
-// const getUserIdByCookies = require('../../functions')
-const getUserIdByCookiesWithErrors = require('../../functions')
+const getUserIdByCookiesWithErrors = require('../../lib/cookie')
+
+// Bring User modeil
+const User = require('../../models/User')
 
 // Bring stripe library and set TEST key of Denis' account
 const stripe = require('stripe')('sk_test_3WWDihsp6zRR9AWb2PHnfhZm')
-
-// Declare globally to asign later in promises
-let dbo
-
-// Array of errors to return
-// let errors = {}
-
-// brin Async func
-// declare global to assign value in promise resolve
-const gdbo = require('../../mongo-dbo-promise')
-gdbo.then(res => {
-  // console.log('Inside promise resolve is', res)
-  dbo = res
-})
-
-// To check it
-setTimeout(() => {
-  if (dbo !== undefined) {
-  }
-  console.log('Mongodb connected from pmnts.js')
-}, 500)
 
 // Since there is no simple way to transfer amount and currency data from from front to back by hitting endpoint by React StripeCheckout component we implenet two separate endpoint to handle two different membership plans
 
@@ -42,7 +22,7 @@ router.post('/pro', async (req, res) => {
 
   try {
     // Get userId by cookie
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 44', userId)
   } catch (err) {
     console.log('err43 when resolving getUserIdByCookies', err)
@@ -52,7 +32,7 @@ router.post('/pro', async (req, res) => {
   // UserId found by cookie
   // Bring more fields from `users` collection
   try {
-    user = await (dbo.collection('users').findOne({ _id: userId }))
+    user = await (User.findById(userId))
     // console.log('user 54', user)
   } catch (error) {
     console.log('error ', error)
@@ -99,7 +79,7 @@ router.post('/premium', async (req, res) => {
 
   try {
     // Get userId by cookie
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 44', userId)
   } catch (err) {
     console.log('err43 when resolving getUserIdByCookies', err)
@@ -110,7 +90,7 @@ router.post('/premium', async (req, res) => {
   // UserId found by cookie
   // Bring more fields from `users` collection
   try {
-    user = await (dbo.collection('users').findOne({ _id: userId }))
+    user = await (User.findById(userId))
     // console.log('user 54', user)
   } catch (error) {
     console.log('error ', error)

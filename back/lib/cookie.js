@@ -1,3 +1,8 @@
+// Bring models
+// Load User and Session models
+// const User = require('../models/User')
+const Session = require('../models/Session')
+
 // Returns userId by cookies
 // Function never throws error.
 // Always returns object of two objects
@@ -9,7 +14,7 @@
 // userId is userId of user found by cookie through sessions collections
 // If userId is not found then return userId: ''
 // NOTE: TEST IT before using!
-module.exports = async function getUserIdByCookies (dbo, cookies = {}) {
+module.exports = async function getUserIdByCookies (cookies = {}) {
   let errors = {}
   let userId = ''
   let repObj = {
@@ -28,7 +33,7 @@ module.exports = async function getUserIdByCookies (dbo, cookies = {}) {
   } else {
     // Find userId by session id
     try {
-      let res = await (dbo.collection('sessions').findOne({ sessionId: mlCookie }))
+      let res = await (Session.findOne({ sessionId: mlCookie }))
       console.log('result from functions.js', res)
       if (res === null) {
       // Can't find sessionid in sessions collection.
@@ -51,7 +56,7 @@ module.exports = async function getUserIdByCookies (dbo, cookies = {}) {
 // Another approach to throw errors to catch them in calling function on catch branch
 // Returns userId by cookies
 // Retruns string userId or throw Error object
-module.exports = async function getUserIdByCookiesWithErrors (dbo, cookies = {}) {
+module.exports = async function getUserIdByCookiesWithErrors (cookies = {}) {
   // Get our cookie from all cookies
   let mlCookie = cookies.__sid__
   console.log('mlCookie: 60 ', mlCookie)
@@ -67,7 +72,8 @@ module.exports = async function getUserIdByCookiesWithErrors (dbo, cookies = {})
     mlCookie = mlCookie.toString()
 
     try {
-      let res = await (dbo.collection('sessions').findOne({ sessionId: mlCookie }))
+      let res = await (Session.findOne({ sessionId: mlCookie }))
+      console.log('res ', res)
       if (res === null) {
         // Can't find sessionid in sessions collection.
         throw new Error(`Can't find sessionid in sessions collection`)

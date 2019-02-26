@@ -1,22 +1,9 @@
 const express = require('express')
 const router = express.Router()
-// Declare globally to asign later in promises
-let dbo
 
-// brin Async func
-// declare global to assign value in promise resolve
-const gdbo = require('../../mongo-dbo-promise')
-gdbo.then(res => {
-  // console.log('Inside promise resolve is', res)
-  dbo = res
-})
-
-// To check it
-setTimeout(() => {
-  if (dbo !== undefined) {
-  }
-  console.log('Mongodb connected from test.js')
-}, 500)
+// Load Test model
+const Test = require('../../models/Test')
+// console.log('Test', Test)
 
 // @@ POST /api/tests/add
 // Here we will insert new posts into our database
@@ -29,10 +16,16 @@ router.post('/add', async (req, res) => {
   console.log('*******************************************')
   console.log('req.body for POST /tests/add ', req.body)
 
+  const newTest = new Test({
+    name: req.body.name,
+    surname: req.body.surname
+  })
+
   try {
-    let result = await (dbo.collection('tests').insertOne(req.body))
-    console.log('result.ops[0]', result.ops[0])
-    res.status(200).json({ success: true, message: 'test added', doc: result.ops[0] })
+    const result = await (newTest.save())
+    // let result = await (Test.insertOne(req.body))
+    console.log('result', result)
+    res.status(200).json({ success: true, message: 'test added', doc: result })
   } catch (error) {
     console.log(error)
     res.status(400).json({ success: false, message: 'smth goes wrong', error })
@@ -43,10 +36,10 @@ router.post('/add', async (req, res) => {
 // @@ GET /api/tests
 router.get('/', async (req, res) => {
   console.log('*******************************************')
-  console.log('req.body for GET /tests ', req.body)
+  console.log('req.body for GET /tests ', req.body.name)
 
   try {
-    let result = await (dbo.collection('tests').find({}).toArray())
+    let result = await (Test.find({}))
     console.log('Getting all test', result)
     res.status(200).json({ success: true, tests: result })
   } catch (error) {
