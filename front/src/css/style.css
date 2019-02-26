@@ -725,7 +725,6 @@ html {
 }
 
 .lists-holder {
-  width: 70%;
   text-align: left;
   margin: auto;
   margin-top: 4%;
@@ -738,8 +737,47 @@ html {
 
 @media only screen and (max-width: 600px) {
   .lists-holder {
+    width: 80%;
+  }
+}
+
+.tags-holder-lists {
+  text-align: left;
+  margin: auto;
+  margin-top: 4%;
+  justify-content: center;
+  padding: 4%;
+  background: #f7f7f7;
+  border-radius: 5px;
+  border: 1px solid rgb(202, 202, 202);
+  margin-bottom: 4%;
+}
+
+@media only screen and (max-width: 600px) {
+  .tags-holder-lists {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .lists-holder {
     text-align: center;
   }
+}
+
+.lists-tag {
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+  color: black;
+  /* transition: all ease 300ms;
+    position: relative;
+    margin-left: 5px;
+    margin-right: 5px; */
+}
+
+.lists-tag:hover {
+  color: blue;
 }
 
 .each-list {
