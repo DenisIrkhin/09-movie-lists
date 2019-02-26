@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const ObjectID = require('mongodb').ObjectID
-// const getUserIdByCookies = require('../../functions')
 const getUserIdByCookiesWithErrors = require('../../lib/cookie')
 
 // Bring List model
@@ -221,7 +220,7 @@ router.post('/id', async (req, res) => {
   console.log('listId', listId)
 
   try {
-    let list = await (List.findById({ listId }))
+    let list = await (List.findById(listId))
     console.log('list', list)
     return res.status(200).json({ success: true, list })
   } catch (error) {

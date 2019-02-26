@@ -1,7 +1,5 @@
 const express = require('express')
 const router = express.Router()
-// const ObjectID = require('mongodb').ObjectID
-// const getUserIdByCookies = require('../../functions')
 const getUserIdByCookiesWithErrors = require('../../lib/cookie')
 
 // Bring User modeil
@@ -34,7 +32,7 @@ router.post('/pro', async (req, res) => {
   // UserId found by cookie
   // Bring more fields from `users` collection
   try {
-    user = await (User.findById({ userId }))
+    user = await (User.findById(userId))
     // console.log('user 54', user)
   } catch (error) {
     console.log('error ', error)
@@ -92,7 +90,7 @@ router.post('/premium', async (req, res) => {
   // UserId found by cookie
   // Bring more fields from `users` collection
   try {
-    user = await (User.findById({ userId }))
+    user = await (User.findById(userId))
     // console.log('user 54', user)
   } catch (error) {
     console.log('error ', error)

@@ -1,34 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const ObjectID = require('mongodb').ObjectID
-// const getUserIdByCookies = require('../../functions')
-const getUserIdByCookiesWithErrors = require('../../functions')
+const getUserIdByCookiesWithErrors = require('../../lib/cookie')
 
-// Declare globally to asign later in promises
-let dbo
-
-// Array of errors to return
-let errors = {}
-
-// brin Async func
-// declare global to assign value in promise resolve
-const gdbo = require('../../mongo-dbo-promise')
-gdbo.then(res => {
-  // console.log('Inside promise resolve is', res)
-  dbo = res
-})
-
-// To check it
-setTimeout(() => {
-  if (dbo !== undefined) {
-  }
-  console.log('Mongodb connected from reviews.js')
-}, 500)
+// Bring List model
+const Review = require('../../models/Review')
+const User = require('../../models/User')
 
 // Add new review
 // @@ POST /api/reviews
 router.post('/', async (req, res) => {
-  errors = {}
+  let errors = {}
   console.log('*******************************************')
   console.log('req.body from POST. /reviews ', req.body)
   console.log('All Cookies: ', req.cookies)
@@ -37,7 +19,7 @@ router.post('/', async (req, res) => {
 
   try {
     // Get userId by cookie
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 40', userId)
   } catch (err) {
     console.log('err43 when resolving getUserIdByCookies', err)
@@ -47,7 +29,7 @@ router.post('/', async (req, res) => {
   // UserId found by cookie
   // Bring more fields from `users` collection
   try {
-    user = await (dbo.collection('users').findOne({ _id: userId }))
+    user = await (User.findOne({ _id: userId }))
     console.log('user 175', user)
   } catch (error) {
     console.log('error ', error)
@@ -57,12 +39,12 @@ router.post('/', async (req, res) => {
 
   // Create new review
   const { movieId, reviewText } = req.body
-  const newReview = { userId, email, movieId, reviewText }
+  const newReview = new Review({ userId, email, movieId, reviewText })
   console.log('newReview', newReview)
   try {
-    let result = await (dbo.collection('reviews').insertOne(newReview))
-    console.log('review added', result.ops[0])
-    return res.status(200).json({ success: true, message: 'review added' })
+    let result = await (newReview.save())
+    console.log('review added', result)
+    return res.status(200).json({ success: true, message: 'Review added' })
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: true, message: `Something goes wrong`, error })
@@ -80,7 +62,7 @@ router.get('/', async (req, res) => {
 
   // Get userId by cookie
   try {
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 84', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
@@ -90,7 +72,7 @@ router.get('/', async (req, res) => {
   // User found
   // Find users' reviews by userId
   try {
-    let reviews = await (dbo.collection('reviews').find({ userId }).toArray())
+    let reviews = await (Review.find({ userId }))
     console.log('reviews', reviews)
     return res.status(200).json({ success: true, reviews })
   } catch (error) {
@@ -110,7 +92,7 @@ router.put('/id', async (req, res) => {
 
   // Get userId by cookie
   try {
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 114', userId)
   } catch (err) {
     console.log('err116 when resolving getUserIdByCookies', err)
@@ -130,11 +112,11 @@ router.put('/id', async (req, res) => {
   // In mongoose we can try { new: true}
   // in MongoDocs {returnNewDocument : true }
   try {
-    let result = await (dbo.collection('reviews').findOneAndUpdate(
+    let result = await (Review.findOneAndUpdate(
       { $and: [{ _id: ObjectID(reviewId) }, { userId }] },
       // { _id: ObjectID(reviewId) },
       { $set: updatedReview },
-      { returnOriginal: false }
+      { returnNewDocument: true }
     ))
     console.log('result', result)
     console.log('result.value', result.value)
@@ -161,7 +143,7 @@ router.delete('/id', async (req, res) => {
 
   // Get user' eamil by cookie
   try {
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 165', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
@@ -173,7 +155,7 @@ router.delete('/id', async (req, res) => {
   // Mongo throw err with result.deletedCount = 0
   // We handle this
   try {
-    let result = await (dbo.collection('reviews').deleteOne(
+    let result = await (Review.deleteOne(
       { $and: [{ _id: ObjectID(reviewId) }, { userId }] }
     ))
     // console.log('result', result)
@@ -199,7 +181,7 @@ router.post('/id', async (req, res) => {
   console.log('reviewId', reviewId)
 
   try {
-    let review = await (dbo.collection('reviews').findOne({ _id: ObjectID(reviewId) }))
+    let review = await (Review.findOne({ _id: ObjectID(reviewId) }))
     console.log('review', review)
     return res.status(200).json({ success: true, review })
   } catch (error) {
@@ -230,12 +212,12 @@ router.post('/wildsearch', async (req, res) => {
 
   // Regex search through bdo
   try {
-    reviews = await (dbo.collection('reviews').find({
+    reviews = await (Review.find({
       $or: [
         { reviewText: { $regex: search, $options: 'i' } }
         // { email: { $regex: search, $options: 'i' } }
       ]
-    }).toArray())
+    }))
 
     console.log('reviews', reviews)
   } catch (error) {
