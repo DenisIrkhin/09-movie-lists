@@ -88,7 +88,7 @@ class Movie extends Component {
                 See on IMDB
               </a>
               <Link to="/search" className="btn button-movie-page">
-                Back To Search
+                Go To Search
               </Link>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 import axios from 'axios'
 import $ from 'jquery'
 import SearchList from './SearchBarList'
+import Movielogo from '../media/images/movieslists_logo.svg'
 
 class UnconnectedNavbar extends Component {
   constructor(props) {
@@ -175,7 +176,7 @@ class UnconnectedNavbar extends Component {
         id="navbar-main-style"
       >
         <Link to="/" className="navbar-brand ml-3">
-          Movielists
+          <img src={Movielogo} className="logo-navbar" />
         </Link>
 
         <button

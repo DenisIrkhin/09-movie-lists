@@ -82,12 +82,14 @@ class UnconnectedFilterDropdown extends Component {
   }
   //renders menu with filter
   RenderMenu() {
-    if(this.props.loggedIn===false){
-      
-      this.props.parent.setState({message:"To add movies to a list please log in or sign up, then make a list"})
+    if (this.props.loggedIn === false) {
+      this.props.parent.setState({
+        message:
+          'To add movies to a list please log in or sign up, then make a list'
+      })
       this.closeMenu()
-      window.scrollTo(0,0)
-      
+      window.scrollTo(0, 0)
+
       return
     }
     let listArr = this.props.lists
@@ -120,7 +122,7 @@ class UnconnectedFilterDropdown extends Component {
     if (mappedMenuOptions.length === 0) {
       mappedMenuOptions = (
         <Link to="./lists/makelist">
-          <div>No lists. Click here to create a List</div>
+          <div>No lists. Click to create a List</div>
         </Link>
       )
     }

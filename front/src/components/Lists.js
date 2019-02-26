@@ -119,7 +119,7 @@ class UnconnectedLists extends Component {
       if (!listsArr.length) {
         return (
           <div>
-            <h4>No Lists have been created yet</h4>
+            <h6>No Lists have been created yet</h6>
             <Link to="/lists/makelist">Create a List</Link>
           </div>
         )

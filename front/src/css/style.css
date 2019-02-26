@@ -37,6 +37,11 @@ html {
   color: white;
 }
 
+.logo-navbar {
+  width: 130px;
+  height: 50px;
+}
+
 .navbar-brand:hover {
   color: white;
 }
