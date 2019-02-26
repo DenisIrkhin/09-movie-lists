@@ -9,7 +9,7 @@ import axios from "axios";
 import App from "../App.js";
 import Modal from "react-modal";
 
-class MyReviews extends Component {
+class UnconnectedMyReviews extends Component {
   constructor(props) {
     super(props);
     this.state = { reviews: [] };
@@ -67,6 +67,12 @@ class MyReviews extends Component {
   };
 
   render() {
+      if(this.props.loggedIn===false){
+        return(
+            <Redirect to={"./loginalert"}></Redirect>
+        )
+      }
+     
     return (
       <div>
         <h3>Your Reviews</h3>
@@ -77,5 +83,10 @@ class MyReviews extends Component {
 }
 
 
-
+let mapStateToProps = function(state) {
+    return { loggedIn: state.state.loggedIn };
+  };
+  
+  let MyReviews = connect(mapStateToProps)(withRouter(UnconnectedMyReviews));
+  
 export default MyReviews
