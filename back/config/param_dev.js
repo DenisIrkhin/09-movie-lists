@@ -8,5 +8,6 @@ module.exports = {
   MONGO_MLAB: 'mongodb://dd:QWhHQrWztwZ8netQMY@ds129045.mlab.com:29045/ml',
   MONGO_DO: 'mongodb://dbUser:TsTQNyBwykyjBegXv8PaUUWtu@movielists.ca:27017/ml',
   CORS: 'http://localhost:3080',
-  SERVER_PORT: 5050
+  SERVER_PORT: 5050,
+  JWT_SECRET: 'HgkT8FmXGCBqznszqjsYDsrKx'
 }

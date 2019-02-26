@@ -2,33 +2,14 @@ const express = require('express')
 const router = express.Router()
 const ObjectID = require('mongodb').ObjectID
 // const getUserIdByCookies = require('../../functions')
-const getUserIdByCookiesWithErrors = require('../../functions')
+const getUserIdByCookiesWithErrors = require('../../lib/cookie')
 
-// Declare globally to asign later in promises
-let dbo
-
-// Array of errors to return
-let errors = {}
-
-// brin Async func
-// declare global to assign value in promise resolve
-const gdbo = require('../../mongo-dbo-promise')
-gdbo.then(res => {
-  // console.log('Inside promise resolve is', res)
-  dbo = res
-})
-
-// To check it
-setTimeout(() => {
-  if (dbo !== undefined) {
-  }
-  console.log('Mongodb connected from lists.js')
-}, 500)
+// Bring List model
+const List = require('../../models/List')
 
 // Insert new lists into our database
 // @@ POST /api/lists/add
 router.post('/add', async (req, res) => {
-  errors = {}
   console.log('*******************************************')
   console.log('req.body from post. /lists/add ', req.body)
   console.log('All Cookies: ', req.cookies)
@@ -37,7 +18,7 @@ router.post('/add', async (req, res) => {
 
   try {
     // Get userId by cookie
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 40', userId)
   } catch (err) {
     console.log('err43 when resolving getUserIdByCookies', err)
@@ -46,11 +27,11 @@ router.post('/add', async (req, res) => {
 
   // Create new list and save it in dbo
   let { name, movieArr, description, tags } = req.body
-  const newList = { name, movieArr, userId, description, tags }
+  const newList = new List({ name, movieArr, userId, description, tags })
   console.log('newList', newList)
   try {
-    let result = await (dbo.collection('lists').insertOne(newList))
-    console.log('list added', result.ops[0])
+    let result = await (newList.save())
+    console.log('list added', result)
     return res.status(200).json({ success: true, message: 'list added' })
   } catch (error) {
     console.log(error)
@@ -69,7 +50,7 @@ router.get('/', async (req, res) => {
 
   try {
     // Get user' eamil by cookie
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 72', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
@@ -77,12 +58,12 @@ router.get('/', async (req, res) => {
   }
 
   try {
-    let lists = await (dbo.collection('lists').find({ userId }).toArray())
+    let lists = await (List.find({ userId }))
     console.log('lists', lists)
     return res.status(200).json({ success: true, lists })
   } catch (error) {
     console.log(error)
-    return res.status(400).json({ success: true, message: `Something goes wrong`, error })
+    return res.status(400).json({ success: false, message: `Something goes wrong`, error })
   }
 })
 
@@ -97,7 +78,7 @@ router.put('/id', async (req, res) => {
 
   try {
     // Get user' email by cookie
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 71', userId)
   } catch (err) {
     console.log('err103 when resolving getUserIdByCookies', err)
@@ -106,7 +87,7 @@ router.put('/id', async (req, res) => {
 
   // Create updated list from req.body for future saving it in dbo
   let { listId, name, movieArr, description, tags } = req.body
-  const updatedList = { userId, name, movieArr, description, tags }
+  const updatedList = new List({ userId, name, movieArr, description, tags })
   console.log('updatedList', updatedList)
 
   // Search for id and that userId of list maches with userId
@@ -117,11 +98,11 @@ router.put('/id', async (req, res) => {
   // In mongoose we can try { new: true}
   // in MongoDocs {returnNewDocument : true }
   try {
-    let result = await (dbo.collection('lists').findOneAndUpdate(
+    let result = await (List.findOneAndUpdate(
       { $and: [{ _id: ObjectID(listId) }, { userId }] },
       // { _id: ObjectID(listId) },
       { $set: updatedList },
-      { returnOriginal: false }
+      { new: true }
     ))
     console.log('result', result)
     console.log('result.value', result.value)
@@ -154,7 +135,7 @@ router.put('/add-movie', async (req, res) => {
 
   try {
     // Get user' email by cookie
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 71', userId)
   } catch (err) {
     console.log('err103 when resolving getUserIdByCookies', err)
@@ -169,13 +150,13 @@ router.put('/add-movie', async (req, res) => {
   // In mongoose we can try { new: true}
   // in MongoDocs {returnNewDocument : true }
   try {
-    let result = await (dbo.collection('lists').updateMany(
+    let result = await (List.updateMany(
       // { $and: [{ _id: ObjectID(listId) }, { userId }] },
       { $and: [{ _id: { $in: listArrObjectIds } }, { userId }] },
       { $push: {
         movieArr: movieObject
       } },
-      { returnOriginal: false }
+      { new: true }
     ))
     console.log('result', result.result)
     // console.log('result.value', result.value)
@@ -202,7 +183,7 @@ router.delete('/id', async (req, res) => {
 
   // Get user' eamil by cookie
   try {
-    userId = await getUserIdByCookiesWithErrors(dbo, req.cookies)
+    userId = await getUserIdByCookiesWithErrors(req.cookies)
     console.log('userId 71', userId)
   } catch (err) {
     console.log('err64 when resolving getUserIdByCookies', err)
@@ -214,7 +195,7 @@ router.delete('/id', async (req, res) => {
   // Mongo throw err with result.deletedCount = 0
   // We handle this
   try {
-    let result = await (dbo.collection('lists').deleteOne(
+    let result = await (List.deleteOne(
       { $and: [{ _id: ObjectID(listId) }, { userId }] }
     ))
     // console.log('result', result)
@@ -240,7 +221,7 @@ router.post('/id', async (req, res) => {
   console.log('listId', listId)
 
   try {
-    let list = await (dbo.collection('lists').findOne({ _id: ObjectID(listId) }))
+    let list = await (List.findById({ listId }))
     console.log('list', list)
     return res.status(200).json({ success: true, list })
   } catch (error) {
@@ -271,13 +252,13 @@ router.post('/wildsearch', async (req, res) => {
 
   // Regex search through bdo
   try {
-    lists = await (dbo.collection('lists').find({
+    lists = await (List.find({
       $or: [
         { name: { $regex: search, $options: 'i' } },
         { tags: { $regex: search, $options: 'i' } },
         { description: { $regex: search, $options: 'i' } }
       ]
-    }).toArray())
+    }))
 
     console.log('lists', lists)
   } catch (error) {
