@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const ObjectID = require('mongodb').ObjectID
+// const ObjectID = require('mongodb').ObjectID
 const getUserIdByCookiesWithErrors = require('../../lib/cookie')
 
 // Bring List model
@@ -26,20 +26,20 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ success: false, message: `Can't define user`, error: err.message })
   }
 
-  // UserId found by cookie
-  // Bring more fields from `users` collection
-  try {
-    user = await (User.findOne({ _id: userId }))
-    console.log('user 175', user)
-  } catch (error) {
-    console.log('error ', error)
-    return res.status(400).json({ success: false, message: 'Something goes wrong', error })
-  }
-  const { email } = user
+  // // UserId found by cookie
+  // // Bring more fields from `users` collection
+  // try {
+  //   user = await (User.findOne({ _id: userId }))
+  //   console.log('user 175', user)
+  // } catch (error) {
+  //   console.log('error ', error)
+  //   return res.status(400).json({ success: false, message: 'Something goes wrong', error })
+  // }
+  // const { email } = user
 
   // Create new review
   const { movieId, reviewText } = req.body
-  const newReview = new Review({ userId, email, movieId, reviewText })
+  const newReview = new Review({ userId, movieId, reviewText })
   console.log('newReview', newReview)
   try {
     let result = await (newReview.save())
@@ -72,8 +72,8 @@ router.get('/', async (req, res) => {
   // User found
   // Find users' reviews by userId
   try {
-    let reviews = await (Review.find({ userId }))
-    console.log('reviews', reviews)
+    let reviews = await (Review.find({ userId }).populate('user', ['email', 'avatar']))
+    console.log('reviews 76', reviews)
     return res.status(200).json({ success: true, reviews })
   } catch (error) {
     console.log(error)
@@ -113,7 +113,7 @@ router.put('/id', async (req, res) => {
   // in MongoDocs {returnNewDocument : true }
   try {
     let result = await (Review.findOneAndUpdate(
-      { $and: [{ _id: ObjectID(reviewId) }, { userId }] },
+      { $and: [{ _id: reviewId }, { userId }] },
       // { _id: ObjectID(reviewId) },
       { $set: updatedReview },
       { returnNewDocument: true }
@@ -156,7 +156,7 @@ router.delete('/id', async (req, res) => {
   // We handle this
   try {
     let result = await (Review.deleteOne(
-      { $and: [{ _id: ObjectID(reviewId) }, { userId }] }
+      { $and: [{ _id: reviewId }, { userId }] }
     ))
     // console.log('result', result)
     console.log('result.deletedCount', result.deletedCount)
@@ -181,7 +181,7 @@ router.post('/id', async (req, res) => {
   console.log('reviewId', reviewId)
 
   try {
-    let review = await (Review.findOne({ _id: ObjectID(reviewId) }))
+    let review = await (Review.findById(reviewId).populate('user', ['email', 'avatar']))
     console.log('review', review)
     return res.status(200).json({ success: true, review })
   } catch (error) {

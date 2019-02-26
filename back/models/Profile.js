@@ -55,9 +55,10 @@ ProfileSchema.virtual('user', {
   justOne: true // populate one doc only. with false it populates an array
 })
 
-// ProfileSchema.set('toObject', { virtuals: true })
+// This is for console.log
+ProfileSchema.set('toObject', { virtuals: true })
 
-// That setting is crucial to have output with find()
+// That setting is for response
 ProfileSchema.set('toJSON', { virtuals: true })
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema)
