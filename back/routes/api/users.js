@@ -39,7 +39,7 @@ router.post('/signup', async (req, res) => {
   let emailExists, userId
 
   // Check if email exists
-  let { email, password } = req.body
+  let { email, password, username } = req.body
   try {
     emailExists = await (User.findOne({ email }))
   } catch (error) {
@@ -75,6 +75,7 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({
       email,
       avatar,
+      username,
       password: passHashed
     })
     // console.log('newUser', newUser)
@@ -89,7 +90,7 @@ router.post('/signup', async (req, res) => {
     }
 
     // Create JWT token
-    const payload = { userId, email, avatar }
+    const payload = { userId, email, avatar, username }
     const jwtToken = await (jwtSign(payload))
 
     // Create sessionDd
@@ -103,7 +104,7 @@ router.post('/signup', async (req, res) => {
       const result = await (sessionElem.save())
       console.log('new session doc added', result)
       res.cookie('__sid__', `${sessionId}`)
-      return res.status(200).json({ success: true, userId, email, jwtToken, avatar, message: 'Logged in successfully' })
+      return res.status(200).json({ success: true, userId, email, username, jwtToken, avatar, message: 'Logged in successfully' })
     } catch (error) {
       console.log(error)
       return res.status(400).json({ success: false, message: 'Something goes wrong', error })
@@ -130,7 +131,7 @@ router.post('/login', async (req, res) => {
   console.log('******************************************')
   console.log('req.body for post. /users/login', req.body)
 
-  let { email, password } = req.body
+  let { email, password, username } = req.body
 
   // Find user by email and get userId from it
   // NOTE: userId is an object includs ObjectID in mLab we see it like
@@ -169,7 +170,7 @@ router.post('/login', async (req, res) => {
     let { _id, email, avatar } = user
 
     // Create JWT token
-    const payload = { userId: _id, email, avatar }
+    const payload = { userId: _id, email, avatar, username }
     console.log('payload', payload)
     const jwtToken = await (jwtSign(payload))
 
@@ -184,7 +185,7 @@ router.post('/login', async (req, res) => {
       const result = await (sessionElem.save())
       console.log('new session doc added', result)
       res.cookie('__sid__', `${sessionId}`)
-      return res.status(200).json({ success: true, userId, email, jwtToken, avatar, message: 'Logged in successfully' })
+      return res.status(200).json({ success: true, userId, email, username, jwtToken, avatar, message: 'Logged in successfully' })
     } catch (error) {
       console.log(error)
       return res.status(400).json({ success: false, message: 'Something goes wrong', error })
@@ -230,10 +231,10 @@ router.post('/check', async (req, res) => {
 
   // Take out fields we need from user obj
 
-  let { _id, email, avatar } = user
+  let { _id, email, avatar, username } = user
 
   // Create JWT token
-  const payload = { userId: _id, email, avatar }
+  const payload = { userId: _id, email, avatar, username }
   const jwtToken = await (jwtSign(payload))
 
   // Create sessionId
@@ -248,7 +249,7 @@ router.post('/check', async (req, res) => {
     console.log('new session doc added', result)
     res.cookie('__sid__', `${sessionId}`)
 
-    return res.status(200).json({ success: true, userId, email, jwtToken, avatar, message: 'Logged in successfully' })
+    return res.status(200).json({ success: true, userId, email, username, jwtToken, avatar, message: 'Logged in successfully' })
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: false, message: 'Something goes wrong', error })

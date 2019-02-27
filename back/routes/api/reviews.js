@@ -72,7 +72,7 @@ router.get('/', async (req, res) => {
   // User found
   // Find users' reviews by userId
   try {
-    let reviews = await (Review.find({ userId }).populate('user', ['email', 'avatar']))
+    let reviews = await (Review.find({ userId }).populate('user', ['email', 'avatar', 'username']))
     console.log('reviews 76', reviews)
     return res.status(200).json({ success: true, reviews })
   } catch (error) {
@@ -181,7 +181,7 @@ router.post('/id', async (req, res) => {
   console.log('reviewId', reviewId)
 
   try {
-    let review = await (Review.findById(reviewId).populate('user', ['email', 'avatar']))
+    let review = await (Review.findById(reviewId).populate('user', ['email', 'avatar', 'username']))
     console.log('review', review)
     return res.status(200).json({ success: true, review })
   } catch (error) {
