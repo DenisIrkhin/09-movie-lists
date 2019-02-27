@@ -167,7 +167,7 @@ router.post('/login', async (req, res) => {
     console.log('User authentificated')
 
     // Take out fields we need from user obj
-    let { _id, email, avatar } = user
+    let { _id, email, avatar, username } = user
 
     // Create JWT token
     const payload = { userId: _id, email, avatar, username }

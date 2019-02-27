@@ -217,7 +217,7 @@ router.post('/wildsearch', async (req, res) => {
         { reviewText: { $regex: search, $options: 'i' } }
         // { email: { $regex: search, $options: 'i' } }
       ]
-    }))
+    }).populate('user', ['email', 'avatar', 'username']))
 
     console.log('reviews', reviews)
   } catch (error) {
