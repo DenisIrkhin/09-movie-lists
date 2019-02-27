@@ -31,13 +31,15 @@ class UnconnectedSignup extends Component {
     this.state = {
       inputEmail: '',
       inputPassword: '',
-
+      inputConfirmPassword:"",
+      inputUsername:"",
       modalIsOpen: true,
       modalMessage: ''
     }
     this.handleInputPassword = this.handleInputPassword.bind(this)
     this.handleInputConfirmPassword = this.handleInputConfirmPassword.bind(this)
     this.handleInputEmail = this.handleInputEmail.bind(this)
+    this.handleInputUsername = this.handleInputUsername.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.openModal = this.openModal.bind(this)
     this.afterOpenModal = this.afterOpenModal.bind(this)
@@ -46,7 +48,10 @@ class UnconnectedSignup extends Component {
   handleInputEmail (evt) {
     this.setState({ inputEmail: evt.currentTarget.value })
   }
-  handleInputPassword (evt) {
+  handleInputUsername(evt) {
+    this.setState({ inputUsername: evt.currentTarget.value })
+  }
+  handleInputPassword(evt) {
     this.setState({ inputPassword: evt.currentTarget.value })
   }
   handleInputConfirmPassword (evt) {
@@ -65,7 +70,8 @@ class UnconnectedSignup extends Component {
     let reqBody = {
       email: this.state.inputEmail,
       password: this.state.inputPassword,
-      confirmPassword: this.state.inputConfirmPassword
+      confirmPassword:this.state.inputConfirmPassword,
+      username:this.state.inputUsername
     }
     console.log('reqBody', reqBody)
     axios({
@@ -138,6 +144,15 @@ class UnconnectedSignup extends Component {
                   className='input-login-signup'
                 />
                 <div className='mb-1'>Email</div>
+              </div>
+              <div className=" ml-2">
+                <input
+                  type="text"
+                  onChange={this.handleInputUsername}
+                  value={this.state.inputUsername}
+                  className="input-login-signup"
+                />
+                <div className="mb-1">Username</div>
               </div>
               <div>
                 <input
