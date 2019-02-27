@@ -54,7 +54,7 @@ class UnconnectedMyReviews extends Component {
   deleteReview = reviewId => {
     console.log('deleting review')
     // let reqBody={reviewId:reviewId}
-    let reqBody = reviewId
+    let reqBody = {reviewId:reviewId}
     console.log('reqBody', reqBody)
     axios({
       method: 'delete',
