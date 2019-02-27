@@ -490,7 +490,7 @@ html {
 
 /*MOVIE DETAILS PAGE*/
 .main-container-details {
-  min-height: 100%;
+  min-height: 100vh;
   padding-top: 4%;
   padding-bottom: 4%;
   padding-left: 8%;
@@ -584,7 +584,7 @@ html {
 /*PREMIUM PAGE*/
 
 .premium-main-cont {
-  min-height: 100%;
+  min-height: 100vh;
   height: 100%;
   background-color: #edeae5;
 }
@@ -722,11 +722,17 @@ html {
 
 .main-container-lists {
   min-height: 100vh;
-  padding-top: 5%;
+  padding-top: 1.2%;
   padding-bottom: 10%;
   background-color: #edeae5;
   margin: auto;
   justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .main-container-lists {
+    padding-top: 8%;
+  }
 }
 
 .lists-holder {
@@ -1030,6 +1036,110 @@ html {
     padding: 6%;
     padding-left: 10%;
   }
+}
+
+/*REVIEWS*/
+
+.inner-container-your-review {
+  width: 70%;
+  background-color: white;
+  padding: 4%;
+  margin: auto;
+  justify-content: center;
+  border-radius: 5px;
+  margin-top: 4%;
+  margin-bottom: 4%;
+  -webkit-box-shadow: 0px 1px 4px 1px rgba(201, 201, 201, 0.27);
+  -moz-box-shadow: 0px 1px 4px 1px rgba(201, 201, 201, 0.27);
+  box-shadow: 0px 1px 4px 1px rgba(201, 201, 201, 0.27);
+}
+
+@media only screen and (max-width: 600px) {
+  .inner-container-your-review {
+    width: 90%;
+  }
+}
+
+.text-area-your-review {
+  margin-top: 4%;
+  width: 100%;
+}
+
+.submit-your-review {
+  margin-top: 4%;
+  font-size: 14px;
+  cursor: pointer;
+  color: #a8903d;
+  font-weight: 500;
+  border: 1px solid #eed479;
+  background-color: #fce181;
+  box-shadow: none !important;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-radius: 5px;
+}
+
+.submit-your-review:hover {
+  color: #917d35;
+  border: 1px solid #dbc268;
+  background-color: #f0d471;
+  box-shadow: none !important;
+}
+
+.submit-your-review:focus {
+  box-shadow: none !important;
+}
+
+.main-container-my-reviews {
+  min-height: 100vh;
+  padding-bottom: 10%;
+  background-color: #edeae5;
+}
+
+.my-review-holder {
+  width: 75%;
+  text-align: left;
+  margin: auto;
+  margin-top: 4%;
+  justify-content: center;
+  padding: 4%;
+  background: #f7f7f7;
+  border-radius: 5px;
+  border: 1px solid rgb(202, 202, 202);
+}
+
+@media only screen and (max-width: 768px) {
+  .my-review-holder {
+    width: 90%;
+    margin-top: 10%;
+  }
+}
+
+.single-review-holder {
+  width: 90%;
+  text-align: left;
+  margin: auto;
+  margin-top: 4%;
+  justify-content: center;
+  padding: 4%;
+  padding-left: 6%;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid rgb(202, 202, 202);
+}
+
+.movie-title-my-reviews {
+  color: rgb(83, 83, 83);
+  font-size: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-bottom: 2%;
+}
+
+.movie-title-my-reviews:hover {
+  color: blue;
 }
 
 /* .tag {
