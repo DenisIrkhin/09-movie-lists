@@ -85,7 +85,7 @@ router.get('/', async (req, res) => {
 // @@ PUT /api/reviews/id
 router.put('/id', async (req, res) => {
   console.log('*******************************************')
-  console.log('req.body from PUT. /reviews/id ', req.body)
+  console.log('req.body from PUT /reviews/id ', req.body)
   console.log('All Cookies: ', req.cookies)
 
   let userId
@@ -140,7 +140,7 @@ router.delete('/id', async (req, res) => {
   let userId
 
   let { reviewId } = req.body
-console.log('reviewId', reviewId)
+  console.log('reviewId', reviewId)
   // Get user' eamil by cookie
   try {
     userId = await getUserIdByCookiesWithErrors(req.cookies)

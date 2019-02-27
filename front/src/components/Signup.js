@@ -53,7 +53,6 @@ class UnconnectedSignup extends Component {
     this.setState({ inputConfirmPassword: evt.currentTarget.value })
   }
 
-<<<<<<< Updated upstream
   handleSubmit(e) {
     
     let that = this
@@ -64,13 +63,6 @@ class UnconnectedSignup extends Component {
     }
     //make fetch request here and dispatch action if it returns positive
     //Recommend that backend also expects a password and user
-=======
-  handleSubmit (e) {
-    // let that = this
-    e.preventDefault()
-    // make fetch request here and dispatch action if it returns positive
-    // Recommend that backend also expects a password and user
->>>>>>> Stashed changes
     let reqBody = {
       email: this.state.inputEmail,
       password: this.state.inputPassword,
