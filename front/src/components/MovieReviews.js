@@ -51,7 +51,7 @@ class MovieReviews extends Component {
       let createDomElements = elem => {
         return (
           <li>
-            <div>User:{elem.user}</div>
+            <div>User:{elem.user.username}</div>
             <div>Review:{elem.reviewText}</div>
           </li>
         );
