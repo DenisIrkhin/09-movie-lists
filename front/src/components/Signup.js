@@ -151,8 +151,9 @@ class UnconnectedSignup extends Component {
                   onChange={this.handleInputUsername}
                   value={this.state.inputUsername}
                   className="input-login-signup"
+                  pattern=".{3,15}" required title="2 to 15 characters"
                 />
-                <div className="mb-1">Username</div>
+                <div className="mb-1" >Username</div>
               </div>
               <div>
                 <input
@@ -169,6 +170,8 @@ class UnconnectedSignup extends Component {
                   onChange={this.handleInputConfirmPassword}
                   value={this.state.inputConfirmPassword}
                   className=' ml-2 input-login-signup'
+                  pattern={this.state.inputPassword} required title="passwords must match"
+
                 />
                 <div className=' ml-2 mb-2'>Confirm Password</div>
               </div>
