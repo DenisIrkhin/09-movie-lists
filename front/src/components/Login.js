@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import '../css/style.css'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import '../css/LoginSignup.css'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import App from '../App.js'
 import Modal from 'react-modal'
-import { BACKEND_DOMAIN } from '../Global'
+// import { BACKEND_DOMAIN } from '../Global'
 
 Modal.setAppElement(App)
 
@@ -51,7 +51,7 @@ class UnconnectedLogin extends Component {
   }
 
   handleSubmit (e) {
-    let that = this
+    // let that = this
     e.preventDefault()
     let reqBody = {
       email: this.state.inputEmail,
@@ -93,9 +93,9 @@ class UnconnectedLogin extends Component {
       })
       .catch(e => {
         if (e) {
-          console.log('error',e.response.data.valErrors )
+          console.log('error', e.response.data.valErrors)
           this.setState({
-            modalMessage: Object.values(e.response.data.valErrors).join(";")
+            modalMessage: Object.values(e.response.data.valErrors).join(';')
           })
           // console.log("Error. probably username doesnt exist")
         }

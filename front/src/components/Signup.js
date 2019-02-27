@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../css/style.css'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 // import "../css/LoginSignup.css";
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -26,7 +26,7 @@ const customStyles = {
 }
 
 class UnconnectedSignup extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       inputEmail: '',
@@ -43,16 +43,17 @@ class UnconnectedSignup extends Component {
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
-  handleInputEmail(evt) {
+  handleInputEmail (evt) {
     this.setState({ inputEmail: evt.currentTarget.value })
   }
-  handleInputPassword(evt) {
+  handleInputPassword (evt) {
     this.setState({ inputPassword: evt.currentTarget.value })
   }
   handleInputConfirmPassword(evt){
     this.setState({ inputConfirmPassword: evt.currentTarget.value })
   }
 
+<<<<<<< Updated upstream
   handleSubmit(e) {
     
     let that = this
@@ -63,6 +64,13 @@ class UnconnectedSignup extends Component {
     }
     //make fetch request here and dispatch action if it returns positive
     //Recommend that backend also expects a password and user
+=======
+  handleSubmit (e) {
+    // let that = this
+    e.preventDefault()
+    // make fetch request here and dispatch action if it returns positive
+    // Recommend that backend also expects a password and user
+>>>>>>> Stashed changes
     let reqBody = {
       email: this.state.inputEmail,
       password: this.state.inputPassword,
@@ -78,21 +86,23 @@ class UnconnectedSignup extends Component {
       .then(response => {
         console.log('post signup was successful')
         console.log('response', response)
+        let { email, userId, avatar } = response.data
+        // Dispatch to set loggedIn to true
+        this.props.dispatch({ type: 'login', payload: { email, userId, avatar } })
         axios({
-            method: "get",
-            url: "api/lists",
-            withCredentials: true
-          }).then(response => {
-            console.log("response", response);
-            let responseLists = response.data.lists;
-            console.log("responseLists", responseLists);
-            this.props.dispatch({ type: "getLists", payload: responseLists });
-            this.props.dispatch({ type: 'login', payload: {email:this.state.inputEmail} })
-            
-          })
+          method: 'get',
+          url: 'api/lists',
+          withCredentials: true
+        }).then(response => {
+          console.log('response', response)
+          let responseLists = response.data.lists
+          console.log('responseLists', responseLists)
+          this.props.dispatch({ type: 'getLists', payload: responseLists })
+        })
       })
       .catch(e => {
         console.log('error of this request', e.response.data.valErrors)
+<<<<<<< Updated upstream
         try{
           let errorMessage=Object.values(e.response.data.valErrors).join(";")
           console.log('errorMessage', errorMessage)
@@ -101,23 +111,30 @@ class UnconnectedSignup extends Component {
           })
         }catch{}
         
+=======
+        let errorMessage = Object.values(e.response.data.valErrors).join(';')
+        console.log('errorMessage', errorMessage)
+        this.setState({
+          modalMessage: errorMessage
+        })
+>>>>>>> Stashed changes
       })
     //
   }
 
-  openModal() {
+  openModal () {
     this.setState({ modalIsOpen: true })
   }
 
-  afterOpenModal() {
+  afterOpenModal () {
     // this.subtitle.style.color="#f00"
   }
 
-  closeModal() {
+  closeModal () {
     this.setState({ modalIsOpen: false })
   }
 
-  render() {
+  render () {
     if (!this.props.loggedIn && this.state.modalIsOpen) {
       return (
         <div>
@@ -127,26 +144,27 @@ class UnconnectedSignup extends Component {
             onRequestClose={this.closeModal}
             style={customStyles}
           >
-            <h3 className="header-login-signup mb-3 ml-1">Sign up </h3>
+            <h3 className='header-login-signup mb-3 ml-1'>Sign up </h3>
             <form onSubmit={this.handleSubmit}>
-              <div className=" ml-2">
+              <div className=' ml-2'>
                 <input
-                  type="text"
+                  type='text'
                   onChange={this.handleInputEmail}
                   value={this.state.inputEmail}
-                  className="input-login-signup"
+                  className='input-login-signup'
                 />
-                <div className="mb-1">Email</div>
+                <div className='mb-1'>Email</div>
               </div>
               <div>
                 <input
-                  type="text"
+                  type='text'
                   onChange={this.handleInputPassword}
                   value={this.state.inputPassword}
-                  className=" ml-2 input-login-signup"
+                  className=' ml-2 input-login-signup'
                 />
-                <div className=" ml-2 mb-2">Password</div>
+                <div className=' ml-2 mb-2'>Password</div>
               </div>
+<<<<<<< Updated upstream
               <div>
                 <input
                   type="text"
@@ -158,17 +176,21 @@ class UnconnectedSignup extends Component {
               </div>
               <div className="modal-message">{this.state.modalMessage}</div>
               <input className="btn button-login-signup" type="submit" />
+=======
+              <div className='modal-message'>{this.state.modalMessage}</div>
+              <input className='btn button-login-signup' type='submit' />
+>>>>>>> Stashed changes
             </form>
           </Modal>
         </div>
       )
     } else {
-      return <Redirect to="/" />
+      return <Redirect to='/' />
     }
   }
 }
 
-let mapStateToProps = function(state) {
+let mapStateToProps = function (state) {
   return { loggedIn: state.state.loggedIn }
 }
 
@@ -176,9 +198,9 @@ let Signup = connect(mapStateToProps)(UnconnectedSignup)
 
 export default Signup
 
-//add as list item in navbar
-{
-  /* <li className="nav-item nav-link">
-                <LoginSignup/>
-                </li> */
-}
+// // add as list item in navbar
+// {
+//   /* <li className="nav-item nav-link">
+//                 <LoginSignup/>
+//                 </li> */
+// }

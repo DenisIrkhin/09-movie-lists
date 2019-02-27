@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
   // Find user's profile
   try {
     profile = await (Profile.findOne({ userId }).populate('user', ['email', 'avatar']))
-    console.log('profile 37', profile)
+    console.log('profile 40', profile)
   } catch (error) {
     console.log('error ', error)
     errors.general = 'Something goes wrong'
@@ -46,6 +46,7 @@ router.get('/', async (req, res) => {
 
   if (!profile) {
     errors.profile = 'There is no profile for this user'
+    console.log('errors', errors)
     return res.status(400).json({ success: false, errors })
   }
 

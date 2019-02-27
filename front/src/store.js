@@ -39,11 +39,28 @@ let reducer = function (state, action) {
         ...state,
         state: { ...state.state, editList: action.payload }
       }
+
+    case 'get-user-profile':
+      console.log('Reduce Get-User-Profile')
+      return {
+        ...state,
+        state: { ...state.state, profile: action.payload, isProfileLoaded: true }
+      }
+
     default:
       return { state }
   }
 }
-const initialState = { loggedIn: false }
+const initialState = {
+  loggedIn: false,
+  user: '',
+  userId: '',
+  avatar: '',
+  profile: null,
+  isProfileLoaded: false
+
+  // lists: []
+}
 
 const store = createStore(
   reducer,
