@@ -16,6 +16,14 @@ module.exports = function validateRegisterInput (data) {
     valErrors.email = 'Email is invalid'
   }
 
+  if (Validator.isEmpty(data.username)) {
+    valErrors.username = 'Username field is required'
+  }
+
+  if (!Validator.isLength(data.username, { min: 2, max: 15 })) {
+    valErrors.username = 'Username must be more than 2 and less than 15 characters'
+  }
+
   if (Validator.isEmpty(data.password)) {
     valErrors.password = 'Password field is required'
   }
