@@ -36,7 +36,7 @@ class UnconnectedSignup extends Component {
       modalMessage: ''
     }
     this.handleInputPassword = this.handleInputPassword.bind(this)
-    this.handleInputConfirmPassword=this.handleInputConfirmPassword.bind(this)
+    this.handleInputConfirmPassword = this.handleInputConfirmPassword.bind(this)
     this.handleInputEmail = this.handleInputEmail.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.openModal = this.openModal.bind(this)
@@ -49,24 +49,23 @@ class UnconnectedSignup extends Component {
   handleInputPassword (evt) {
     this.setState({ inputPassword: evt.currentTarget.value })
   }
-  handleInputConfirmPassword(evt){
+  handleInputConfirmPassword (evt) {
     this.setState({ inputConfirmPassword: evt.currentTarget.value })
   }
 
-  handleSubmit(e) {
-    
-    let that = this
+  handleSubmit (e) {
+    // let that = this
     e.preventDefault()
-    if(this.state.inputConfirmPassword!==this.state.inputPassword){
-      this.setState({modalMessage:"Password fields do not match."})
+    if (this.state.inputConfirmPassword !== this.state.inputPassword) {
+      this.setState({ modalMessage: 'Password fields do not match.' })
       return
     }
-    //make fetch request here and dispatch action if it returns positive
-    //Recommend that backend also expects a password and user
+    // make fetch request here and dispatch action if it returns positive
+    // Recommend that backend also expects a password and user
     let reqBody = {
       email: this.state.inputEmail,
       password: this.state.inputPassword,
-      confirmPassword:this.state.inputConfirmPassword
+      confirmPassword: this.state.inputConfirmPassword
     }
     console.log('reqBody', reqBody)
     axios({
@@ -94,22 +93,15 @@ class UnconnectedSignup extends Component {
       })
       .catch(e => {
         console.log('error of this request', e.response.data.valErrors)
-<<<<<<< Updated upstream
-        try{
-          let errorMessage=Object.values(e.response.data.valErrors).join(";")
+        try {
+          let errorMessage = Object.values(e.response.data.valErrors).join(';')
           console.log('errorMessage', errorMessage)
           this.setState({
             modalMessage: errorMessage
           })
-        }catch{}
-        
-=======
-        let errorMessage = Object.values(e.response.data.valErrors).join(';')
-        console.log('errorMessage', errorMessage)
-        this.setState({
-          modalMessage: errorMessage
-        })
->>>>>>> Stashed changes
+        } catch (error) {
+          console.log('error', error)
+        }
       })
     //
   }
@@ -156,22 +148,17 @@ class UnconnectedSignup extends Component {
                 />
                 <div className=' ml-2 mb-2'>Password</div>
               </div>
-<<<<<<< Updated upstream
               <div>
                 <input
-                  type="text"
+                  type='text'
                   onChange={this.handleInputConfirmPassword}
                   value={this.state.inputConfirmPassword}
-                  className=" ml-2 input-login-signup"
+                  className=' ml-2 input-login-signup'
                 />
-                <div className=" ml-2 mb-2">Confirm Password</div>
+                <div className=' ml-2 mb-2'>Confirm Password</div>
               </div>
-              <div className="modal-message">{this.state.modalMessage}</div>
-              <input className="btn button-login-signup" type="submit" />
-=======
               <div className='modal-message'>{this.state.modalMessage}</div>
               <input className='btn button-login-signup' type='submit' />
->>>>>>> Stashed changes
             </form>
           </Modal>
         </div>
