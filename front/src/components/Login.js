@@ -93,8 +93,9 @@ class UnconnectedLogin extends Component {
       })
       .catch(e => {
         if (e) {
+          console.log('error',e.response.data.valErrors )
           this.setState({
-            modalMessage: 'Wrong username or password.'
+            modalMessage: Object.values(e.response.data.valErrors).join(";")
           })
           // console.log("Error. probably username doesnt exist")
         }

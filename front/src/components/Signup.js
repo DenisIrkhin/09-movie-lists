@@ -61,7 +61,7 @@ class UnconnectedSignup extends Component {
     axios({
       method: 'post',
       data: reqBody,
-      url: '/api/users/Signup',
+      url: '/api/users/signup',
       withCredentials: true
     })
       .then(response => {
@@ -81,9 +81,11 @@ class UnconnectedSignup extends Component {
           })
       })
       .catch(e => {
-        console.log('error', e)
+        console.log('error of this request', e.response.data.valErrors)
+        let errorMessage=Object.values(e.response.data.valErrors).join(";")
+        console.log('errorMessage', errorMessage)
         this.setState({
-          modalMessage: 'Username taken.'
+          modalMessage: errorMessage
         })
       })
     //

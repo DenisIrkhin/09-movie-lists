@@ -140,7 +140,7 @@ router.delete('/id', async (req, res) => {
   let userId
 
   let { reviewId } = req.body
-
+console.log('reviewId', reviewId)
   // Get user' eamil by cookie
   try {
     userId = await getUserIdByCookiesWithErrors(req.cookies)

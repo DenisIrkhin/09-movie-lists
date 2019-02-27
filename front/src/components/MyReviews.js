@@ -51,6 +51,19 @@ class UnconnectedMyReviews extends Component {
       //       console.log("reviews set",reviews)},1000)
     })
   }
+  deleteReview=(reviewId)=>{
+      console.log("deleting review") 
+      let reqBody={reviewId:reviewId}
+      console.log('reqBody', reqBody)
+    axios({
+        method:"delete",
+        url:"/api/reviews/id",
+        data:reqBody ,
+        withCredentials:true
+    }).then(()=>{
+        console.log("deleted review",reviewId)
+    }).catch((e)=>{console.log("error",e.response)})
+  }
 
   renderReviews = () => {
     let elemToDOM = elem => {
@@ -62,7 +75,9 @@ class UnconnectedMyReviews extends Component {
                 {elem.movieObj.original_title}
               </div>
             </Link>
+            <span className="fas fa-trash-alt MouseOver ml-1 mr-1 icon-lists" onClick={()=>{this.deleteReview(elem.movieId)}}></span>
             <div>{elem.reviewText}</div>
+            
           </div>
         )
       }

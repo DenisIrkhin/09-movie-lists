@@ -26,6 +26,10 @@ const Session = require('../../models/Session')
 // @@ POST /api/users/signup
 // @@ Public
 router.post('/signup', async (req, res) => {
+  console.log('******************************************')
+  console.log('req.body for post. /users/signup', req.body)
+
+  
   const { valErrors, isValid } = validateSignup(req.body)
 
   // Check Validation

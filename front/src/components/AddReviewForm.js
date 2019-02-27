@@ -12,9 +12,10 @@ import Modal from 'react-modal'
 class UnconnectedAddReviewForm extends Component {
   constructor(props) {
     super(props)
-    this.state = { inputReview: '' }
+    this.state = { inputReview: '',message:"" }
   }
   componentDidMount() {
+      let that=this
     console.log(
       'Component did mount---getting all reviews for the add review form'
     )
@@ -26,11 +27,8 @@ class UnconnectedAddReviewForm extends Component {
       let allReviewsArr = response.data.reviews
       console.log('allReviewsArr', allReviewsArr)
       let filterByUser = elem => {
-        if (
-          elem.userId === this.props.userId &&
-          elem.movieId === this.props.movieId
-        ) {
-          return true
+        if (elem.userId == that.props.userId && elem.movieId==that.props.movieId) {
+          return true;
         }
       }
       let ReviewFilter = allReviewsArr.filter(filterByUser)
@@ -38,16 +36,67 @@ class UnconnectedAddReviewForm extends Component {
       let userReview = allReviewsArr.filter(filterByUser)[0]
       console.log('userReview', userReview)
       if (userReview) {
-        this.setState({
+        that.setState({
           inputReview: userReview.reviewText,
           review: userReview
         })
       }
     })
   }
+//   componentWillUpdate(prevProps,prevState){
+//       if(prevState.review.reviewText!==this.state.review.reviewText){
+//         axios({
+//             method: "get",
+//             url: "/api/reviews"
+//           }).then(response => {
+//             console.log("response to get reviews", response);
+//             let allReviewsArr = response.data.reviews;
+//             console.log("allReviewsArr", allReviewsArr);
+//             let filterByUser = elem => {
+//               if (elem.userId === this.props.userId && elem.movieId===this.props.movieId) {
+//                 return true;
+//               }
+//             };
+//             let ReviewFilter = allReviewsArr.filter(filterByUser)
+//             console.log('ReviewFilter', ReviewFilter)
+//             let userReview = allReviewsArr.filter(filterByUser)[0];
+//             console.log("userReview", userReview);
+//             if (userReview) {
+//               this.setState({
+//                 inputReview: userReview.reviewText,
+//                 review: userReview
+//               });
+//             }
+//           });
+//       }
+//   }
 
   update = () => {
+      let that=this
     this.props.parent.update()
+    axios({
+      method: 'get',
+      url: '/api/reviews'
+    }).then(response => {
+      console.log('response to get reviews', response)
+      let allReviewsArr = response.data.reviews
+      console.log('allReviewsArr', allReviewsArr)
+      let filterByUser = elem => {
+        if (elem.userId == that.props.userId && elem.movieId==that.props.movieId) {
+          return true;
+        }
+      }
+      let ReviewFilter = allReviewsArr.filter(filterByUser)
+      console.log('ReviewFilter', ReviewFilter)
+      let userReview = allReviewsArr.filter(filterByUser)[0]
+      console.log('userReview', userReview)
+      if (userReview) {
+        that.setState({
+          inputReview: userReview.reviewText,
+          review: userReview
+        })
+      }
+    })
   }
   handleInput = evt => {
     this.setState({ inputReview: evt.currentTarget.value })
@@ -65,8 +114,9 @@ class UnconnectedAddReviewForm extends Component {
         },
         withCredentials: true
       }).then(() => {
+        this.setState({message:"Review submitted"})
         this.update()
-      })
+      }).catch((e)=>{console.log('e.response.data', e.response.data)})
     } else {
       axios({
         method: 'post',
@@ -77,8 +127,9 @@ class UnconnectedAddReviewForm extends Component {
         },
         withCredentials: true
       }).then(() => {
-        this.update()
-      })
+        this.setState({review:{reviewText:"Review text was changed"},message:"review submitted"})
+        this.update();
+      });
     }
   }
   render() {
@@ -86,6 +137,7 @@ class UnconnectedAddReviewForm extends Component {
       <div className="container inner-container-your-review">
         <form onSubmit={this.handleSubmit}>
           <h5>Your Review</h5>
+          <div className="jump">{this.state.message}</div>
           <textarea
             name="reviewField"
             rows="5"

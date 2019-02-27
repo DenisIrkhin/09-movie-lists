@@ -12,11 +12,17 @@ class MovieReviews extends Component {
     }
   
     componentDidMount(){
+        console.log("component did mount movie reviews---------------")
       
       this.getReviews()
     }
-    componentWillReceiveProps(){
-        this.getReviews()
+    // componentWillReceiveProps(){
+    //     this.getReviews()
+    // }
+    componentWillUpdate(prevProps,prevState){
+        if(prevState.reviews===this.state.reviews){
+            this.getReviews()
+        }
     }
   
     getReviews = () => {
@@ -31,8 +37,8 @@ class MovieReviews extends Component {
         let allReviews = response.data.sortedRankedReviews;
         console.log("allReviews", allReviews);
         let filterMovie = elem => {
-          console.log('elem', elem)
-          if (elem.movieId === that.state.movieId) {
+        //   console.log('elem', elem)
+          if (elem.movieId == that.state.movieId) {
             return true;
           }
         };
@@ -42,6 +48,7 @@ class MovieReviews extends Component {
       });
     };
     render() {
+        console.log("render MovieReviews ---------------------")
       let createDomElements = elem => {
         return (
           <li>
