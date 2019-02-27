@@ -46,6 +46,11 @@ html {
   color: white;
 }
 
+.account-text {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+}
+
 .input.list-control {
   padding: 5px;
   width: 100% !important;
@@ -163,7 +168,7 @@ html {
 
 .btn-color-main {
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   box-shadow: none !important;
@@ -274,6 +279,10 @@ html {
 .main-container-search {
   min-height: 100vh;
   background-color: #edeae5;
+}
+
+.row-search-results {
+  padding-top: 5%;
 }
 
 .horizontal-rule {
@@ -399,7 +408,7 @@ html {
   font-size: 13px;
   cursor: pointer;
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   border-top-right-radius: 5px;
@@ -418,7 +427,7 @@ html {
   font-size: 13px;
   cursor: pointer;
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   border-top-right-radius: 0px;
@@ -506,7 +515,7 @@ html {
 }
 
 .inner-container-details {
-  width: 70%;
+  width: 80%;
   background-color: white;
   padding: 4%;
   margin: auto;
@@ -537,7 +546,7 @@ html {
   font-size: 14px;
   cursor: pointer;
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   box-shadow: none !important;
@@ -590,8 +599,8 @@ html {
 }
 
 .first-cont-premium {
-  padding-top: 10%;
-  padding-bottom: 5%;
+  padding-top: 4%;
+  padding-bottom: 4%;
   background-color: #edeae5;
 }
 
@@ -617,7 +626,7 @@ html {
 
 .price {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   color: #3a3a3a;
 }
 
@@ -652,7 +661,7 @@ html {
 
 .premium-patron-header {
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 400;
   color: #414141;
   margin-bottom: 15px;
 }
@@ -661,7 +670,7 @@ html {
   font-size: 14px;
   cursor: pointer;
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   box-shadow: none !important;
@@ -696,7 +705,7 @@ html {
   font-size: 14px;
   cursor: pointer;
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   box-shadow: none !important;
@@ -761,7 +770,6 @@ html {
   background: #f7f7f7;
   border-radius: 5px;
   border: 1px solid rgb(202, 202, 202);
-  margin-bottom: 4%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -788,7 +796,7 @@ html {
 }
 
 .lists-tag:hover {
-  color: blue;
+  color: #1ca7b5;
 }
 
 .each-list {
@@ -807,7 +815,8 @@ html {
 
 .title-lists {
   color: rgb(83, 83, 83);
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 400;
   text-decoration: none;
   cursor: pointer;
 }
@@ -819,7 +828,7 @@ html {
 }
 
 .title-lists:hover {
-  color: blue;
+  color: #1ca7b5;
 }
 
 .lists-icons {
@@ -899,7 +908,7 @@ html {
 }
 
 .title-list:hover {
-  color: blue;
+  color: #1ca7b5;
 }
 
 .icon-list {
@@ -934,7 +943,7 @@ html {
   font-size: 14px;
   cursor: pointer;
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   box-shadow: none !important;
@@ -972,7 +981,7 @@ html {
 }
 
 .wild-results-holder {
-  width: 70%;
+  width: 80%;
   text-align: left;
   margin: auto;
   margin-top: 4%;
@@ -1004,7 +1013,7 @@ html {
 }
 
 .wild-tags:hover {
-  color: blue;
+  color: #1ca7b5;
 }
 
 /*TAG SEARCH*/
@@ -1041,7 +1050,7 @@ html {
 /*REVIEWS*/
 
 .inner-container-your-review {
-  width: 70%;
+  width: 80%;
   background-color: white;
   padding: 4%;
   margin: auto;
@@ -1070,7 +1079,7 @@ html {
   font-size: 14px;
   cursor: pointer;
   color: #a8903d;
-  font-weight: 500;
+  font-weight: 400;
   border: 1px solid #eed479;
   background-color: #fce181;
   box-shadow: none !important;
@@ -1099,7 +1108,7 @@ html {
 }
 
 .my-review-holder {
-  width: 75%;
+  width: 80%;
   text-align: left;
   margin: auto;
   margin-top: 4%;
@@ -1121,7 +1130,8 @@ html {
   width: 90%;
   text-align: left;
   margin: auto;
-  margin-top: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
   justify-content: center;
   padding: 4%;
   padding-left: 6%;
@@ -1131,15 +1141,51 @@ html {
 }
 
 .movie-title-my-reviews {
+  display: inline-block;
+  font-weight: 400;
   color: rgb(83, 83, 83);
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
   cursor: pointer;
   margin-bottom: 2%;
 }
 
 .movie-title-my-reviews:hover {
-  color: blue;
+  color: #1ca7b5;
+}
+
+.trash-my-reviews {
+  float: right;
+}
+
+.all-reviews-movie-container {
+  width: 80%;
+  background-color: white;
+  padding: 4%;
+  margin: auto;
+  justify-content: center;
+  border-radius: 5px;
+  margin-top: 4%;
+  margin-bottom: 4%;
+  -webkit-box-shadow: 0px 1px 4px 1px rgba(201, 201, 201, 0.27);
+  -moz-box-shadow: 0px 1px 4px 1px rgba(201, 201, 201, 0.27);
+  box-shadow: 0px 1px 4px 1px rgba(201, 201, 201, 0.27);
+}
+
+@media only screen and (max-width: 768px) {
+  .all-reviews-movie-container {
+    width: 90%;
+  }
+}
+
+.list-holder-all-reviews {
+  text-align: left;
+}
+
+.list-item-all-reviews {
+  list-style-type: none;
+  margin-top: 4%;
+  margin-bottom: 4%;
 }
 
 /* .tag {

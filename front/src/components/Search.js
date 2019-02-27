@@ -204,7 +204,7 @@ class Search extends Component {
         }}
       >
         {this.displayMessage()}
-        <div id="movies" className="row pt-5" />
+        <div id="movies" className="row row-search-results" />
         {this.renderFilterDropdown()}
       </div>
     )

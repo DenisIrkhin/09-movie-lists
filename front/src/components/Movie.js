@@ -1,68 +1,68 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import NumberFormat from "react-number-format";
-import MovieReviews from "./MovieReviews"
-import AddReviewForm from "./AddReviewForm"
+import React, { Component } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import NumberFormat from 'react-number-format'
+import MovieReviews from './MovieReviews'
+import AddReviewForm from './AddReviewForm'
 
 class Movie extends Component {
   constructor(props) {
-    super(props);
-    this.state = { movieId: this.props.movieId, movieData: [] };
+    super(props)
+    this.state = { movieId: this.props.movieId, movieData: [] }
   }
   componentDidMount() {
-    console.log("component did mount for Movie Component");
-    console.log("props", this.props);
-    let id = this.props.movieId;
-    this.setState({ movieId: id });
-    console.log("id", id);
+    console.log('component did mount for Movie Component')
+    console.log('props', this.props)
+    let id = this.props.movieId
+    this.setState({ movieId: id })
+    console.log('id', id)
     axios(
-      "https://api.themoviedb.org/3/movie/" +
+      'https://api.themoviedb.org/3/movie/' +
         id +
-        "?api_key=98325a9d3ed3ec225e41ccc4d360c817"
+        '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
     ).then(response => {
-      console.log("response", response.data);
-      this.setState({ movieData: response.data });
-    });
+      console.log('response', response.data)
+      this.setState({ movieData: response.data })
+    })
 
     // this.getReviews();
   }
-  update=()=>{
-    console.log("Updating state of movie component");
-    console.log("props", this.props);
-    let id = this.props.movieId;
-    this.setState({ movieId: id });
-    console.log("id", id);
+  update = () => {
+    console.log('Updating state of movie component')
+    console.log('props', this.props)
+    let id = this.props.movieId
+    this.setState({ movieId: id })
+    console.log('id', id)
     axios(
-      "https://api.themoviedb.org/3/movie/" +
+      'https://api.themoviedb.org/3/movie/' +
         id +
-        "?api_key=98325a9d3ed3ec225e41ccc4d360c817"
+        '?api_key=98325a9d3ed3ec225e41ccc4d360c817'
     ).then(response => {
-      console.log("response", response.data);
-      this.setState({ movieData: response.data });
-    });
+      console.log('response', response.data)
+      this.setState({ movieData: response.data })
+    })
   }
 
   checkIfImage = () => {
     if (this.state.movieData.backdrop_path) {
-      return "w780" + this.state.movieData.backdrop_path;
+      return 'w780' + this.state.movieData.backdrop_path
     } else {
-      return "w342" + this.state.movieData.poster_path;
+      return 'w342' + this.state.movieData.poster_path
     }
-  };
+  }
 
   displayMovie = () => {
     return (
       <div className="container inner-container-details">
         <div className="row single-movie-holder">
-          <div className="col-md-8">
-            {console.log("DATA", this.state.movieData)}
+          <div className="col-md-10">
+            {console.log('DATA', this.state.movieData)}
             <img
-              src={"https://image.tmdb.org/t/p/" + this.checkIfImage()}
+              src={'https://image.tmdb.org/t/p/' + this.checkIfImage()}
               className="thumbnail"
             />
           </div>
-          <div className="col-md-8 pb-2">
+          <div className="col-md-10 pb-2">
             <ul>
               <li className="list-group-item mt-2">
                 <h3>{this.state.movieData.title}</h3>
@@ -80,27 +80,27 @@ class Movie extends Component {
                 <strong>Runtime:</strong> {this.state.movieData.runtime} min.
               </li>
               <li className="list-group-item">
-                <strong>Budget:</strong>{" "}
+                <strong>Budget:</strong>{' '}
                 <NumberFormat
                   value={this.state.movieData.budget}
-                  displayType={"text"}
+                  displayType={'text'}
                   thousandSeparator={true}
-                  prefix={"$"}
+                  prefix={'$'}
                 />
               </li>
               <li className="list-group-item">
-                <strong>Revenue:</strong>{" "}
+                <strong>Revenue:</strong>{' '}
                 <NumberFormat
                   value={this.state.movieData.revenue}
-                  displayType={"text"}
+                  displayType={'text'}
                   thousandSeparator={true}
-                  prefix={"$"}
+                  prefix={'$'}
                 />
               </li>
             </ul>
             <div>
               <a
-                href={"http://imdb.com/title/" + this.state.movieData.imdb_id}
+                href={'http://imdb.com/title/' + this.state.movieData.imdb_id}
                 target="_blank"
                 className="btn button-movie-page"
               >
@@ -113,10 +113,10 @@ class Movie extends Component {
           </div>
         </div>
       </div>
-    );
-  };
+    )
+  }
   displayReviews() {
-    let getReviews = () => {};
+    let getReviews = () => {}
   }
   // getReviews = () => {
   //   let that = this;
@@ -161,13 +161,11 @@ class Movie extends Component {
       <div className="container-fluid main-container-details">
         {this.displayMovie()}
         {/* {this.renderReviews()} */}
-        <AddReviewForm movieId={this.state.movieId} parent={this}></AddReviewForm>
-        <MovieReviews movieId={this.state.movieId} parent={this} ></MovieReviews>
+        <AddReviewForm movieId={this.state.movieId} parent={this} />
+        <MovieReviews movieId={this.state.movieId} parent={this} />
       </div>
-    );
+    )
   }
 }
 
-
-
-export default Movie;
+export default Movie

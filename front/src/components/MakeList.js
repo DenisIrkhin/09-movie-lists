@@ -292,6 +292,7 @@ class UnconnectedMakeList extends Component {
         <div className="container-fluid main-container-make">
           {this.displayMessage()}
           <div className="container-fluid make-holder">
+            <h2 className="text-center mb-5">Make List</h2>
             <div className="row row-top-make p-0">
               <div className="col-md-6 p-2 form-holder-make">
                 <ListPropertiesForm parent={this} />

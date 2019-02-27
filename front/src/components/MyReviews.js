@@ -51,19 +51,23 @@ class UnconnectedMyReviews extends Component {
       //       console.log("reviews set",reviews)},1000)
     })
   }
-  deleteReview=(reviewId)=>{
-      console.log("deleting review") 
-      // let reqBody={reviewId:reviewId}
-      let reqBody=reviewId
-      console.log('reqBody', reqBody)
+  deleteReview = reviewId => {
+    console.log('deleting review')
+    // let reqBody={reviewId:reviewId}
+    let reqBody = reviewId
+    console.log('reqBody', reqBody)
     axios({
-        method:"delete",
-        url:"/api/reviews/id",
-        data:reqBody ,
-        withCredentials:true
-    }).then(()=>{
-        console.log("deleted review",reviewId)
-    }).catch((e)=>{console.log("error",e.response)})
+      method: 'delete',
+      url: '/api/reviews/id',
+      data: reqBody,
+      withCredentials: true
+    })
+      .then(() => {
+        console.log('deleted review', reviewId)
+      })
+      .catch(e => {
+        console.log('error', e.response)
+      })
   }
 
   renderReviews = () => {
@@ -76,9 +80,13 @@ class UnconnectedMyReviews extends Component {
                 {elem.movieObj.original_title}
               </div>
             </Link>
-            <span className="fas fa-trash-alt MouseOver ml-1 mr-1 icon-lists" onClick={()=>{this.deleteReview(elem.movieId)}}></span>
+            <span
+              className="fas fa-trash-alt MouseOver ml-1 mr-1 icon-lists trash-my-reviews"
+              onClick={() => {
+                this.deleteReview(elem.movieId)
+              }}
+            />
             <div>{elem.reviewText}</div>
-            
           </div>
         )
       }
@@ -93,9 +101,9 @@ class UnconnectedMyReviews extends Component {
 
     return (
       <div className="container-fluid main-container-my-reviews">
-        <div className="container pt-5">
-          <h3>Your Reviews</h3>
-          <div class="my-review-holder">{this.renderReviews()}</div>
+        <div className="container pt-4">
+          <h2 className="text-center mb-5 mt-5">My Reviews</h2>
+          <div class="my-review-holder mt-2"> {this.renderReviews()}</div>
         </div>
       </div>
     )

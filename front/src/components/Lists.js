@@ -180,14 +180,12 @@ class UnconnectedLists extends Component {
       return (
         <div className="container-fluid main-container-lists">
           <div className="container">
+            <h2 className="text-center mb-3 mt-5">My Lists</h2>
             <div className="row">
-              <ul className="col-md-8 lists-holder">
-                <h4 className="text-center mb-3">Your Lists</h4>
-                {this.displayLists()}
-              </ul>
+              <ul className="col-md-8 lists-holder">{this.displayLists()}</ul>
 
               <div className="col-md-3 tags-holder-lists">
-                <h4 className="text-center mb-3">Your Tags</h4>
+                <h4 className="text-center mb-4">My Tags</h4>
                 {this.displayTags()}
               </div>
             </div>

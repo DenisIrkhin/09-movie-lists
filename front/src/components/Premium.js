@@ -33,7 +33,7 @@ class Premium extends Component {
             <div className="col-md-4 text-center patron-holder">
               <h4 className="premium-patron-header">Premium</h4>
               <p>
-                Everything in advanced.
+                Everything in pro.
                 <br />
                 More list options.
                 <br />
