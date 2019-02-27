@@ -27,7 +27,7 @@ const customStyles = {
 }
 
 class UnconnectedLogin extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       inputEmail: '',
@@ -43,14 +43,14 @@ class UnconnectedLogin extends Component {
     this.closeModal = this.closeModal.bind(this)
   }
 
-  handleInputEmail (evt) {
+  handleInputEmail(evt) {
     this.setState({ inputEmail: evt.currentTarget.value })
   }
-  handleInputPassword (evt) {
+  handleInputPassword(evt) {
     this.setState({ inputPassword: evt.currentTarget.value })
   }
 
-  handleSubmit (e) {
+  handleSubmit(e) {
     // let that = this
     e.preventDefault()
     let reqBody = {
@@ -72,7 +72,10 @@ class UnconnectedLogin extends Component {
         if (response.data.success === true) {
           let { email, userId, avatar } = response.data
           // Dispatch to set loggedIn to true
-          this.props.dispatch({ type: 'login', payload: { email, userId, avatar } })
+          this.props.dispatch({
+            type: 'login',
+            payload: { email, userId, avatar }
+          })
           // add the list to the store for the particular user"
           console.log('fetch from endpoint /lists')
           axios({
@@ -102,18 +105,18 @@ class UnconnectedLogin extends Component {
       })
   }
 
-  openModal () {
+  openModal() {
     this.setState({ modalIsOpen: true })
   }
 
-  afterOpenModal () {
+  afterOpenModal() {
     // this.subtitle.style.color="#f00"
   }
 
-  closeModal () {
+  closeModal() {
     this.setState({ modalIsOpen: false })
   }
-  render () {
+  render() {
     if (!this.props.loggedIn && this.state.modalIsOpen) {
       return (
         <div>
@@ -123,61 +126,61 @@ class UnconnectedLogin extends Component {
             onRequestClose={this.closeModal}
             style={customStyles}
           >
-            <h3 className='header-login-signup mb-3 ml-1'>Log in </h3>
+            <h3 className="header-login-signup mb-3 ml-1">Log in </h3>
             <form onSubmit={this.handleSubmit}>
-              <div className=' ml-2'>
+              <div className=" ml-2">
                 <input
-                  type='text'
+                  type="text"
                   onChange={this.handleInputEmail}
                   value={this.state.inputEmail}
-                  className='input-login-signup'
+                  className="input-login-signup"
                 />
-                <div className='mb-1'>Email</div>
+                <div className="mb-1">Email</div>
               </div>
               <div>
                 <input
-                  type='text'
+                  type="password"
                   onChange={this.handleInputPassword}
                   value={this.state.inputPassword}
-                  className=' ml-2 input-login-signup'
+                  className=" ml-2 input-login-signup"
                 />
-                <div className=' ml-2 mb-2'>Password</div>
+                <div className=" ml-2 mb-2">Password</div>
               </div>
-              <div className='modal-message'>{this.state.modalMessage}</div>
-              <input className='btn button-login-signup' type='submit' />
+              <div className="modal-message">{this.state.modalMessage}</div>
+              <input className="btn button-login-signup" type="submit" />
             </form>
           </Modal>
         </div>
 
-      // this component works. now im trying to make it into a separate component
-      // <div >
+        // this component works. now im trying to make it into a separate component
+        // <div >
 
-      //   <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeModal} style={customStyles}>
-      //   <h3>Log in </h3>
-      //   <form onSubmit={this.handleSubmit}>
-      //     <div>
-      //       <input
-      //         type="text"
-      //         onChange={this.handleInputEmail}
-      //         value={this.state.inputEmail}
-      //       />
-      //       <div>Email</div>
-      //     </div>
-      //     <div>
-      //       <input
-      //         type="text"
-      //         onChange={this.handleInputPassword}
-      //         value={this.state.inputPassword}
-      //       />
-      //       <div>Password</div>
-      //     </div>
-      //     <input type="submit" />
-      //   </form>
-      //   </Modal>
-      // </div>
+        //   <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeModal} style={customStyles}>
+        //   <h3>Log in </h3>
+        //   <form onSubmit={this.handleSubmit}>
+        //     <div>
+        //       <input
+        //         type="text"
+        //         onChange={this.handleInputEmail}
+        //         value={this.state.inputEmail}
+        //       />
+        //       <div>Email</div>
+        //     </div>
+        //     <div>
+        //       <input
+        //         type="text"
+        //         onChange={this.handleInputPassword}
+        //         value={this.state.inputPassword}
+        //       />
+        //       <div>Password</div>
+        //     </div>
+        //     <input type="submit" />
+        //   </form>
+        //   </Modal>
+        // </div>
       )
     } else {
-      return <Redirect to='/' />
+      return <Redirect to="/" />
     }
   }
 }
@@ -259,7 +262,7 @@ class UnconnectedLogin extends Component {
 //   }
 // }
 
-let mapStateToProps = function (state) {
+let mapStateToProps = function(state) {
   return { loggedIn: state.state.loggedIn }
 }
 

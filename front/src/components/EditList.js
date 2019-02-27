@@ -1,45 +1,45 @@
-import React, { Component } from "react";
-import "../css/style.css";
-import { Redirect, Link } from "react-router-dom";
-import { withRouter } from "react-router";
+import React, { Component } from 'react'
+import '../css/style.css'
+import { Redirect, Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
-import "../css/MakeList.css";
-import { connect } from "react-redux";
-import axios from "axios";
-import App from "../App.js";
-import Modal from "react-modal";
-import EditListSearchMovie from "./EditListSearchMovie";
+import '../css/MakeList.css'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import App from '../App.js'
+import Modal from 'react-modal'
+import EditListSearchMovie from './EditListSearchMovie'
 
 const ModalStyles = {
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    zIndex: "50000000000",
-    textAlign: "center"
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: '50000000000',
+    textAlign: 'center'
   }
-};
+}
 
 class ChosenMovies extends Component {
   constructor(props) {
-    super(props);
-    this.displayMovies = this.displayMovies.bind(this);
+    super(props)
+    this.displayMovies = this.displayMovies.bind(this)
   }
 
   displayMovies() {
-    let addSignVisibility = "visible";
+    let addSignVisibility = 'visible'
     if (this.props.parent.state.chosenMovies.length < 1) {
-      addSignVisibility = "hidden";
+      addSignVisibility = 'hidden'
     }
     // let imageAnimationStyle = { width: '60px', height: '90px' }
     // let showTrashIcon=()=>{
     //   imageAnimationStyle={width:"600px"}
     // }
-    console.log("displaying movies");
-    let moviesArr = this.props.parent.state.chosenMovies;
+    console.log('displaying movies')
+    let moviesArr = this.props.parent.state.chosenMovies
 
     let movieDOMSArr = moviesArr.map((elem, index) => {
       return (
@@ -49,78 +49,78 @@ class ChosenMovies extends Component {
         >
           <img
             className="image-inside-list"
-            src={"https://image.tmdb.org/t/p/w500" + elem.poster_path}
+            src={'https://image.tmdb.org/t/p/w500' + elem.poster_path}
             // onClick={() => this.removeMovie(elem, index)}
             // onMouseOver={()=>{showTrashIcon()}}
           />
           <div className="middle">
             <a href="#" className="icon-trash">
-              <i className="far fa-trash-alt" />
+              <i className="far fa-trash-alt trash" />
             </a>
           </div>
           {/* <div className="image-inside-list-title">{elem.original_title}</div> */}
         </span>
-      );
-    });
-    return movieDOMSArr;
+      )
+    })
+    return movieDOMSArr
   }
 
   removeMovie(elem, index) {
-    console.log("removing Movie");
-    console.log("elem", elem);
-    console.log("index", index);
-    let oldArr = this.props.parent.state.chosenMovies;
-    console.log("oldArr", oldArr);
-    let newArr = oldArr.slice(0);
-    newArr.splice(index, 1);
-    console.log("newArr", newArr);
-    this.props.parent.setState({ chosenMovies: newArr });
+    console.log('removing Movie')
+    console.log('elem', elem)
+    console.log('index', index)
+    let oldArr = this.props.parent.state.chosenMovies
+    console.log('oldArr', oldArr)
+    let newArr = oldArr.slice(0)
+    newArr.splice(index, 1)
+    console.log('newArr', newArr)
+    this.props.parent.setState({ chosenMovies: newArr })
   }
 
   render() {
-    return <div className="row row-bottom-make">{this.displayMovies()}</div>;
+    return <div className="row row-bottom-make">{this.displayMovies()}</div>
   }
 }
 
 class TagsBody extends Component {
   constructor(props) {
-    super(props);
-    this.handleInputTag = this.handleInputTag.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    super(props)
+    this.handleInputTag = this.handleInputTag.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleInputTag(evt) {
     //this adds constraints to input tags field. for example ^ cant be used and no more than 15 characters
     if (
-      evt.target.value[evt.target.value.length - 1] === "^" ||
+      evt.target.value[evt.target.value.length - 1] === '^' ||
       evt.target.value.length >= 25
     ) {
-      return;
+      return
     }
-    this.props.grandParent.setState({ inputTag: evt.currentTarget.value });
+    this.props.grandParent.setState({ inputTag: evt.currentTarget.value })
   }
   //adds tag
   handleSubmit(evt) {
-    evt.preventDefault();
+    evt.preventDefault()
     if (this.props.grandParent.state.inputTag.trim().length) {
-      console.log("adding tag", this.props.grandParent.state.inputTag);
+      console.log('adding tag', this.props.grandParent.state.inputTag)
       if (this.props.grandParent.state.tags.length <= 10) {
         this.props.grandParent.setState({
           tags: this.props.grandParent.state.tags.concat(
             this.props.grandParent.state.inputTag
           ),
-          inputTag: "",
-          message: ""
-        });
+          inputTag: '',
+          message: ''
+        })
       } else {
         this.props.grandParent.setState({
-          message: "Lists can only have a maximum of 10 tags"
-        });
+          message: 'Lists can only have a maximum of 10 tags'
+        })
       }
     }
   }
 
   displayTags() {
-    let that = this;
+    let that = this
     return this.props.grandParent.state.tags.map((elem, index) => {
       return (
         <div className="tag">
@@ -130,19 +130,19 @@ class TagsBody extends Component {
             className="fas fa-tag ml-2"
             data-fa-transform="rotate-30"
             onClick={evt => {
-              console.log("evt", evt);
-              console.log("i just clicked on a tag");
-              let oldTagArr = that.props.grandParent.state.tags.slice(0);
-              console.log("oldTagArr", oldTagArr);
-              let newTagArr = oldTagArr.slice(0);
-              newTagArr.splice(index, 1);
-              console.log("newTagArr", newTagArr);
-              that.props.grandParent.setState({ tags: newTagArr });
+              console.log('evt', evt)
+              console.log('i just clicked on a tag')
+              let oldTagArr = that.props.grandParent.state.tags.slice(0)
+              console.log('oldTagArr', oldTagArr)
+              let newTagArr = oldTagArr.slice(0)
+              newTagArr.splice(index, 1)
+              console.log('newTagArr', newTagArr)
+              that.props.grandParent.setState({ tags: newTagArr })
             }}
           />
         </div>
-      );
-    });
+      )
+    })
   }
 
   render() {
@@ -159,31 +159,31 @@ class TagsBody extends Component {
           <div className="tags-holder">{this.displayTags()}</div>
         </form>
       </div>
-    );
+    )
   }
 }
 
 class ListPropertiesForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.inputTextHandler = this.inputTextHandler.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.inputTextHandler = this.inputTextHandler.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   inputTextHandler(e) {
-    if (e.target.name === "listName") {
-      this.props.parent.setState({ inputTitle: e.currentTarget.value });
-    } else if (e.target.name === "description") {
-      this.props.parent.setState({ inputDescription: e.currentTarget.value });
+    if (e.target.name === 'listName') {
+      this.props.parent.setState({ inputTitle: e.currentTarget.value })
+    } else if (e.target.name === 'description') {
+      this.props.parent.setState({ inputDescription: e.currentTarget.value })
     }
   }
   handleSubmit(e) {
-    e.preventDefault();
-    if (e.target[0].name === "tag") {
+    e.preventDefault()
+    if (e.target[0].name === 'tag') {
     } else if (this.props.parent.state.inputTitle.length !== 0) {
-      this.props.parent.setState({ modalIsOpen: true });
+      this.props.parent.setState({ modalIsOpen: true })
     } else {
-      this.props.parent.setState({ message: "List title may not be empty" });
+      this.props.parent.setState({ message: 'List title may not be empty' })
     }
   }
 
@@ -210,106 +210,106 @@ class ListPropertiesForm extends Component {
         <TagsBody grandParent={this.props.parent} />
         <input type="submit" className="btn make-submit-button" />
       </form>
-    );
+    )
   }
 }
 
 class UnconnectedEditList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      inputTitle: "",
-      inputDescription: "",
-      inputTag: "",
+      inputTitle: '',
+      inputDescription: '',
+      inputTag: '',
       chosenMovies: [],
       tags: [],
-      message: "",
+      message: '',
       confirmedFinishedList: false,
       modalIsOpen: false
-    };
-    this.displayMessage = this.displayMessage.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.addEditedList = this.addEditedList.bind(this);
+    }
+    this.displayMessage = this.displayMessage.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.afterOpenModal = this.afterOpenModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.addEditedList = this.addEditedList.bind(this)
   }
 
   componentDidMount() {
     //Try and catch are necessary for when the component is mounted when editlist is undefined in redux
     try {
-      let that = this;
-      let tagArr = this.props.editList.tags.split(" ^^ ");
+      let that = this
+      let tagArr = this.props.editList.tags.split(' ^^ ')
       that.setState({
         chosenMovies: this.props.editList.movieArr,
         tags: tagArr,
         inputTitle: this.props.editList.name,
         inputDescription: this.props.editList.description
-      });
+      })
     } catch {}
   }
 
   openModal() {
-    this.setState({ modalIsOpen: true });
+    this.setState({ modalIsOpen: true })
   }
   afterOpenModal() {
     // this.subtitle.style.color="#f00"
   }
   closeModal() {
-    this.setState({ modalIsOpen: false });
+    this.setState({ modalIsOpen: false })
   }
   displayMessage() {
     if (this.state.message) {
       return (
-        <div className="jump" style={{ color: "red" }}>
+        <div className="jump" style={{ color: 'red' }}>
           {this.state.message}
         </div>
-      );
+      )
     }
   }
 
   addEditedList() {
-    let that = this;
+    let that = this
     //tags will be sent as a string which separates the movies with ^^ .
-    let tagBody = this.state.tags.join(" ^^ ");
+    let tagBody = this.state.tags.join(' ^^ ')
     let reqBody = {
       listId: this.props.editList._id,
       name: this.state.inputTitle,
       movieArr: this.state.chosenMovies,
       description: this.state.inputDescription,
       tags: tagBody
-    };
-    console.log("commencing fetch at endpoint /lists/add ");
+    }
+    console.log('commencing fetch at endpoint /lists/add ')
     axios({
-      method: "put",
-      url: "/api/lists/id",
+      method: 'put',
+      url: '/api/lists/id',
       data: reqBody,
-      withCredentials: "include"
+      withCredentials: 'include'
     })
       .then(response => {
-        console.log("response", response);
+        console.log('response', response)
         if (response.data.success) {
-          console.log("successful request");
-          that.setState({ confirmedFinishedList: true });
-          that.props.history.push("/lists");
+          console.log('successful request')
+          that.setState({ confirmedFinishedList: true })
+          that.props.history.push('/lists')
         } else {
-          console.log("error in request");
+          console.log('error in request')
         }
       })
-      .catch(() => console.log("error in request"));
+      .catch(() => console.log('error in request'))
   }
 
   render() {
     if (!this.props.editList) {
-      return <Redirect to="/lists" />;
+      return <Redirect to="/lists" />
     }
     if (!this.props.loggedIn) {
-      return <Redirect to="/loginalert" />;
+      return <Redirect to="/loginalert" />
     } else {
       return (
         <div className="container-fluid main-container-make">
-          <h2 className="">Edit List</h2>
           {this.displayMessage()}
           <div className="container-fluid make-holder">
+            <h2 className="text-center mb-5">Edit List</h2>
             <div className="row row-top-make p-0">
               <div className="col-md-6 p-2 form-holder-make">
                 <ListPropertiesForm parent={this} />
@@ -331,25 +331,25 @@ class UnconnectedEditList extends Component {
           >
             <h5>Confirm to finish making List</h5>
             <button onClick={this.addEditedList} className="button-modal-list">
-              Confirm
+              CONFIRM
             </button>
             <button
               onClick={() => this.setState({ modalIsOpen: false })}
               className="button-modal-list"
             >
-              Not yet
+              NOT YET
             </button>
           </Modal>
         </div>
-      );
+      )
     }
   }
 }
 
 let mapStateToProps = function(state) {
-  return { loggedIn: state.state.loggedIn, editList: state.state.editList };
-};
+  return { loggedIn: state.state.loggedIn, editList: state.state.editList }
+}
 
-let EditList = connect(mapStateToProps)(withRouter(UnconnectedEditList));
+let EditList = connect(mapStateToProps)(withRouter(UnconnectedEditList))
 
-export default EditList;
+export default EditList

@@ -37,26 +37,26 @@ class MovieReviews extends Component {
       console.log('allReviews', allReviews)
       let filterMovie = elem => {
         //   console.log('elem', elem)
-          if (elem.movieId == that.state.movieId) {
-            return true;
-          }
-        };
-        let relaventReviews = allReviews.filter(filterMovie);
-        console.log("relaventReviews", relaventReviews);
-        that.setState({ reviews: relaventReviews });
-      });
-    };
-    render() {
-        console.log("render MovieReviews ---------------------")
-      let createDomElements = elem => {
-        return (
-          <li>
-            <div>User:{elem.user.username}</div>
-            <div>Review:{elem.reviewText}</div>
-          </li>
-        );
-      };
-    
+        if (elem.movieId == that.state.movieId) {
+          return true
+        }
+      }
+      let relaventReviews = allReviews.filter(filterMovie)
+      console.log('relaventReviews', relaventReviews)
+      that.setState({ reviews: relaventReviews })
+    })
+  }
+  render() {
+    console.log('render MovieReviews ---------------------')
+    let createDomElements = elem => {
+      return (
+        <li>
+          <div>User: {elem.user.username}</div>
+          <div>Review: {elem.reviewText}</div>
+        </li>
+      )
+    }
+
     return (
       <div className="container all-reviews-movie-container">
         <h5 className="title-all-review-movie">Reviews</h5>
