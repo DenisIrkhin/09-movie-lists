@@ -29,7 +29,6 @@ router.post('/signup', async (req, res) => {
   console.log('******************************************')
   console.log('req.body for post. /users/signup', req.body)
 
-  
   const { valErrors, isValid } = validateSignup(req.body)
 
   // Check Validation
@@ -38,8 +37,6 @@ router.post('/signup', async (req, res) => {
   }
   errors = {}
   let emailExists, userId
-  console.log('******************************************')
-  console.log('req.body for post. /users/signup', req.body)
 
   // Check if email exists
   let { email, password } = req.body
@@ -100,7 +97,7 @@ router.post('/signup', async (req, res) => {
 
     // Generate new Session
     // Email just for simplify human readability of dbo
-    const sessionElem = new Session({ userId, sessionId, jwtToken, email })
+    const sessionElem = new Session({ userId, sessionId, jwtToken, email, avatar })
 
     try {
       const result = await (sessionElem.save())
@@ -187,7 +184,7 @@ router.post('/login', async (req, res) => {
       const result = await (sessionElem.save())
       console.log('new session doc added', result)
       res.cookie('__sid__', `${sessionId}`)
-      return res.status(200).json({ success: true, userId, email, jwtToken, message: 'Logged in successfully' })
+      return res.status(200).json({ success: true, userId, email, jwtToken, avatar, message: 'Logged in successfully' })
     } catch (error) {
       console.log(error)
       return res.status(400).json({ success: false, message: 'Something goes wrong', error })
@@ -251,7 +248,7 @@ router.post('/check', async (req, res) => {
     console.log('new session doc added', result)
     res.cookie('__sid__', `${sessionId}`)
 
-    return res.status(200).json({ success: true, userId, email, jwtToken, message: 'Logged in successfully' })
+    return res.status(200).json({ success: true, userId, email, jwtToken, avatar, message: 'Logged in successfully' })
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: false, message: 'Something goes wrong', error })

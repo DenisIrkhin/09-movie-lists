@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('../config/param')
 
-const secret = config.JWT_SECRET
+const secret = config.ML_JWT_SECRET
 
 module.exports = async function jwtSign (payload) {
   console.log('from jwtSign func')

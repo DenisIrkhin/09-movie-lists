@@ -9,23 +9,23 @@ import SearchList from './SearchBarList'
 import Movielogo from '../media/images/movieslists_logo.svg'
 
 class UnconnectedNavbar extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       moviesSearch: ''
     }
   }
-  CheckIfLoggedIn() {
+  CheckIfLoggedIn () {
     if (!this.props.loggedIn) {
       return (
         <React.Fragment>
-          <li className="nav-item">
-            <Link to="/signup" className="nav-link">
+          <li className='nav-item'>
+            <Link to='/signup' className='nav-link'>
               SIGN UP
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/login" className="nav-link">
+          <li className='nav-item'>
+            <Link to='/login' className='nav-link'>
               LOG IN
             </Link>
           </li>
@@ -34,18 +34,32 @@ class UnconnectedNavbar extends Component {
     } else {
       console.log('logout rendered')
       return (
-        <li className="nav-item">
-          <Link
-            to="/"
-            className="nav-link"
-            onClick={() => {
-              console.log('onClick event')
-              this.props.dispatch({ type: 'logout' })
-            }}
-          >
+        <React.Fragment>
+          <li className='nav-item'>
+            <Link
+              to='/'
+              className='nav-link'
+              onClick={() => {
+                console.log('onClick event')
+                this.props.dispatch({ type: 'logout' })
+              }}
+            >
             LOG OUT (Logged in as {this.props.user})
-          </Link>
-        </li>
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link
+              to='/profile'
+              className='nav-link'
+              // onClick={() => {
+              //   console.log('onClick event')
+              //   this.props.dispatch({ type: 'logout' })
+              // }}
+            >
+              <img src={this.props.avatar} alt='' width='25px' style={{ borderRadius: '20%', opacity: '0.7' }} />
+            </Link>
+          </li>
+        </React.Fragment>
       )
     }
   }
@@ -68,7 +82,7 @@ class UnconnectedNavbar extends Component {
   //   }
   // }
 
-  componentDidMount() {
+  componentDidMount () {
     document.getElementById('searchForm').addEventListener('submit', event => {
       event.preventDefault()
       let searchText = document.getElementById('searchText').value
@@ -103,7 +117,7 @@ class UnconnectedNavbar extends Component {
   //   // return imdbId
   // }
 
-  getMovies(searchText) {
+  getMovies (searchText) {
     if (searchText === '') {
       this.props.history.push('/')
     } else {
@@ -133,11 +147,11 @@ class UnconnectedNavbar extends Component {
               <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
               <div class="btn-group-vertical" role="group">
               <button type="button" class="add-list-button-left buttonMovie-large" id="addMovieToLists" value="${
-                movie.id
-              }" >ADD TO MY LIST</button>
+  movie.id
+}" >ADD TO MY LIST</button>
               <button type="button" class="add-list-button-right buttonMovie-large" id="see-more-large" value="${
-                movie.id
-              }">SEE MORE INFO</button>
+  movie.id
+}">SEE MORE INFO</button>
               </div>
             </div>
 
@@ -146,11 +160,11 @@ class UnconnectedNavbar extends Component {
               <p class="text-search-result">${movie.overview}</p>
               <div class="btn-group" role="group">
               <button type="button" class="add-list-button-left buttonMovie-small" id="addMovieToLists" value="${
-                movie.id
-              }" >ADD TO MY LIST</button>
+  movie.id
+}" >ADD TO MY LIST</button>
               <button type="button" class="add-list-button-right buttonMovie-small" id="see-more-small" value="${
-                movie.id
-              }">SEE MORE INFO</button>
+  movie.id
+}">SEE MORE INFO</button>
               </div>
             </div>
 
@@ -158,7 +172,7 @@ class UnconnectedNavbar extends Component {
             }
           }
           this.setState({ moviesSearch: output })
-          //Pushes the html content to the local storage to access from the search as history
+          // Pushes the html content to the local storage to access from the search as history
           localStorage.setItem('movies', this.state.moviesSearch)
           $('#movies').html(output)
           console.log('STATE', this.state.moviesSearch)
@@ -169,56 +183,56 @@ class UnconnectedNavbar extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <nav
-        className="navbar navbar-expand-lg navbar-dark"
-        id="navbar-main-style"
+        className='navbar navbar-expand-lg navbar-dark'
+        id='navbar-main-style'
       >
-        <Link to="/" className="navbar-brand ml-3">
-          <img src={Movielogo} className="logo-navbar" />
+        <Link to='/' className='navbar-brand ml-3'>
+          <img src={Movielogo} className='logo-navbar' />
         </Link>
 
         <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          className='navbar-toggler'
+          type='button'
+          data-toggle='collapse'
+          data-target='#navbarSupportedContent'
+          aria-controls='navbarSupportedContent'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
         >
-          <span className="navbar-toggler-icon" />
+          <span className='navbar-toggler-icon' />
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <div className="container">
-            <ul className="navbar-nav ml-auto justify-content-end">
-              <li className="nav-item dropdown desktop-only">
+        <div className='collapse navbar-collapse' id='navbarSupportedContent'>
+          <div className='container'>
+            <ul className='navbar-nav ml-auto justify-content-end'>
+              <li className='nav-item dropdown desktop-only'>
                 <a
-                  className="nav-link dropdown-toggle"
-                  id="navbarDropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                  className='nav-link dropdown-toggle'
+                  id='navbarDropdownMenuLink'
+                  data-toggle='dropdown'
+                  aria-haspopup='true'
+                  aria-expanded='false'
                 >
                   SEARCH
                 </a>
                 <div
-                  className="dropdown-menu dropdown-primary"
-                  aria-labelledby="navbarDropdownMenuLink"
+                  className='dropdown-menu dropdown-primary'
+                  aria-labelledby='navbarDropdownMenuLink'
                 >
                   <form
-                    className="form-inline form-spacing form-lists-control"
-                    id="searchForm"
+                    className='form-inline form-spacing form-lists-control'
+                    id='searchForm'
                   >
                     <input
-                      className="form-control search-select input-lists-control"
-                      type="search"
-                      id="searchText"
-                      placeholder="Search movies"
-                      aria-label="Search"
-                      autocomplete="off"
+                      className='form-control search-select input-lists-control'
+                      type='search'
+                      id='searchText'
+                      placeholder='Search movies'
+                      aria-label='Search'
+                      autocomplete='off'
                     />
                   </form>
 
@@ -245,22 +259,22 @@ class UnconnectedNavbar extends Component {
                 </li>
               </ul> */}
 
-              <li className="nav-item mobile-only">
+              <li className='nav-item mobile-only'>
                 <form
-                  className="form-inline form-spacing form-lists-control"
-                  id="searchFormTwo"
+                  className='form-inline form-spacing form-lists-control'
+                  id='searchFormTwo'
                 >
                   <input
-                    className="form-control search-select input-lists-control"
-                    type="search"
-                    id="searchTextTwo"
-                    placeholder="Search movies"
-                    aria-label="Search"
-                    autocomplete="off"
+                    className='form-control search-select input-lists-control'
+                    type='search'
+                    id='searchTextTwo'
+                    placeholder='Search movies'
+                    aria-label='Search'
+                    autocomplete='off'
                   />
                 </form>
               </li>
-              <li className="nav-item mobile-only">
+              <li className='nav-item mobile-only'>
                 <SearchList />
               </li>
 
@@ -275,24 +289,24 @@ class UnconnectedNavbar extends Component {
                     LOG IN
                   </Link>
                 </li> */}
-              <li className="nav-item">
-                <Link to="/reviews" className="nav-link">
+              <li className='nav-item'>
+                <Link to='/reviews' className='nav-link'>
                   MY REVIEWS
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/lists" className="nav-link">
+              <li className='nav-item'>
+                <Link to='/lists' className='nav-link'>
                   MY LISTS
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/lists/makelist" className="nav-link">
+              <li className='nav-item'>
+                <Link to='/lists/makelist' className='nav-link'>
                   MAKE LIST
                 </Link>
               </li>
 
-              <li className="nav-item">
-                <Link to="/premium" className="nav-link">
+              <li className='nav-item'>
+                <Link to='/premium' className='nav-link'>
                   PREMIUM
                 </Link>
               </li>
@@ -304,8 +318,12 @@ class UnconnectedNavbar extends Component {
   }
 }
 
-let mapStateToProps = function(state) {
-  return { loggedIn: state.state.loggedIn, user: state.state.user }
+let mapStateToProps = function (state) {
+  return {
+    loggedIn: state.state.loggedIn,
+    user: state.state.user,
+    avatar: state.state.avatar
+  }
 }
 let Navbar = connect(mapStateToProps)(withRouter(UnconnectedNavbar))
 export default Navbar

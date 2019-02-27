@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import './App.css'
 import { connect } from 'react-redux'
-import Test from './components/Test'
+// import Test from './components/Test'
 import axios from 'axios'
 // import thunk from 'redux-thunk'
 // For future using
@@ -20,20 +20,21 @@ import Movie from './components/Movie'
 import LoginAlert from './components/LoginAlert'
 import Premium from './components/Premium'
 import TagSearchResults from './components/TagSearchResults'
-import MyReviews from "./components/MyReviews"
+import MyReviews from './components/MyReviews'
+import Profile from './components/Profile'
 
 import { BACKEND_DOMAIN } from './Global'
 import SearchListResults from './components/SearchListResults'
 import EditList from './components/EditList'
 
-//GLOBAL VARIABLES
+// GLOBAL VARIABLES
 
 class UnconnectedApp extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = { verified: false }
   }
-  componentWillMount() {
+  componentWillMount () {
     let that = this
     console.log('fetching to endpoint /user/check')
     axios({
@@ -47,9 +48,11 @@ class UnconnectedApp extends Component {
         console.log('user', email)
         let userId = response.data.userId
         console.log('userId', userId)
+        let avatar = response.data.avatar
+        console.log('userId', userId)
         this.props.dispatch({
           type: 'login',
-          payload: { email: email, userId: userId }
+          payload: { email: email, userId: userId, avatar }
         })
       })
       .then(() => {
@@ -72,56 +75,56 @@ class UnconnectedApp extends Component {
       })
   }
 
-  renderHome() {
+  renderHome () {
     console.log('Home page rendered')
     return <Home />
   }
 
-  renderSearch() {
+  renderSearch () {
     console.log('Search page rendered')
     return <Search />
   }
 
-  renderMovie(routerData) {
+  renderMovie (routerData) {
     let movieId = routerData.match.params.id
     console.log('Movie details page rendered')
     return <Movie movieId={movieId} />
   }
 
   // Render Test comp for fetch data from mongo and understand that it works
-  renderTest() {
+  renderTest () {
     console.log('test page rendered')
     return (
       <div>
-        <MyReviews></MyReviews>
+        <MyReviews />
       </div>
     )
   }
-  renderSignup() {
+  renderSignup () {
     console.log('signup component rendered')
     return <Signup />
   }
-  renderLogin() {
+  renderLogin () {
     console.log('login component rendered')
     return <Login />
   }
-  renderLoginAlert() {
+  renderLoginAlert () {
     console.log('login alert rendered')
     return <LoginAlert />
   }
-  renderMakeList() {
+  renderMakeList () {
     console.log('makelist component rendered')
     return <MakeList />
   }
-  renderEditList() {
+  renderEditList () {
     console.log('editlist component rendered')
     return <EditList />
   }
-  renderLists(routerData) {
+  renderLists (routerData) {
     console.log('lists component rendered')
     return <Lists />
   }
-  renderList(routerData) {
+  renderList (routerData) {
     if (
       routerData.match.params.id === 'makelist' ||
       routerData.match.params.id === 'editlist'
@@ -132,47 +135,47 @@ class UnconnectedApp extends Component {
     console.log('path of list', routerData.match.params.id)
     return <List listId={routerData.match.params.id} />
   }
-  renderSearchListResults(routerData) {
+  renderSearchListResults (routerData) {
     console.log('search list results route rendered')
     console.log('path of page', routerData.match.params.id)
     return <SearchListResults />
   }
 
-  renderPremium() {
+  renderPremium () {
     console.log('premium component rendered')
     return <Premium />
   }
-  renderSearchTags(routerData) {
+  renderSearchTags (routerData) {
     console.log('searchTags component rendered')
     let tag = routerData.match.params.id
     console.log('tag', tag)
     return <TagSearchResults tag={tag} />
   }
-  renderMyReviews(){
-    console.log("routing to My reviews page")
-    return <MyReviews></MyReviews>
+  renderMyReviews () {
+    console.log('routing to My reviews page')
+    return <MyReviews />
   }
 
-  closePopup(event) {
+  closePopup (event) {
     event.stopPropagation()
     this.props.dispatch()
   }
 
-  render() {
+  render () {
     if (this.state.verified) {
       return (
         <BrowserRouter>
-          <div className="App">
+          <div className='App'>
             <Navbar />
-            <Route exact path="/signup" render={this.renderSignup} />
-            <Route exact path="/login" render={this.renderLogin} />
-            <Route exact path="/" render={this.renderHome} />
-            <Route exact path="/premium" render={this.renderPremium} />
-            <Route exact path="/search" render={this.renderSearch} />
-            <Route exact path="/movie/:id" render={this.renderMovie} />
-            <Route exact path="/test" render={this.renderTest} />
-            <Route exact path="/lists/makelist" render={this.renderMakeList} />
-            <Route exact path="/lists" render={this.renderLists} />
+            <Route exact path='/signup' render={this.renderSignup} />
+            <Route exact path='/login' render={this.renderLogin} />
+            <Route exact path='/' render={this.renderHome} />
+            <Route exact path='/premium' render={this.renderPremium} />
+            <Route exact path='/search' render={this.renderSearch} />
+            <Route exact path='/movie/:id' render={this.renderMovie} />
+            <Route exact path='/test' render={this.renderTest} />
+            <Route exact path='/lists/makelist' render={this.renderMakeList} />
+            <Route exact path='/lists' render={this.renderLists} />
             <Route exact path={'/lists/:id'} render={this.renderList} />
             <Route exact path={'/reviews'} render={this.renderMyReviews} />
 
@@ -186,12 +189,13 @@ class UnconnectedApp extends Component {
               path={'/searchlistresults/:id'}
               render={this.renderSearchListResults}
             />
-            <Route exact path="/loginalert" render={this.renderLoginAlert} />
+            <Route exact path='/loginalert' render={this.renderLoginAlert} />
             <Route
               exact
-              path="/searchtags/:id"
+              path='/searchtags/:id'
               render={this.renderSearchTags}
             />
+            <Route exact path='/profile' component={Profile} />
           </div>
         </BrowserRouter>
       )
@@ -200,7 +204,7 @@ class UnconnectedApp extends Component {
     }
   }
 }
-let mapStateToProps = function(state) {
+let mapStateToProps = function (state) {
   return { lists: state.state.lists }
 }
 
