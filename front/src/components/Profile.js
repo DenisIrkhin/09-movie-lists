@@ -4,13 +4,13 @@ import axios from 'axios'
 
 import Spinner from './Spinner'
 class Profile extends Component {
-  async componentDidMount () {
+  async componentDidMount() {
     try {
-      let { data } = await (axios({
+      let { data } = await axios({
         method: 'get',
         url: '/api/profiles',
         withCredentials: true
-      }))
+      })
       console.log('data', data)
       if (data.success) {
         // Dispatch profile loaded
@@ -37,7 +37,7 @@ class Profile extends Component {
   //   // }
   // }
 
-  render () {
+  render() {
     console.log('this.props', this.props)
     const { profile, isProfileLoaded, email, avatar } = this.props
     let profileContent
@@ -57,38 +57,59 @@ class Profile extends Component {
       console.log('profile', profile)
       const { username, bio, status, website, hobbies, social } = profile
       profileContent = (
-        <div className='mt-5'>
-          <div className='row'>
-            <div className='col-md-6'>
-              <img src={avatar} width='200px' alt='' />
-              {/* <Link to="/profiles" className="btn btn-light mb-3 float-left">
+        <React.Fragment>
+          <div className="col-md-5 p-5 avatar-container">
+            <img src={avatar} alt="" className="avatar-profile w-100" />
+            {/* <Link to="/profiles" className="btn btn-light mb-3 float-left">
                 Back To Profiles
               </Link> */}
+          </div>
+          <div className="col-md-7 p-5 text-left">
+            <div>
+              <strong>Username: </strong>
+              {username}
             </div>
-            <div className='col-md-6' >
-              <div>Username: {username}</div>
-              <div>Status: {status}</div>
-              <div>Bio: {bio}</div>
-              <div>Website: {website}</div>
-              <div>Hobbies: {hobbies}</div>
-              <div>Facebook: {social.facebook}</div>
-              <div>Instagram: {social.instagram}</div>
-              <div>Linkedin: {social.linkedin}</div>
-              <div>Youtube: {social.youtube}</div>
+            <div>
+              <strong>Status: </strong>
+              {status}
+            </div>
+            <div>
+              <strong>Bio: </strong>
+              {bio}
+            </div>
+            <div>
+              <strong>Website: </strong>
+              {website}
+            </div>
+            <div>
+              <strong>Hobbies: </strong>
+              {hobbies}
+            </div>
+            <div>
+              <strong>Facebook: </strong>
+              {social.facebook}
+            </div>
+            <div>
+              <strong>Instagram: </strong>
+              {social.instagram}
+            </div>
+            <div>
+              <strong>Linkedin: </strong>
+              {social.linkedin}
+            </div>
+            <div>
+              <strong>Youtube: </strong>
+              {social.youtube}
             </div>
           </div>
-          {/* <ProfileHeader profile={profile} /> */}
-          {/* <ProfileAbout profile={profile} /> */}
-        </div>
+        </React.Fragment>
       )
     }
 
     return (
-      <div className='profile'>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>{profileContent}</div>
-          </div>
+      <div className="profile container-fluid main-container-profile ">
+        <div className="container pt-5">
+          <div className="row pt-5 holder-profile">{profileContent}</div>
         </div>
       </div>
     )
@@ -104,7 +125,7 @@ class Profile extends Component {
   // }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => {
   return {
     email: state.state.email,
     avatar: state.state.avatar,

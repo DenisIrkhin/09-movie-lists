@@ -108,7 +108,7 @@ class UnconnectedMyReviews extends Component {
     return (
       <div className="container-fluid main-container-my-reviews">
         <div className="container pt-4">
-          <h2 className="text-center mb-5 mt-5">My Reviews</h2>
+          <h2 className="text-center mb-5 mt-4">My Reviews</h2>
           <div class="my-review-holder mt-2"> {this.renderReviews()}</div>
         </div>
       </div>

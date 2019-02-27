@@ -37,19 +37,22 @@ class UnconnectedHome extends Component {
             <div className="col-md-3 text-center p-2 three-images">
               <i className="fas fa-search icon-main" />
               <p className="icon-text">
-                Search through our database of 500,000 movies
+                Search through our database
+                <br /> of 500,000 movies
               </p>
             </div>
             <div className="col-md-3 text-center p-2 three-images">
               <i className="fas fa-list icon-main" />
               <p className="icon-text">
-                Make lists and add your favourite movies
+                Make lists and add
+                <br /> your favourite movies
               </p>
             </div>
             <div className="col-md-3 text-center p-2 three-images">
               <i className="fas fa-share-square icon-main pl-3" />
               <p className="icon-text">
-                Share lists with your friends through social media
+                Share lists with your <br />
+                friends through social media
               </p>
             </div>
           </div>
