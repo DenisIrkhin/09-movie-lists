@@ -70,7 +70,7 @@ class UnconnectedSignup extends Component {
     let reqBody = {
       email: this.state.inputEmail,
       password: this.state.inputPassword,
-      confirmPassword:this.state.inputConfirmPassword,
+      password2:this.state.inputConfirmPassword,
       username:this.state.inputUsername
     }
     console.log('reqBody', reqBody)

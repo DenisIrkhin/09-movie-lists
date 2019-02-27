@@ -18,6 +18,10 @@ class UnconnectedMyReviews extends Component {
     let that = this
     console.log('Fetching all of users reviews')
 
+    this.update()
+  }
+  update(){
+    let that=this
     axios({
       method: 'get',
       url: '/api/reviews/',
@@ -52,6 +56,7 @@ class UnconnectedMyReviews extends Component {
     })
   }
   deleteReview = reviewId => {
+    let that=this
     console.log('deleting review')
     // let reqBody={reviewId:reviewId}
     let reqBody = {reviewId:reviewId}
@@ -64,6 +69,7 @@ class UnconnectedMyReviews extends Component {
     })
       .then(() => {
         console.log('deleted review', reviewId)
+        that.update()
       })
       .catch(e => {
         console.log('error', e.response)
@@ -83,7 +89,7 @@ class UnconnectedMyReviews extends Component {
             <span
               className="fas fa-trash-alt MouseOver ml-1 mr-1 icon-lists trash-my-reviews"
               onClick={() => {
-                this.deleteReview(elem.movieId)
+                this.deleteReview(elem._id)
               }}
             />
             <div>{elem.reviewText}</div>
