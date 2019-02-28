@@ -50,16 +50,22 @@ class MovieReviews extends Component {
     console.log('render MovieReviews ---------------------')
     let createDomElements = elem => {
       return (
-        <li>
-          <div>User: {elem.user.username}</div>
-          <div>Review: {elem.reviewText}</div>
+        <li className="mt-3 mb-3">
+          <div>
+            <strong>User: </strong>
+            {elem.user.username}
+          </div>
+          <div>
+            <strong>Review: </strong>
+            {elem.reviewText}
+          </div>
         </li>
       )
     }
 
     return (
       <div className="container all-reviews-movie-container">
-        <h5 className="title-all-review-movie">Reviews</h5>
+        <h5 className="title-all-review-movie mb-5">Reviews</h5>
         <ol className="list-holder-all-reviews">
           {this.state.reviews.map(createDomElements)}
         </ol>
