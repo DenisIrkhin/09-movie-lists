@@ -23,7 +23,7 @@ class UnconnectedSearchList extends Component {
     console.log('submitted searchList form')
     evt.preventDefault()
 
-    this.props.history.push('/searchlistresults/' + this.state.inputSearch)
+    this.props.history.push('/searchlistresults/' + this.state.inputSearch+" ")
   }
 
   render() {

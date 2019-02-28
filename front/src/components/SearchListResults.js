@@ -13,7 +13,7 @@ import Modal from 'react-modal'
 class SearchListResults extends Component {
   constructor(props) {
     super(props)
-    this.state = { searchQuery: '', results: [] }
+    this.state = { results: [] }
     this.startSearch = this.startSearch.bind(this)
     this.displayTags = this.displayTags.bind(this)
   }

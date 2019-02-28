@@ -189,6 +189,11 @@ class UnconnectedApp extends Component {
               path={'/searchlistresults/:id'}
               render={this.renderSearchListResults}
             />
+            <Route
+              exact
+              path={'/searchlistresults/'}
+              render={this.renderSearchListResults}
+            />
             <Route exact path='/loginalert' render={this.renderLoginAlert} />
             <Route
               exact
