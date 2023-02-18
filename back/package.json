@@ -22,7 +22,7 @@
   "author": "Jonathan-Konrad-Denis",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "cookie-parser": "^1.4.4",
